@@ -160,131 +160,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2022/09/17/20220917_hexo_auto_post2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="fanzhh">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fanzhh's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/17/20220917_hexo_auto_post2/" class="post-title-link" itemprop="url">使用Webdav访问坚果云</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-09-17 00:00:00 / Modified: 09:24:23" itemprop="dateCreated datePublished" datetime="2022-09-17T00:00:00+08:00">2022-09-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>我使用<a href="https://www.jianguoyun.com/" target="_blank" rel="noopener">坚果云</a>管理工作、生活、学习等一切的文档，使用<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo</a>作为博客平台，Hexo在一台VPS上运行。我希望在写完一篇博客后，存储到坚果云指定目录中。一个脚本能够定时访问这个目录，若目录非空，则将目录中的<code>markdown</code>格式的文件复制到Hexo <code>source/_posts</code>目录，拷贝图片文件至<code>source/images/</code>。文件更新后，Hexo自动更新博客内容。</p>
-<ul>
-<li>获取坚果云指定目录文件</li>
-<li>更新Hexo</li>
-</ul>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><table>
-<thead>
-<tr>
-<th>用例名称</th>
-<th>获取坚果云指定目录文件</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>用例编号</td>
-<td>UC01</td>
-</tr>
-<tr>
-<td>用例简述</td>
-<td>访问坚果云指定目录，获取目录下所有文件</td>
-</tr>
-<tr>
-<td>用例图</td>
-<td>如下</td>
-</tr>
-<tr>
-<td>主要流程</td>
-<td>1. 访问指定目录 <br> 2. 获取该目录中所有文件 <br> 3. 获取Hexo指定目录中所有文件 <br> 4. 若坚果云文件在Hexo目录中不存在，则复制文件至Hexo <br></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>用例名称</th>
-<th>更新Hexo</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>用例编号</td>
-<td>UC02</td>
-</tr>
-<tr>
-<td>用例简述</td>
-<td>更新Hexo内容</td>
-</tr>
-<tr>
-<td>用例图</td>
-<td>如下</td>
-</tr>
-<tr>
-<td>主要流程</td>
-<td>1. 判断有无新增文件 <br> 2. 若有则Hexo重新生成内容</td>
-</tr>
-</tbody>
-</table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">left to right direction</span><br><span class="line">actor &quot;Robot&quot; as a</span><br><span class="line">rectangle &quot;Use Case&quot; &#123;</span><br><span class="line">  usecase &quot;Get Files to Publish&quot; as UC1</span><br><span class="line">  usecase &quot;Update Hexo&quot; as UC2</span><br><span class="line">&#125;</span><br><span class="line">a --&gt; UC1</span><br><span class="line">a --&gt; UC2</span><br><span class="line">&#96;&#96;&#96; </span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;plantuml</span><br><span class="line">actor Robot as F1</span><br><span class="line">actor Jianguoyun as D1</span><br><span class="line">actor Hexo as E1</span><br><span class="line">F1 --&gt; D1 : 访问坚果云申请授权</span><br><span class="line">D1 --&gt; F1 : 授权成功</span><br><span class="line">F1 --&gt; D1 : 申请指定目录文件列表</span><br><span class="line">D1 --&gt; F1 : 返回列表</span><br><span class="line">F1 --&gt; D1 : 申请下载文件</span><br><span class="line">D1 --&gt; E1 : 下载到Hexo目录</span><br><span class="line">E1 --&gt; E1 : 更新</span><br></pre></td></tr></table></figure>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> webdav4.client <span class="keyword">import</span> Client </span><br><span class="line"></span><br><span class="line"><span class="comment"># username 为坚果云账号， passwd 为密码 </span></span><br><span class="line">client = client(<span class="string">"https://dav.jianguoyun.com/dav/"</span>,auth=(<span class="string">"fanzhh@gmail.com"</span>,<span class="string">"a7zfvd49ey5rijkf"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出目录 </span></span><br><span class="line">dir = client.ls(path=<span class="string">"/我的坚果云/knowledge/projects/todos/posts_to_be_publish/"</span>,detail=<span class="literal">True</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载 </span></span><br><span class="line">client.download_file(from_path=dirs[<span class="number">0</span>][<span class="string">'name'</span>],to_path=<span class="string">'./'</span>+dirs[<span class="number">0</span>][<span class="string">'display_name'</span>]) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取当前目录已有文件及尺寸 </span></span><br><span class="line"><span class="keyword">import</span> os path = <span class="string">'./'</span> fun = <span class="keyword">lambda</span> x: os.path.isfile(os.path.join(path,x)) files_list = filter(fun, os.listdir(path)) size_of_file = [ (f, os.stat(os.path.join(path, f)).st_size) <span class="keyword">for</span> f <span class="keyword">in</span> files_list ] </span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载 </span></span><br><span class="line"><span class="keyword">for</span> d <span class="keyword">in</span> dir: </span><br><span class="line">    <span class="keyword">if</span> (d[<span class="string">'display_name'</span>],d[<span class="string">'content_length'</span>]) <span class="keyword">not</span> <span class="keyword">in</span> size_of_file: </span><br><span class="line">        client.download_file(from_path=d[<span class="string">'name'</span>],to_path=<span class="string">'./'</span>+d[<span class="string">'display_name'</span>]) </span><br><span class="line">    <span class="keyword">else</span>: </span><br><span class="line">        print(d[<span class="string">'display_name'</span>] + <span class="string">' not download.'</span>)</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2022/09/15/20220915_49_books/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -338,88 +213,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/09/15/20220915_49_books/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2022/09/14/20220917_hexo_auto_post1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="fanzhh">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fanzhh's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/14/20220917_hexo_auto_post1/" class="post-title-link" itemprop="url">大宋之变</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-09-14 00:00:00" itemprop="dateCreated datePublished" datetime="2022-09-14T00:00:00+08:00">2022-09-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-17 09:27:36" itemprop="dateModified" datetime="2022-09-17T09:27:36+08:00">2022-09-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/images/buhuo.PNG" alt=""></p>
-<p>hahha.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/09/14/20220917_hexo_auto_post1/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1003,10 +796,174 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2021/02/15/210215_decision_tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/15/210215_decision_tree/" class="post-title-link" itemprop="url">使用决策树辅助日常生活中的决策</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-02-15 00:00:00" itemprop="dateCreated datePublished" datetime="2021-02-15T00:00:00+08:00">2021-02-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-08 08:47:24" itemprop="dateModified" datetime="2022-01-08T08:47:24+08:00">2022-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/" itemprop="url" rel="index"><span itemprop="name">学习教育</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/images/210215_0.jpg" alt=""></p>
+<p>在学习 <a href="https://www.coursera.org" target="_blank" rel="noopener">Coursera.org</a> 上 <a href="https://www.coursera.org/learn/model-thinking/home/welcome" target="_blank" rel="noopener">Model Thinking</a> 课程过程中，觉得决策树<a href="https://en.wikipedia.org/wiki/Decision_tree" target="_blank" rel="noopener">Decision Tree</a> 特别有趣，可以在日常生活中用以辅助个人的决策。人人都希望用理性指导自己的生活，实际上绝大部分一生中的绝大部分（包括最重要的）决策都是非理性的（至少我是这样）。<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/15/210215_decision_tree/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2021/01/30/210130_one_second/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/30/210130_one_second/" class="post-title-link" itemprop="url">两部电影：《一秒钟》与《半个喜剧》</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-30 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-30T00:00:00+08:00">2021-01-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-08 08:47:24" itemprop="dateModified" datetime="2022-01-08T08:47:24+08:00">2022-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%B5%E5%BD%B1%E5%89%A7%E9%9B%86/" itemprop="url" rel="index"><span itemprop="name">电影剧集</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/images/2101301.png" alt=""></p>
+<p>有剧透。<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/30/210130_one_second/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1072,7 +1029,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-count">149</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1085,7 +1042,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-count">110</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
