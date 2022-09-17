@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Next.js新手教程">
+<meta property="og:url" content="http://fanzhh.pw/2019/12/08/191208_nextjs/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://fanzhh.pw/images/191208_next.gif">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/38605-5121644d9954e192.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/38605-5d7f6bb434503539.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/38605-c237f71a8959d2d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/38605-5316f005ce60e238.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/38605-a4e9edb95ed6d742.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/38605-e5a5d25fed1a5303.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/38605-dd4e71167d752f1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/38605-59b8aef2deb39f26.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/38605-821d5b820d519391.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/38605-cbe7d434a0b59fa9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/38605-710f1f414573f9cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/38605-9771075ccb66fbff.gif?imageMogr2/auto-orient/strip">
+<meta property="article:published_time" content="2019-12-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-08T00:47:24.837Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="NextJS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://fanzhh.pw/images/191208_next.gif">
+
+<link rel="canonical" href="http://fanzhh.pw/2019/12/08/191208_nextjs/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Next.js新手教程 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2019/12/08/191208_nextjs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Next.js新手教程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-08 00:00:00" itemprop="dateCreated datePublished" datetime="2019-12-08T00:00:00+08:00">2019-12-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-08 08:47:24" itemprop="dateModified" datetime="2022-01-08T08:47:24+08:00">2022-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/images/191208_next.gif" alt="Next.js"></p>
+<a id="more"></a>
+<p>Next.js 是一个轻量级的 React 服务端渲染应用框架。本教程演示使用Next.js制作一个显示比特币汇率的网站。详细的Next.js信息请访问<a href="https://nextjs.org/。" target="_blank" rel="noopener">https://nextjs.org/。</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>本文假设你使用的是windows操作系统，已经安装npm。npm的安装方法，请自行<a href="http://cn.bing.com" target="_blank" rel="noopener">bing</a>搜索。</p>
+<p>我使用的是<code>visual studio code</code>环境。命令行在该环境的<code>terminal</code>下输入、运行。当然你也可以使用其它环境如windows自带的powershell，使用写字板编辑代码。</p>
+<p>新建一个名为<code>BitzPrice</code>目录，并进入该目录。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\HP\projects&gt;mkdir bitzprice</span><br><span class="line">C:\Users\HP\projects&gt;cd bitzprice</span><br></pre></td></tr></table></figure>
+<p>查看<code>npm</code>版本，确认你已经安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\HP\projects\bitzprices&gt; npm --version</span><br><span class="line">6.12.1</span><br></pre></td></tr></table></figure>
+<p>初始化：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\HP\projects\bitzprices&gt; npm init -y</span><br><span class="line">Wrote to C:\Users\HP\projects\bitzprices\package.json:</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  "name": "bitzprices",</span><br><span class="line">  "version": "1.0.0",</span><br><span class="line">  "description": "",</span><br><span class="line">  "main": "index.js",</span><br><span class="line">  "scripts": &#123;</span><br><span class="line">    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1"</span><br><span class="line">  &#125;,</span><br><span class="line">  "keywords": [],</span><br><span class="line">  "author": "",</span><br><span class="line">  "license": "ISC"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>安装next、react和react-dom。某<del>强</del>国访问境外网站非常慢，建议使用国内镜像加速，当然也可以不用。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\HP\projects\bitzprices&gt; npm config set registry https://registry.npm.taobao.org</span><br><span class="line">PS C:\Users\HP\projects\bitzprices&gt; npm install next react react-dom</span><br><span class="line">npm WARN deprecated core-js@2.6.10: core-js@&lt;3.0 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual</span><br><span class="line">version of core-js@3.</span><br><span class="line">npm WARN deprecated fsevents@1.2.9: One of your dependencies needs to upgrade to fsevents</span><br><span class="line">v2: 1) Proper nodejs v10+ support 2) No more fetching binaries from AWS, smaller package size</span><br><span class="line">...</span><br><span class="line">+ react-dom@16.12.0</span><br><span class="line">+ react@16.12.0</span><br><span class="line">+ next@9.1.4</span><br><span class="line">added 760 packages from 356 contributors in 70.692s</span><br></pre></td></tr></table></figure>
+<h2 id="修改package-json"><a href="#修改package-json" class="headerlink" title="修改package.json"></a>修改package.json</h2><p>现在目录下应该有<code>package.json</code>文件了。修改这个文件，将<code>scripts</code>部分修改为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"dev"</span>: <span class="string">"next"</span>,</span><br><span class="line">    <span class="string">"build"</span>: <span class="string">"next build"</span>,</span><br><span class="line">    <span class="string">"start"</span>: <span class="string">"next start"</span></span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<h2 id="建立index页面"><a href="#建立index页面" class="headerlink" title="建立index页面"></a>建立index页面</h2><p>新建<code>pages</code>目录放置页面，在<code>pages</code>目录中新建<code>Index.js</code>文件，输入以下内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; (<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Hello Next.js<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>)</span><br></pre></td></tr></table></figure>
+<h2 id="运行服务器"><a href="#运行服务器" class="headerlink" title="运行服务器"></a>运行服务器</h2><p>在<code>terminal</code>输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> bitzprices@1.0.0 dev C:\Users\HP\projects\bitzprices</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> next</span></span><br><span class="line"></span><br><span class="line">[ wait ]  starting the development server ...</span><br><span class="line">[ info ]  waiting on http://localhost:3000 ...</span><br><span class="line">[ ready ] compiled successfully - ready on http://localhost:3000</span><br></pre></td></tr></table></figure>
+<p>现在浏览器访问<code>http://localhost:3000</code>，应该可以看到以下画面：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/38605-5121644d9954e192.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="index.js"></p>
+<h2 id="新建about页面"><a href="#新建about页面" class="headerlink" title="新建about页面"></a>新建about页面</h2><p>在<code>pages</code>中新建文件<code>About.js</code>，输入以下内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; (<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>About BitzPrices<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>)</span><br></pre></td></tr></table></figure>
+<p>在浏览器输入<code>http://localhost:3000/about</code>，会看到以下内容：<br><img src="https://upload-images.jianshu.io/upload_images/38605-5d7f6bb434503539.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="about.js"></p>
+<h2 id="让代码更React化"><a href="#让代码更React化" class="headerlink" title="让代码更React化"></a>让代码更React化</h2><p><code>Index.js</code>修改成下面的样子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Index = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;Hello BitzPrices&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Index;</span><br></pre></td></tr></table></figure>
+<p>现在访问页面，应该是这样：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/38605-c237f71a8959d2d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="index"></p>
+<p><code>About.js</code>也做类似修改：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> About = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;About BitzPrices&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">        &lt;p&gt;查看比特币汇率的应用。&lt;/</span>p&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default About;</span></span><br></pre></td></tr></table></figure>
+<p>About页面：<br><img src="https://upload-images.jianshu.io/upload_images/38605-5316f005ce60e238.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="about"></p>
+<h2 id="添加导航"><a href="#添加导航" class="headerlink" title="添加导航"></a>添加导航</h2><p>我们使用<code>next</code>的<code>Link</code>作为导航。修改<code>Index.js</code>，内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Link <span class="keyword">from</span> <span class="string">'next/link'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Index = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;ul&gt;</span><br><span class="line">            &lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>主页<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">            &lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">"/about"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>关于<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">        &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">        &lt;h1&gt;Hello BitzPrices&lt;/</span>h1&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default Index;</span></span><br></pre></td></tr></table></figure>
+<p>修改<code>About.js</code>内容如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Link <span class="keyword">from</span> <span class="string">'next/link'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> About = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;ul&gt;</span><br><span class="line">            &lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>主页<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">            &lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">"/about"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>关于<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">        &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">        &lt;h1&gt;关于BitzPrices&lt;/</span>h1&gt;</span><br><span class="line">        &lt;p&gt;查看比特币汇率的应用。&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> About;</span><br></pre></td></tr></table></figure><br>刷新浏览器页面，应该能够使用导航了。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/38605-a4e9edb95ed6d742.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="about"></p>
+<h2 id="将导航栏放入部件中"><a href="#将导航栏放入部件中" class="headerlink" title="将导航栏放入部件中"></a>将导航栏放入部件中</h2><p>如果要创建多个页面，每个页面中都输入相同的代码显然太麻烦。我们可以将导航栏放入单独的部件，使用导航的页面只需要引入这个部件。</p>
+<p>在<code>bitzprices</code>目录下新建<code>components</code>目录，在这个目录中新建<code>Navbar.js</code>文件，内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Link <span class="keyword">from</span> <span class="string">'next/link'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Navbar = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>主页<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">        &lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">"/about"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>关于<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">    &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default Navbar;</span></span><br></pre></td></tr></table></figure>
+<p><code>Index.js</code>现在只需要引入<code>Navbar</code>部件并使用它：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Navbar <span class="keyword">from</span> <span class="string">'../components/Navbar'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Index = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;Navbar /&gt;</span><br><span class="line">        &lt;h1&gt;欢迎访问 BitzPrices&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Index;</span><br></pre></td></tr></table></figure>
+<p><code>About.js</code>也做相同修改。</p>
+<h2 id="使用样式表"><a href="#使用样式表" class="headerlink" title="使用样式表"></a>使用样式表</h2><p>我们在<code>Navbar.js</code>中展示样式表的使用，在文件中添加样式表，代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Link <span class="keyword">from</span> <span class="string">'next/link'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Navbar = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;ul&gt;</span><br><span class="line">            &lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>主页<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">            &lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">"/about"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>关于<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">        &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">        &lt;style jsx&gt;&#123;`</span></span><br><span class="line"><span class="regexp">            ul &#123;</span></span><br><span class="line"><span class="regexp">                background: #333;</span></span><br><span class="line"><span class="regexp">                color: #fff;</span></span><br><span class="line"><span class="regexp">                list-style: none;</span></span><br><span class="line"><span class="regexp">                display: flex;</span></span><br><span class="line"><span class="regexp">            &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">            ul li &#123;</span></span><br><span class="line"><span class="regexp">                font-size: 18px;</span></span><br><span class="line"><span class="regexp">                margin: 20px 20px 20px;</span></span><br><span class="line"><span class="regexp">            &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">            ul li a&#123;</span></span><br><span class="line"><span class="regexp">                color: #fff;</span></span><br><span class="line"><span class="regexp">                text-decoration: none;</span></span><br><span class="line"><span class="regexp">            &#125;</span></span><br><span class="line"><span class="regexp">        `&#125;&lt;/</span>style&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default Navbar;</span></span><br></pre></td></tr></table></figure>
+<p>现在的页面如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/38605-e5a5d25fed1a5303.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="index"></p>
+<p>这个样式表只对<code>Navbar</code>这个部件有效，不影响其它地方的<code>&lt;ul&gt;</code>。</p>
+<h2 id="使用布局"><a href="#使用布局" class="headerlink" title="使用布局"></a>使用布局</h2><p>在<code>components</code>目录下新建<code>Layout.js</code>文件，内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Navbar <span class="keyword">from</span> <span class="string">'./Navbar'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Layout = <span class="function">(<span class="params">props</span>) =&gt;</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;Navbar /&gt;</span><br><span class="line">        &#123;props.children&#125;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default Layout;</span></span><br></pre></td></tr></table></figure>
+<p>我们对<code>Index.js</code>做如下修改：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Layout <span class="keyword">from</span> <span class="string">'../components/Layout'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Index = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">    &lt;Layout&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;h1&gt;欢迎访问 BitzPrices&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>div&gt;</span><br><span class="line">    &lt;<span class="regexp">/Layout&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default Index;</span></span><br></pre></td></tr></table></figure>
+<p><code>About.js</code>的修改也一样：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Layout <span class="keyword">from</span> <span class="string">'../components/Layout'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> About = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">    &lt;Layout&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;h1&gt;关于BitzPrices&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">            &lt;p&gt;查看比特币汇率的应用。&lt;/</span>p&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>Layout&gt;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> About;</span><br></pre></td></tr></table></figure><br>页面不会有任何变化，但我们现在已经使用布局了。</p>
+<h2 id="添加页面标题及样式表引用"><a href="#添加页面标题及样式表引用" class="headerlink" title="添加页面标题及样式表引用"></a>添加页面标题及样式表引用</h2><p>修改<code>Layout.js</code>，引入<code>Head</code>，在<code>Head</code>中添加页面标题和样式表的引用（我们使用<code>bootswatch</code>的<a href="[https://bootswatch.com/](https://bootswatch.com/">cerulean</a><br>)样式）。<code>Layout.js</code>的内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Head <span class="keyword">from</span> <span class="string">'next/head'</span>;</span><br><span class="line"><span class="keyword">import</span> Navbar <span class="keyword">from</span> <span class="string">'./Navbar'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Layout = <span class="function">(<span class="params">props</span>) =&gt;</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;Head&gt;</span><br><span class="line">            &lt;title&gt;BitzPrices&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">            &lt;link rel="stylesheet"</span></span><br><span class="line"><span class="regexp">            href="https:/</span><span class="regexp">/bootswatch.com/</span><span class="number">4</span>/cerulean/bootstrap.min.css<span class="string">" /&gt;</span></span><br><span class="line"><span class="string">        &lt;/Head&gt;</span></span><br><span class="line"><span class="string">        &lt;Navbar /&gt;</span></span><br><span class="line"><span class="string">        &#123;props.children&#125;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">export default Layout;</span></span><br></pre></td></tr></table></figure>
+<p>刷新页面，<br><img src="https://upload-images.jianshu.io/upload_images/38605-dd4e71167d752f1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="index"></p>
+<p>我们看到页面正文部分样式改变了，导航部分没有变。这是因为我们在<code>Navbar.js</code>中使用了样式表。为了应用<code>cerulean</code>样式，我们用<code>cerulean</code>的<code>Navbar</code>的源码代替<code>Navbar.js</code>的内容，注意要将所有的<code>class=</code>替换为<code>className=</code>，导航菜单内容及链接地址也做修改：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Navbar = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">    &lt;nav className=<span class="string">"navbar navbar-expand-lg navbar-dark bg-dark"</span>&gt;</span><br><span class="line">        &lt;a className=<span class="string">"navbar-brand"</span> href=<span class="string">"/"</span>&gt;BitzPrices&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">        &lt;button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation"&gt;</span></span><br><span class="line"><span class="regexp">            &lt;span className="navbar-toggler-icon"&gt;&lt;/</span>span&gt;</span><br><span class="line">        &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">        &lt;div className="collapse navbar-collapse" id="navbarColor02"&gt;</span></span><br><span class="line"><span class="regexp">            &lt;ul className="navbar-nav mr-auto"&gt;</span></span><br><span class="line"><span class="regexp">                &lt;li className="nav-item active"&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;a className="nav-link" href="/</span><span class="string">"&gt;主页&lt;span className="</span>sr-only<span class="string">"&gt;(current)&lt;/span&gt;&lt;/a&gt;</span></span><br><span class="line"><span class="string">                &lt;/li&gt;</span></span><br><span class="line"><span class="string">                &lt;li className="</span>nav-item<span class="string">"&gt;</span></span><br><span class="line"><span class="string">                    &lt;a className="</span>nav-link<span class="string">" href="</span>/about<span class="string">"&gt;关于&lt;/a&gt;</span></span><br><span class="line"><span class="string">                &lt;/li&gt;</span></span><br><span class="line"><span class="string">            &lt;/ul&gt;</span></span><br><span class="line"><span class="string">            &lt;form className="</span>form-inline my<span class="number">-2</span> my-lg<span class="number">-0</span><span class="string">"&gt;</span></span><br><span class="line"><span class="string">                &lt;input className="</span>form-control mr-sm<span class="number">-2</span><span class="string">" type="</span>text<span class="string">" placeholder="</span>Search<span class="string">"/&gt;</span></span><br><span class="line"><span class="string">                &lt;button className="</span>btn btn-secondary my<span class="number">-2</span> my-sm<span class="number">-0</span><span class="string">" type="</span>submit<span class="string">"&gt;Search&lt;/button&gt;`</span></span><br><span class="line"><span class="string">            &lt;/form&gt;</span></span><br><span class="line"><span class="string">        &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;/nav&gt;</span></span><br><span class="line"><span class="string">);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">export default Navbar;</span></span><br></pre></td></tr></table></figure>
+<h2 id="将页面内容放入容器"><a href="#将页面内容放入容器" class="headerlink" title="将页面内容放入容器"></a>将页面内容放入容器</h2><p>修改<code>Layout.js</code>，将<code>{props.children}</code>放入<code>div</code>中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">"container"</span>&gt;</span><br><span class="line">    &#123;props.children&#125;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="通过API获取数据"><a href="#通过API获取数据" class="headerlink" title="通过API获取数据"></a>通过API获取数据</h2><p>我们要获取的数据来自<a href="https://www.coindesk.com/" target="_blank" rel="noopener">https://www.coindesk.com/</a>，地址为<a href="https://api.coindesk.com/v1/bpi/currentprice.json，通过这个地址获取的json数据为：" target="_blank" rel="noopener">https://api.coindesk.com/v1/bpi/currentprice.json，通过这个地址获取的json数据为：</a><br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">"time"</span>:&#123;</span><br><span class="line"><span class="attr">"updated"</span>:<span class="string">"Dec 8, 2019 02:06:00 UTC"</span>,</span><br><span class="line"><span class="attr">"updatedISO"</span>:<span class="string">"2019-12-08T02:06:00+00:00"</span>,</span><br><span class="line"><span class="attr">"updateduk"</span>:<span class="string">"Dec 8, 2019 at 02:06 GMT"</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="attr">"disclaimer"</span>:<span class="string">"This data was produced from the CoinDesk Bitcoin Price Index (USD). Non-USD currency data converted using hourly conversion rate from openexchangerates.org"</span>,</span><br><span class="line"><span class="attr">"chartName"</span>:<span class="string">"Bitcoin"</span>,</span><br><span class="line"><span class="attr">"bpi"</span>:&#123;</span><br><span class="line"><span class="attr">"USD"</span>:&#123;<span class="attr">"code"</span>:<span class="string">"USD"</span>,<span class="attr">"symbol"</span>:<span class="string">"&amp;#36;"</span>,<span class="attr">"rate"</span>:<span class="string">"7,454.3000"</span>,<span class="attr">"description"</span>:<span class="string">"United States Dollar"</span>,<span class="attr">"rate_float"</span>:<span class="number">7454.3</span>&#125;,</span><br><span class="line"><span class="attr">"GBP"</span>:&#123;<span class="attr">"code"</span>:<span class="string">"GBP"</span>,<span class="attr">"symbol"</span>:<span class="string">"&amp;pound;"</span>,<span class="attr">"rate"</span>:<span class="string">"5,674.7126"</span>,<span class="attr">"description"</span>:<span class="string">"British Pound Sterling"</span>,<span class="attr">"rate_float"</span>:<span class="number">5674.7126</span>&#125;,</span><br><span class="line"><span class="attr">"EUR"</span>:&#123;<span class="attr">"code"</span>:<span class="string">"EUR"</span>,<span class="attr">"symbol"</span>:<span class="string">"&amp;euro;"</span>,<span class="attr">"rate"</span>:<span class="string">"6,740.6328"</span>,<span class="attr">"description"</span>:<span class="string">"Euro"</span>,<span class="attr">"rate_float"</span>:<span class="number">6740.6328</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>获取数据，我们需要用到<code>isomorphic-unfetch</code>。安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\HP\projects\bitzprices&gt; npm install isomorphic-unfetch</span><br></pre></td></tr></table></figure>
+<p>修改<code>Index.js</code>如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Fetch <span class="keyword">from</span> <span class="string">'isomorphic-unfetch'</span>;</span><br><span class="line"><span class="keyword">import</span> Layout <span class="keyword">from</span> <span class="string">'../components/Layout'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Index = <span class="function">(<span class="params">props</span>) =&gt;</span> (</span><br><span class="line">    &lt;Layout&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;h1&gt;欢迎访问 BitzPrices&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">            &#123;props.bpi.time.updated&#125;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>div&gt;</span><br><span class="line">    &lt;<span class="regexp">/Layout&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">Index.getInitialProps = async function() &#123;</span></span><br><span class="line"><span class="regexp">    const res = await Fetch(</span></span><br><span class="line"><span class="regexp">        'https:/</span><span class="regexp">/api.coindesk.com/</span>v1/bpi/currentprice.json<span class="string">'</span></span><br><span class="line"><span class="string">    );</span></span><br><span class="line"><span class="string">    const data = await res.json();</span></span><br><span class="line"><span class="string">    return &#123;</span></span><br><span class="line"><span class="string">        bpi: data</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125; </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">export default Index;</span></span><br></pre></td></tr></table></figure>
+<p>刷新页面：<br><img src="https://upload-images.jianshu.io/upload_images/38605-59b8aef2deb39f26.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="index"></p>
+<h2 id="将Prices放入单独的部件"><a href="#将Prices放入单独的部件" class="headerlink" title="将Prices放入单独的部件"></a>将Prices放入单独的部件</h2><p>在<code>components</code>目录下，新建<code>Prices.js</code>文件，内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Prices</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        currency: <span class="string">'USD'</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">            Prices</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Prices;</span><br></pre></td></tr></table></figure>
+<p>修改<code>Index.js</code>内容，<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">const</span> Index = <span class="function">(<span class="params">props</span>) =&gt;</span> (</span><br><span class="line">    &lt;Layout&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;h1&gt;欢迎访问 BitzPrices&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">            &lt;Prices bpi=&#123;props.bpi&#125; /</span>&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>Layout&gt;</span><br><span class="line">);</span><br><span class="line">...</span><br></pre></td></tr></table></figure><br>现在主页应该是这样：<br><img src="https://upload-images.jianshu.io/upload_images/38605-821d5b820d519391.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="index"></p>
+<h2 id="显示汇率"><a href="#显示汇率" class="headerlink" title="显示汇率"></a>显示汇率</h2><p>修改<code>Index.js</code>内容：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Fetch <span class="keyword">from</span> <span class="string">'isomorphic-unfetch'</span>;</span><br><span class="line"><span class="keyword">import</span> Layout <span class="keyword">from</span> <span class="string">'../components/Layout'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Prices <span class="keyword">from</span> <span class="string">'../components/Prices'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Index = <span class="function">(<span class="params">props</span>) =&gt;</span> (</span><br><span class="line">    &lt;Layout&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;h1&gt;欢迎访问 BitzPrices&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">            &lt;p&gt;当前的比特币汇率：&lt;/</span>p&gt;</span><br><span class="line">            &lt;Prices bpi=&#123;props.bpi&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>Layout&gt;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">Index.getInitialProps = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> Fetch(</span><br><span class="line">        <span class="string">'https://api.coindesk.com/v1/bpi/currentprice.json'</span></span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> res.json();</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        bpi: data</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Index;</span><br></pre></td></tr></table></figure><br>修改<code>Prices.js</code>内容：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Prices</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        currency: <span class="string">'USD'</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;ul className="list-group"&gt;</span><br><span class="line">                &lt;li className="list-group-item"&gt;</span><br><span class="line">                    Bitcoin rate for &#123;this.props.bpi.bpi.USD.description&#125;:&lt;span className="badge badge-primary"&gt;&#123;this.props.bpi.bpi.USD.code&#125;&lt;/span&gt;&lt;strong&gt;&#123;this.props.bpi.bpi.USD.rate&#125;&lt;/strong&gt;</span><br><span class="line">                &lt;/li&gt;</span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Prices;</span><br></pre></td></tr></table></figure><br>刷新页面：<br><img src="https://upload-images.jianshu.io/upload_images/38605-cbe7d434a0b59fa9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="index"></p>
+<h2 id="获取其它币种汇率"><a href="#获取其它币种汇率" class="headerlink" title="获取其它币种汇率"></a>获取其它币种汇率</h2><p>修改<code>Prices.js</code>，增加获取其它币种的数据：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Prices</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        currency: <span class="string">'EUR'</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">let</span> list = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.state.currency === <span class="string">'USD'</span>) &#123;</span><br><span class="line">            list = <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">"list-group-item"</span>&gt;</span> Bitcoin rate for &#123;this.props.bpi.bpi.USD.description&#125;:<span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">"badge badge-primary"</span>&gt;</span>&#123;this.props.bpi.bpi.USD.code&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;this.props.bpi.bpi.USD.rate&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.state.currency === <span class="string">'GBP'</span>) &#123;</span><br><span class="line">            list = <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">"list-group-item"</span>&gt;</span> Bitcoin rate for &#123;this.props.bpi.bpi.GBP.description&#125;:<span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">"badge badge-primary"</span>&gt;</span>&#123;this.props.bpi.bpi.GBP.code&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;this.props.bpi.bpi.GBP.rate&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.state.currency === <span class="string">'EUR'</span>) &#123;</span><br><span class="line">            list = <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">"list-group-item"</span>&gt;</span> Bitcoin rate for &#123;this.props.bpi.bpi.EUR.description&#125;:<span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">"badge badge-primary"</span>&gt;</span>&#123;this.props.bpi.bpi.EUR.code&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;this.props.bpi.bpi.EUR.rate&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;ul className="list-group"&gt;</span><br><span class="line">                &#123;list&#125;</span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Prices;</span><br></pre></td></tr></table></figure><br>现在，因为<code>currency</code>的值为<code>EUR</code>，刷新页面，应该能够看到如下画面：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/38605-710f1f414573f9cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="index"></p>
+<h2 id="动态选择要查询的币种"><a href="#动态选择要查询的币种" class="headerlink" title="动态选择要查询的币种"></a>动态选择要查询的币种</h2><p>修改<code>Prices.js</code>，</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Prices</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        currency: <span class="string">'USD'</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">let</span> list = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.state.currency === <span class="string">'USD'</span>) &#123;</span><br><span class="line">            list = <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">"list-group-item"</span>&gt;</span> Bitcoin rate for &#123;this.props.bpi.bpi.USD.description&#125;:<span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">"badge badge-primary"</span>&gt;</span>&#123;this.props.bpi.bpi.USD.code&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;this.props.bpi.bpi.USD.rate&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.state.currency === <span class="string">'GBP'</span>) &#123;</span><br><span class="line">            list = <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">"list-group-item"</span>&gt;</span> Bitcoin rate for &#123;this.props.bpi.bpi.GBP.description&#125;:<span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">"badge badge-primary"</span>&gt;</span>&#123;this.props.bpi.bpi.GBP.code&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;this.props.bpi.bpi.GBP.rate&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.state.currency === <span class="string">'EUR'</span>) &#123;</span><br><span class="line">            list = <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">"list-group-item"</span>&gt;</span> Bitcoin rate for &#123;this.props.bpi.bpi.EUR.description&#125;:<span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">"badge badge-primary"</span>&gt;</span>&#123;this.props.bpi.bpi.EUR.code&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;this.props.bpi.bpi.EUR.rate&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;select onChange=&#123;e =&gt; this.setState(&#123;currency: e.target.value&#125;)&#125; className="form-control"&gt;</span><br><span class="line">                &lt;option value="USD"&gt;USD&lt;/option&gt;</span><br><span class="line">                &lt;option value="GBP"&gt;GBP&lt;/option&gt;</span><br><span class="line">                &lt;option value="EUR"&gt;EUR&lt;/option&gt;</span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span></span><br><span class="line">            &lt;ul className="list-group"&gt;</span><br><span class="line">                &#123;list&#125;</span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Prices;</span><br></pre></td></tr></table></figure>
+<p>现在可以选择要查询的币种了：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/38605-9771075ccb66fbff.gif?imageMogr2/auto-orient/strip" alt="index"></p>
+<p>本文章内容参考了<a href="https://www.youtube.com/watch?v=IkOVe40Sy0U&amp;t=431s" target="_blank" rel="noopener">Traversy Media在Youtube上的视频</a>。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/NextJS/" rel="tag"># NextJS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/26/191126_yuanze/" rel="prev" title="自我意识和思维盲点是个人成长的最大障碍">
+      <i class="fa fa-chevron-left"></i> 自我意识和思维盲点是个人成长的最大障碍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/31/191231_books/" rel="next" title="2019年读书记录">
+      2019年读书记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改package-json"><span class="nav-number">2.</span> <span class="nav-text">修改package.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立index页面"><span class="nav-number">3.</span> <span class="nav-text">建立index页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行服务器"><span class="nav-number">4.</span> <span class="nav-text">运行服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新建about页面"><span class="nav-number">5.</span> <span class="nav-text">新建about页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#让代码更React化"><span class="nav-number">6.</span> <span class="nav-text">让代码更React化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加导航"><span class="nav-number">7.</span> <span class="nav-text">添加导航</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将导航栏放入部件中"><span class="nav-number">8.</span> <span class="nav-text">将导航栏放入部件中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用样式表"><span class="nav-number">9.</span> <span class="nav-text">使用样式表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用布局"><span class="nav-number">10.</span> <span class="nav-text">使用布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加页面标题及样式表引用"><span class="nav-number">11.</span> <span class="nav-text">添加页面标题及样式表引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将页面内容放入容器"><span class="nav-number">12.</span> <span class="nav-text">将页面内容放入容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过API获取数据"><span class="nav-number">13.</span> <span class="nav-text">通过API获取数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将Prices放入单独的部件"><span class="nav-number">14.</span> <span class="nav-text">将Prices放入单独的部件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示汇率"><span class="nav-number">15.</span> <span class="nav-text">显示汇率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取其它币种汇率"><span class="nav-number">16.</span> <span class="nav-text">获取其它币种汇率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态选择要查询的币种"><span class="nav-number">17.</span> <span class="nav-text">动态选择要查询的币种</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

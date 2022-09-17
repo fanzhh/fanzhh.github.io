@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="gensim学习笔记，文档集与向量空间 ，点击链接可访问官网原文。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gensim — 文档集与向量空间">
+<meta property="og:url" content="http://fanzhh.pw/2016/11/28/161128-gensim-corpora-vector-spaces/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="gensim学习笔记，文档集与向量空间 ，点击链接可访问官网原文。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-11-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-08T00:47:24.829Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="gensim">
+<meta property="article:tag" content="语义分析">
+<meta property="article:tag" content="统计">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://fanzhh.pw/2016/11/28/161128-gensim-corpora-vector-spaces/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>gensim — 文档集与向量空间 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2016/11/28/161128-gensim-corpora-vector-spaces/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          gensim — 文档集与向量空间
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-11-28 00:00:00" itemprop="dateCreated datePublished" datetime="2016-11-28T00:00:00+08:00">2016-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-08 08:47:24" itemprop="dateModified" datetime="2022-01-08T08:47:24+08:00">2022-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>gensim学习笔记，<a href="https://radimrehurek.com/gensim/tut1.html" target="_blank" rel="noopener">文档集与向量空间</a> ，点击链接可访问官网原文。<br><a id="more"></a><br>先设置日志：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">In</span> [1]: import logging</span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [2]: logging.basicConfig(<span class="attribute">format</span>=<span class="string">'%(asctime)s : %(levelname)s : %(message)s'</span>, <span class="attribute">level</span>=logging.INFO)</span><br></pre></td></tr></table></figure></p>
+<h2 id="从字符串到向量"><a href="#从字符串到向量" class="headerlink" title="从字符串到向量"></a>从字符串到向量</h2><p>这次，我们从字符串组成的文档开始：<br><figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">In</span> [<span class="number">8</span>]:  from gensim import corpora </span><br><span class="line"></span><br><span class="line"><span class="type">In</span> [<span class="number">7</span>]:  documents = [<span class="symbol">'Human</span> machine interface for lab abc computer applications',</span><br><span class="line">   ...:  <span class="symbol">'A</span> survey <span class="keyword">of</span> user opinion <span class="keyword">of</span> computer system response time',</span><br><span class="line">   ...:  <span class="symbol">'The</span> <span class="type">EPS</span> user interface management system',</span><br><span class="line">   ...:  <span class="symbol">'System</span> <span class="keyword">and</span> human system engineering testing <span class="keyword">of</span> <span class="type">EPS'</span>,</span><br><span class="line">   ...:  <span class="symbol">'Relation</span> <span class="keyword">of</span> user perceived response time to error measurement',</span><br><span class="line">   ...:  <span class="symbol">'The</span> generation <span class="keyword">of</span> random binary unordered trees',</span><br><span class="line">   ...:  <span class="symbol">'The</span> intersection graph <span class="keyword">of</span> paths <span class="keyword">in</span> trees',</span><br><span class="line">   ...:  <span class="symbol">'Graph</span> minors <span class="type">IV</span> <span class="type">Widths</span> <span class="keyword">of</span> trees <span class="keyword">and</span> well quasi ordering',</span><br><span class="line">   ...:  <span class="symbol">'Graph</span> minors <span class="type">A</span> survey']</span><br></pre></td></tr></table></figure></p>
+<p>这个文档集包含9个文档，每个文档只有一个句子组成。</p>
+<p>首先，我们标记化文档集，剔除常用词（使用停用词表）和只在句子中出现1词次的词：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">In [9]: stoplist = <span class="keyword">set</span>(<span class="string">'for a of the and to in'</span>.split())</span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [<span class="number">10</span>]: texts = [[word <span class="keyword">for</span> word <span class="keyword">in</span> document.lower().split() <span class="keyword">if</span> word <span class="keyword">not</span> <span class="keyword">in</span> stoplist] <span class="keyword">for</span> <span class="keyword">document</span> <span class="keyword">in</span> documents]</span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [<span class="number">11</span>]: <span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [<span class="number">12</span>]: frequency = defaultdict(<span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [<span class="number">13</span>]: <span class="keyword">for</span> <span class="built_in">text</span> <span class="keyword">in</span> texts:</span><br><span class="line">   ....:     <span class="keyword">for</span> token <span class="keyword">in</span> <span class="built_in">text</span>:</span><br><span class="line">   ....:         frequency[token] += <span class="number">1</span></span><br><span class="line">   ....:         </span><br><span class="line"><span class="keyword">In</span> [<span class="number">14</span>]: texts = [[token <span class="keyword">for</span> token <span class="keyword">in</span> <span class="built_in">text</span> <span class="keyword">if</span> frequency[token] &gt; <span class="number">1</span>] <span class="keyword">for</span> <span class="built_in">text</span> <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [<span class="number">15</span>]: <span class="keyword">from</span> pprint <span class="keyword">import</span> pprint </span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [<span class="number">16</span>]: pprint(texts)</span><br><span class="line">[[<span class="string">'human'</span>, <span class="string">'interface'</span>, <span class="string">'computer'</span>],</span><br><span class="line"> [<span class="string">'survey'</span>, <span class="string">'user'</span>, <span class="string">'computer'</span>, <span class="string">'system'</span>, <span class="string">'response'</span>, <span class="string">'time'</span>],</span><br><span class="line"> [<span class="string">'eps'</span>, <span class="string">'user'</span>, <span class="string">'interface'</span>, <span class="string">'system'</span>],</span><br><span class="line"> [<span class="string">'system'</span>, <span class="string">'human'</span>, <span class="string">'system'</span>, <span class="string">'eps'</span>],</span><br><span class="line"> [<span class="string">'user'</span>, <span class="string">'response'</span>, <span class="string">'time'</span>],</span><br><span class="line"> [<span class="string">'trees'</span>],</span><br><span class="line"> [<span class="string">'graph'</span>, <span class="string">'trees'</span>],</span><br><span class="line"> [<span class="string">'graph'</span>, <span class="string">'minors'</span>, <span class="string">'trees'</span>],</span><br><span class="line"> [<span class="string">'graph'</span>, <span class="string">'minors'</span>, <span class="string">'survey'</span>]]</span><br></pre></td></tr></table></figure><br>您处理文件的方式可能会有所不同；这里，我只利用空格进行分词，然后把每个单词字母最小化。事实上，我使用这个特殊的（简单低效）设置来模拟Deerwester等人做的原始实验。</p>
+<p>处理文档的方式各不相同，并且与应用程序和语言有关，我决定不通过任何接口来限制它们。相反，文档由从其中提取的特征表示，而不是通过其“表面”字符串形式表示：如何获得特征取决于您。下面我描述一个常见的，通用的方法（称为词袋），但是请记住，不同的应用程序域需要不同的特征，并且，当然，<a href="https://en.wikipedia.org/wiki/Garbage_in,_garbage_out" target="_blank" rel="noopener">输入的是垃圾，输出的也是垃圾</a> …</p>
+<p>要将文档转换为向量，我们将使用一个用bag-of-words来表达的文档。在该表达中，每个文档由一个向量表示，其中每个向量元素表示问题 - 答案对，其风格为：</p>
+<p><strong>    “文字出现在文档中多少次？一次。”</strong></p>
+<p>仅通过其ID（整数）来表达问题是很有用处的。这种问题和ID之间的映射称为词典：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">17</span>]: <span class="built_in">dictionary</span> = corpora.Dictionary(texts)</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">19</span>:<span class="number">11</span>:<span class="number">28</span>,<span class="number">521</span> : INFO : adding document #<span class="number">0</span> to Dictionary(<span class="number">0</span> unique tokens: [])</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">19</span>:<span class="number">11</span>:<span class="number">28</span>,<span class="number">522</span> : INFO : built Dictionary(<span class="number">12</span> unique tokens: [<span class="string">'minors'</span>, <span class="string">'human'</span>, <span class="string">'time'</span>, <span class="string">'system'</span>, <span class="string">'computer'</span>]...) <span class="keyword">from</span> <span class="number">9</span> documents (total <span class="number">29</span> corpus positions)</span><br><span class="line"></span><br><span class="line">In [<span class="number">18</span>]: <span class="built_in">dictionary</span>.save(<span class="string">'/tmp/deerwester.dict'</span>) # 保存词典以备捡来使用</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">19</span>:<span class="number">12</span>:<span class="number">21</span>,<span class="number">738</span> : INFO : saving Dictionary object under /tmp/deerwester.dict, separately None</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">19</span>:<span class="number">12</span>:<span class="number">21</span>,<span class="number">739</span> : INFO : saved /tmp/deerwester.dict</span><br><span class="line"></span><br><span class="line">In [<span class="number">19</span>]: print(<span class="built_in">dictionary</span>)</span><br><span class="line">Dictionary(<span class="number">12</span> unique tokens: [<span class="string">'minors'</span>, <span class="string">'human'</span>, <span class="string">'time'</span>, <span class="string">'system'</span>, <span class="string">'computer'</span>]...)</span><br></pre></td></tr></table></figure><br>这里我们使用<a href="https://radimrehurek.com/gensim/corpora/dictionary.html#gensim.corpora.dictionary.Dictionary" target="_blank" rel="noopener">gensim.corpora.dictionary.Dictionary</a> 类对文档集中出现的每一个词赋予一个唯一的整数ID。这将扫描文本，收集字数和相关统计数据。最后，我们看到在处理的文档库中有12个不同的词，这意味着每个文档将由12个数字（即通过12维向量）表示。要查看单词及其ID之间的映射：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">20</span>]: print(<span class="built_in">dictionary</span>.token2id)</span><br><span class="line">&#123;<span class="string">'minors'</span>: <span class="number">11</span>, <span class="string">'human'</span>: <span class="number">0</span>, <span class="string">'time'</span>: <span class="number">7</span>, <span class="string">'system'</span>: <span class="number">6</span>, <span class="string">'computer'</span>: <span class="number">1</span>, <span class="string">'interface'</span>: <span class="number">2</span>, <span class="string">'survey'</span>: <span class="number">5</span>, <span class="string">'response'</span>: <span class="number">4</span>, <span class="string">'graph'</span>: <span class="number">10</span>, <span class="string">'user'</span>: <span class="number">3</span>, <span class="string">'trees'</span>: <span class="number">9</span>, <span class="string">'eps'</span>: <span class="number">8</span>&#125;</span><br></pre></td></tr></table></figure><br>要将一个文档实际转换为向量：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">21</span>]: new_doc = <span class="string">"Human computer interaction"</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">22</span>]: new_vec = <span class="built_in">dictionary</span>.doc2bow(new_doc.lower().split())</span><br><span class="line"></span><br><span class="line">In [<span class="number">23</span>]: print(new_vec)</span><br><span class="line">[(<span class="number">0</span>, <span class="number">1</span>), (<span class="number">1</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure><br>函数doc2bow()知识简单地统计每个唯一的词出现的次数，把单词转换为对应的整数ID，返回稀疏向量作为结果。稀疏向量[(0,1),(1,1)]因此可读为：在文档“Human computer interaction”中，computer（id 0）和human（id 1）各出现一次；其他十个字典中的词出现（隐式）零次。<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">25</span>]: corpus = [<span class="built_in">dictionary</span>.doc2bow(text) <span class="keyword">for</span> text <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line">In [<span class="number">26</span>]: corpora.MmCorpus.serialize(<span class="string">'/tmp/deerwester.mm'</span>,corpus) # 存储以备将来 使用</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">19</span>:<span class="number">29</span>:<span class="number">06</span>,<span class="number">023</span> : INFO : storing corpus <span class="keyword">in</span> Matrix Market format to /tmp/deerwester.mm</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">19</span>:<span class="number">29</span>:<span class="number">06</span>,<span class="number">023</span> : INFO : saving sparse matrix to /tmp/deerwester.mm</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">19</span>:<span class="number">29</span>:<span class="number">06</span>,<span class="number">023</span> : INFO : PROGRESS: saving document #<span class="number">0</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">19</span>:<span class="number">29</span>:<span class="number">06</span>,<span class="number">024</span> : INFO : saved <span class="number">9</span>x12 matrix, density=<span class="number">25.926</span>% (<span class="number">28</span>/<span class="number">108</span>)</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">19</span>:<span class="number">29</span>:<span class="number">06</span>,<span class="number">024</span> : INFO : saving MmCorpus index to /tmp/deerwester.mm.index</span><br><span class="line"></span><br><span class="line">In [<span class="number">27</span>]: print(corpus)</span><br><span class="line">[[(<span class="number">0</span>, <span class="number">1</span>), (<span class="number">1</span>, <span class="number">1</span>), (<span class="number">2</span>, <span class="number">1</span>)], [(<span class="number">1</span>, <span class="number">1</span>), (<span class="number">3</span>, <span class="number">1</span>), (<span class="number">4</span>, <span class="number">1</span>), (<span class="number">5</span>, <span class="number">1</span>), (<span class="number">6</span>, <span class="number">1</span>), (<span class="number">7</span>, <span class="number">1</span>)], [(<span class="number">2</span>, <span class="number">1</span>), (<span class="number">3</span>, <span class="number">1</span>), (<span class="number">6</span>, <span class="number">1</span>), (<span class="number">8</span>, <span class="number">1</span>)], [(<span class="number">0</span>, <span class="number">1</span>), (<span class="number">6</span>, <span class="number">2</span>), (<span class="number">8</span>, <span class="number">1</span>)], [(<span class="number">3</span>, <span class="number">1</span>), (<span class="number">4</span>, <span class="number">1</span>), (<span class="number">7</span>, <span class="number">1</span>)], [(<span class="number">9</span>, <span class="number">1</span>)], [(<span class="number">9</span>, <span class="number">1</span>), (<span class="number">10</span>, <span class="number">1</span>)], [(<span class="number">9</span>, <span class="number">1</span>), (<span class="number">10</span>, <span class="number">1</span>), (<span class="number">11</span>, <span class="number">1</span>)], [(<span class="number">5</span>, <span class="number">1</span>), (<span class="number">10</span>, <span class="number">1</span>), (<span class="number">11</span>, <span class="number">1</span>)]]</span><br></pre></td></tr></table></figure><br>现在这个问题很清楚了：id=10的向量特征值表示“单词graph在这个文档中出现了几次？”答案是：在前六个文档中出现了0次，在剩余三个文档中各出现1次。</p>
+<h2 id="文档集流—一次一个文档"><a href="#文档集流—一次一个文档" class="headerlink" title="文档集流—一次一个文档"></a>文档集流—一次一个文档</h2><p>注意，上面的文档库完全在内存中，作为一个普通的Python列表。在这个简单的例子中没关系，但为了使事情清楚，让我们假设文档库中有数百万个文档。不可能将它们全部存储在RAM中。相反，让我们假设文档存储在磁盘上的文件中，每行一个文档。 Gensim只要求文档库一次只返回一个文档向量：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">28</span>]: <span class="class"><span class="keyword">class</span> <span class="title">MyCorpus</span>(<span class="title">object</span>):</span></span><br><span class="line">   ....:     <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">   ....:         <span class="keyword">for</span> line <span class="keyword">in</span> open(<span class="string">'mycorpus.txt'</span>)<span class="symbol">:</span></span><br><span class="line">   ....:             <span class="comment"># 假设每行一个文档，每个单词之间有空格</span></span><br><span class="line">   ....:             <span class="keyword">yield</span> dictionary.doc2bow(line.lower().split())</span><br><span class="line">   ....<span class="symbol">:</span></span><br></pre></td></tr></table></figure><br>在这儿下载示例文件<a href="https://radimrehurek.com/gensim/mycorpus.txt" target="_blank" rel="noopener">mycorpus.txt</a> 。文件中每个文档占一行的假设并不重要；你可以修改<strong>iter</strong>功能以适合自己输入的需要，不管它是什么。遍历词典，解析XML格式文件，访问网络……只要能在每个文档中解析出清晰的词语列表，然后把这些词语经词典转换为对应ID，在<strong>iter</strong>中产出稀疏向量。<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">In</span> [<span class="number">29</span>]: corpus_memory_friendly = MyCorpus() # 没有把文档集加载到内存里来！</span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [<span class="number">30</span>]: <span class="built_in">print</span>(corpus_memory_friendly)</span><br><span class="line">&lt;__main__.MyCorpus object <span class="built_in">at</span> <span class="number">0</span>xb69e07ac&gt;</span><br></pre></td></tr></table></figure><br>文档集现在是一个对象。我们没有定义任何打印它的方法，所以print仅打印出该对象在内存中的地址。用处不大。要看组成向量，让我们遍历文档库并打印每一个向量（一次一个）：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">31</span>]: <span class="keyword">for</span> vector <span class="keyword">in</span> corpus_memory_friendly:</span><br><span class="line">   ....:     print(vector)</span><br><span class="line">   ....:     </span><br><span class="line">[(<span class="number">1</span>, <span class="number">1</span>), (<span class="number">5</span>, <span class="number">1</span>), (<span class="number">11</span>, <span class="number">1</span>)]</span><br><span class="line">[(<span class="number">2</span>, <span class="number">1</span>), (<span class="number">3</span>, <span class="number">1</span>), (<span class="number">4</span>, <span class="number">1</span>), (<span class="number">5</span>, <span class="number">1</span>), (<span class="number">7</span>, <span class="number">1</span>), (<span class="number">9</span>, <span class="number">1</span>)]</span><br><span class="line">[(<span class="number">3</span>, <span class="number">1</span>), (<span class="number">8</span>, <span class="number">1</span>), (<span class="number">9</span>, <span class="number">1</span>), (<span class="number">11</span>, <span class="number">1</span>)]</span><br><span class="line">[(<span class="number">1</span>, <span class="number">1</span>), (<span class="number">3</span>, <span class="number">2</span>), (<span class="number">8</span>, <span class="number">1</span>)]</span><br><span class="line">[(<span class="number">2</span>, <span class="number">1</span>), (<span class="number">7</span>, <span class="number">1</span>), (<span class="number">9</span>, <span class="number">1</span>)]</span><br><span class="line">[(<span class="number">10</span>, <span class="number">1</span>)]</span><br><span class="line">[(<span class="number">6</span>, <span class="number">1</span>), (<span class="number">10</span>, <span class="number">1</span>)]</span><br><span class="line">[(<span class="number">0</span>, <span class="number">1</span>), (<span class="number">6</span>, <span class="number">1</span>), (<span class="number">10</span>, <span class="number">1</span>)]</span><br><span class="line">[(<span class="number">0</span>, <span class="number">1</span>), (<span class="number">4</span>, <span class="number">1</span>), (<span class="number">6</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure><br>虽然输出与python的列表输出并没有什么不同，但此处的文档库是内存友好的，因为多数情况下内存中只有一个向量。现在你的文档库可以想要多大就要多大。</p>
+<p>类似地，可以不需要把所有文本载入到内存来构建词典：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">31</span>]: <span class="keyword">from</span> six <span class="keyword">import</span> iteritems</span><br><span class="line"></span><br><span class="line">In [<span class="number">32</span>]: <span class="built_in">dictionary</span> = corpora.Dictionary(line.lower().split() <span class="keyword">for</span> line <span class="keyword">in</span> open(<span class="string">'mycorpus.txt'</span>))</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">19</span>:<span class="number">51</span>:<span class="number">27</span>,<span class="number">132</span> : INFO : adding document #<span class="number">0</span> to Dictionary(<span class="number">0</span> unique tokens: [])</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">19</span>:<span class="number">51</span>:<span class="number">27</span>,<span class="number">133</span> : INFO : built Dictionary(<span class="number">42</span> unique tokens: [<span class="string">'engineering'</span>, <span class="string">'and'</span>, <span class="string">'perceived'</span>, <span class="string">'time'</span>, <span class="string">'intersection'</span>]...) <span class="keyword">from</span> <span class="number">9</span> documents (total <span class="number">69</span> corpus positions)</span><br><span class="line"></span><br><span class="line">In [<span class="number">33</span>]: stop_ids = [<span class="built_in">dictionary</span>.token2id[stopword] <span class="keyword">for</span> stopword <span class="keyword">in</span> stoplist <span class="keyword">if</span> stopword <span class="keyword">in</span> <span class="built_in">dictionary</span>.token2id]</span><br><span class="line"></span><br><span class="line">In [<span class="number">34</span>]: ones_ids = [tokenid <span class="keyword">for</span> tokenid, docfreq <span class="keyword">in</span> iteritems(<span class="built_in">dictionary</span>.dfs) <span class="keyword">if</span> docfreq == <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">37</span>]: <span class="built_in">dictionary</span>.filter_tokens(stop_ids + ones_ids)</span><br><span class="line"></span><br><span class="line">In [<span class="number">38</span>]: <span class="built_in">dictionary</span>.compactify() # 剔除移去停用词和出现一次的词之后留下的空隙</span><br><span class="line"></span><br><span class="line">In [<span class="number">39</span>]: print(<span class="built_in">dictionary</span>)</span><br><span class="line">Dictionary(<span class="number">12</span> unique tokens: [<span class="string">'minors'</span>, <span class="string">'human'</span>, <span class="string">'time'</span>, <span class="string">'computer'</span>, <span class="string">'system'</span>]...)</span><br></pre></td></tr></table></figure><br>这就是所有的事情！至少就词袋表示而言。当然，我们用这样的文档库存在另一个问题；它不是完全清楚如何计数可能是有用的不同的单词的频率。事实证明，这个问题的确存在，在我们可以使用它来计算任何有意义的文档或比较文档的相似之处前，我们将需要对这个简单的表达先应用一个变换。转换在<a href="https://radimrehurek.com/gensim/tut2.html" target="_blank" rel="noopener">另一个教程里介绍</a> ，在此之前，让我们简要地将注意力转移到文档库持久性。</p>
+<h2 id="文档库格式"><a href="#文档库格式" class="headerlink" title="文档库格式"></a>文档库格式</h2><p>将向量空间文档库（〜向量序列）序列化到磁盘存在若干文件格式。 Gensim通过前面提到的流式语料库接口实现它们：以被动方式从文件（或者存储到）盘中一次读取一个文档，而不是将整个文档库一次读入内存。 </p>
+<p>其中一个更值得注意的文件格式是<a href="http://math.nist.gov/MatrixMarket/formats.html" target="_blank" rel="noopener">市场矩阵格式</a> 。要以市场矩阵格式保存文档库：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">41</span>]: corpus = [[(<span class="number">1</span>,<span class="number">0.5</span>)],[]]</span><br><span class="line"></span><br><span class="line">In [<span class="number">42</span>]: corpora.MmCorpus.serialize(<span class="string">'/tmp/corpus.mm'</span>,corpus)</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">20</span>:<span class="number">15</span>:<span class="number">43</span>,<span class="number">361</span> : INFO : storing corpus <span class="keyword">in</span> Matrix Market format to /tmp/corpus.mm</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">20</span>:<span class="number">15</span>:<span class="number">43</span>,<span class="number">361</span> : INFO : saving sparse matrix to /tmp/corpus.mm</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">20</span>:<span class="number">15</span>:<span class="number">43</span>,<span class="number">361</span> : INFO : PROGRESS: saving document #<span class="number">0</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">20</span>:<span class="number">15</span>:<span class="number">43</span>,<span class="number">361</span> : INFO : saved <span class="number">2</span>x2 matrix, density=<span class="number">25.000</span>% (<span class="number">1</span>/<span class="number">4</span>)</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">20</span>:<span class="number">15</span>:<span class="number">43</span>,<span class="number">362</span> : INFO : saving MmCorpus index to /tmp/corpus.mm.index</span><br></pre></td></tr></table></figure><br>其他格式还包括：<a href="http://svmlight.joachims.org/" target="_blank" rel="noopener">Joachim’s SVMlight format</a> ，<a href="http://www.cs.princeton.edu/~blei/lda-c/" target="_blank" rel="noopener">Blei’s LDA-C format</a> ，<a href="http://gibbslda.sourceforge.net/" target="_blank" rel="noopener">GibbsLDA++ format</a> 。<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">In</span> [<span class="number">43</span>]: corpora.SvmLightCorpus.serialize('/tmp/corpus.svmlight',corpus)</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">19</span>:<span class="number">02</span>,<span class="number">491</span> : <span class="type">INFO</span> : <span class="type">converting</span> corpus to SVMlight format: /tmp/corpus.svmlight</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">19</span>:<span class="number">02</span>,<span class="number">492</span> : <span class="type">INFO</span> : <span class="type">saving</span> SvmLightCorpus index to /tmp/corpus.svmlight.index</span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [<span class="number">44</span>]: corpora.BleiCorpus.serialize('/tmp/corpus.lda-c',corpus)</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">19</span>:<span class="number">23</span>,<span class="number">526</span> : <span class="type">INFO</span> : <span class="type">no</span> word id mapping provided; initializing from corpus</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">19</span>:<span class="number">23</span>,<span class="number">526</span> : <span class="type">INFO</span> : <span class="type">storing</span> corpus <span class="keyword">in</span> Blei<span class="symbol">'s</span> LDA-C format into /tmp/corpus.lda-c</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">19</span>:<span class="number">23</span>,<span class="number">528</span> : <span class="type">INFO</span> : <span class="type">saving</span> vocabulary <span class="keyword">of</span> <span class="number">2</span> words to /tmp/corpus.lda-c.vocab</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">19</span>:<span class="number">23</span>,<span class="number">528</span> : <span class="type">INFO</span> : <span class="type">saving</span> BleiCorpus index to /tmp/corpus.lda-c.index</span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [<span class="number">45</span>]: corpora.LowCorpus.serialize('/tmp/corpus.low',corpus)</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">19</span>:<span class="number">42</span>,<span class="number">338</span> : <span class="type">INFO</span> : <span class="type">no</span> word id mapping provided; initializing from corpus</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">19</span>:<span class="number">42</span>,<span class="number">339</span> : <span class="type">INFO</span> : <span class="type">storing</span> corpus <span class="keyword">in</span> List-<span class="keyword">Of</span>-Words format into /tmp/corpus.low</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">19</span>:<span class="number">42</span>,<span class="number">339</span> : <span class="type">WARNING</span> : <span class="type">List</span>-<span class="keyword">of</span>-words format can only save vectors <span class="keyword">with</span> integer elements; <span class="number">1</span> float entries were truncated to integer value</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">19</span>:<span class="number">42</span>,<span class="number">339</span> : <span class="type">INFO</span> : <span class="type">saving</span> LowCorpus index to /tmp/corpus.low.index</span><br></pre></td></tr></table></figure><br>相反，从市场矩阵格式文件中读取一个迭代向量：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">46</span>]: corpus = corpora.MmCorpus(<span class="string">'/tmp/corpus.mm'</span>)</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">20</span>:<span class="number">22</span>:<span class="number">02</span>,<span class="number">531</span> : INFO : loaded corpus index <span class="keyword">from</span> /tmp/corpus.mm.index</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">20</span>:<span class="number">22</span>:<span class="number">02</span>,<span class="number">532</span> : INFO : initializing corpus reader <span class="keyword">from</span> /tmp/corpus.mm</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-28</span> <span class="number">20</span>:<span class="number">22</span>:<span class="number">02</span>,<span class="number">532</span> : INFO : accepted corpus with <span class="number">2</span> documents, <span class="number">2</span> features, <span class="number">1</span> non-zero entries</span><br></pre></td></tr></table></figure><br>文档集对象是流文件，所以一般你不能将它们直接打印出来：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In <span class="literal">[<span class="number">47</span>]</span>: print(corpus)</span><br><span class="line"><span class="constructor">MmCorpus(2 <span class="params">documents</span>, 2 <span class="params">features</span>, 1 <span class="params">non</span>-<span class="params">zero</span> <span class="params">entries</span>)</span></span><br></pre></td></tr></table></figure><br>可以用以下方法：<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">48</span>]: <span class="built_in">print</span>(list(corpus))</span><br><span class="line"><span class="string">[[(1, 0.5)], []]</span></span><br></pre></td></tr></table></figure><br>第二种方法明显对内存使用更友好，当然在开发和测试的时候，使用list(corpus)更简单直接。</p>
+<p>要把矩阵市场文档流存为Blei’s LDA-C格式：<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">In</span> [<span class="number">49</span>]: corpora.BleiCorpus.serialize('/tmp/corpus.lda-c',corpus)</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">27</span>:<span class="number">53</span>,<span class="number">736</span> : <span class="type">INFO</span> : <span class="type">no</span> word id mapping provided; initializing from corpus</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">27</span>:<span class="number">53</span>,<span class="number">737</span> : <span class="type">INFO</span> : <span class="type">storing</span> corpus <span class="keyword">in</span> Blei<span class="symbol">'s</span> LDA-C format into /tmp/corpus.lda-c</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">27</span>:<span class="number">53</span>,<span class="number">738</span> : <span class="type">INFO</span> : <span class="type">saving</span> vocabulary <span class="keyword">of</span> <span class="number">2</span> words to /tmp/corpus.lda-c.vocab</span><br><span class="line"><span class="number">2016</span>-<span class="number">11</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">27</span>:<span class="number">53</span>,<span class="number">738</span> : <span class="type">INFO</span> : <span class="type">saving</span> BleiCorpus index to /tmp/corpus.lda-c.index</span><br></pre></td></tr></table></figure><br>这样，gensim也可以用作内存高效的I / O格式转换工具：只需使用一种格式加载文档流，并立即将其另存为另一种格式。添加新格式是很容易，可参阅<a href="https://github.com/piskvorky/gensim/blob/develop/gensim/corpora/svmlightcorpus.py" target="_blank" rel="noopener">此处</a> SVMlight文档库的代码。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/gensim/" rel="tag"># gensim</a>
+              <a href="/tags/%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90/" rel="tag"># 语义分析</a>
+              <a href="/tags/%E7%BB%9F%E8%AE%A1/" rel="tag"># 统计</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/11/28/161128-gensim-tutorials/" rel="prev" title="gensim — 入门">
+      <i class="fa fa-chevron-left"></i> gensim — 入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/11/29/161129-gensim-topics-and-transformation/" rel="next" title="gensim — 主题与转换">
+      gensim — 主题与转换 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从字符串到向量"><span class="nav-number">1.</span> <span class="nav-text">从字符串到向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文档集流—一次一个文档"><span class="nav-number">2.</span> <span class="nav-text">文档集流—一次一个文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文档库格式"><span class="nav-number">3.</span> <span class="nav-text">文档库格式</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

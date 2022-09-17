@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="结合pandas学习《极简统计学》。第一章《用频数分布表和直方图刻画数据的特征》练习。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="统计学与pandas学习（一）">
+<meta property="og:url" content="http://fanzhh.pw/2017/07/08/170708-statistics/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="结合pandas学习《极简统计学》。第一章《用频数分布表和直方图刻画数据的特征》练习。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://fanzhh.pw/images/170708_bar.png">
+<meta property="article:published_time" content="2017-07-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-08T00:47:24.833Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="统计">
+<meta property="article:tag" content="pandas">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://fanzhh.pw/images/170708_bar.png">
+
+<link rel="canonical" href="http://fanzhh.pw/2017/07/08/170708-statistics/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>统计学与pandas学习（一） | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2017/07/08/170708-statistics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          统计学与pandas学习（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-07-08 00:00:00" itemprop="dateCreated datePublished" datetime="2017-07-08T00:00:00+08:00">2017-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-08 08:47:24" itemprop="dateModified" datetime="2022-01-08T08:47:24+08:00">2022-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>结合pandas学习《极简统计学》。第一章《用频数分布表和直方图刻画数据的特征》练习。<br><a id="more"></a></p>
+<h2 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h2><p>根据原始数据什么也搞不明白，所以使用统计。</p>
+<p>“统计”的手法，就是从原始数据，也就是“原始的现实”中，抽取出分布的特征和特点的方法。</p>
+<p>统计学使用的方法叫“压缩”，是指“将作为数据列举的大量数字，以一定的基准进行整理，只抽取有意义的信息”。大致有以下两种手法：</p>
+<ol>
+<li>以图化捕捉其特征。</li>
+<li>以一个数字来代表特征。此数字叫做“统计量”。</li>
+</ol>
+<p>做频数分布图，首先需要做频数分布表，步骤如下：</p>
+<ol>
+<li>找到数据中的最大值和最小值;</li>
+<li>分组：按最大值、最小值划分范围；</li>
+<li>决定“组值”：一般选择中间的数值；</li>
+<li>数出各组中的数据数——“频数”；</li>
+<li>计算“相对频数”，即各组的频数占全体的比例，相对频数相加等于1；</li>
+<li>计算“累计频数”，即频数合计，累计频数最终与全部数据数一致。</li>
+</ol>
+<p>做直方图的步骤：</p>
+<ol>
+<li>在横轴上以等间距放置组值；</li>
+<li>在各组值上做柱形，柱的高度参考其组值所属分组的频数。</li>
+</ol>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>女大学生体重数据如下，请做频数分布表和直方图：</p>
+<blockquote>
+<p>48, 54, 47, 50, 53, 43, 45, 43, 44, 47,<br>58, 46, 46, 63, 49, 50, 48, 43, 46, 45,<br>50, 53, 51, 58, 52, 53, 47, 49, 45, 42,<br>51, 49, 58, 54, 45, 53, 50, 69, 44, 50,<br>58, 64, 40, 57, 51, 69, 58, 47, 62, 47,<br>40, 60, 48, 47, 53, 47, 52, 61, 55, 55,<br>48, 48, 46, 52, 45, 38, 62, 47, 55, 50,<br>46, 47, 55, 48, 50, 50, 54, 55, 48, 50</p>
+</blockquote>
+<h3 id="频数分布"><a href="#频数分布" class="headerlink" title="频数分布"></a>频数分布</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line">weights = np.array([</span><br><span class="line">  <span class="number">48</span>, <span class="number">54</span>, <span class="number">47</span>, <span class="number">50</span>, <span class="number">53</span>, <span class="number">43</span>, <span class="number">45</span>, <span class="number">43</span>, <span class="number">44</span>, <span class="number">47</span>, </span><br><span class="line">  <span class="number">58</span>, <span class="number">46</span>, <span class="number">46</span>, <span class="number">63</span>, <span class="number">49</span>, <span class="number">50</span>, <span class="number">48</span>, <span class="number">43</span>, <span class="number">46</span>, <span class="number">45</span>, </span><br><span class="line">  <span class="number">50</span>, <span class="number">53</span>, <span class="number">51</span>, <span class="number">58</span>, <span class="number">52</span>, <span class="number">53</span>, <span class="number">47</span>, <span class="number">49</span>, <span class="number">45</span>, <span class="number">42</span>, </span><br><span class="line">  <span class="number">51</span>, <span class="number">49</span>, <span class="number">58</span>, <span class="number">54</span>, <span class="number">45</span>, <span class="number">53</span>, <span class="number">50</span>, <span class="number">69</span>, <span class="number">44</span>, <span class="number">50</span>, </span><br><span class="line">  <span class="number">58</span>, <span class="number">64</span>, <span class="number">40</span>, <span class="number">57</span>, <span class="number">51</span>, <span class="number">69</span>, <span class="number">58</span>, <span class="number">47</span>, <span class="number">62</span>, <span class="number">47</span>, </span><br><span class="line">  <span class="number">40</span>, <span class="number">60</span>, <span class="number">48</span>, <span class="number">47</span>, <span class="number">53</span>, <span class="number">47</span>, <span class="number">52</span>, <span class="number">61</span>, <span class="number">55</span>, <span class="number">55</span>, </span><br><span class="line">  <span class="number">48</span>, <span class="number">48</span>, <span class="number">46</span>, <span class="number">52</span>, <span class="number">45</span>, <span class="number">38</span>, <span class="number">62</span>, <span class="number">47</span>, <span class="number">55</span>, <span class="number">50</span>, </span><br><span class="line">  <span class="number">46</span>, <span class="number">47</span>, <span class="number">55</span>, <span class="number">48</span>, <span class="number">50</span>, <span class="number">50</span>, <span class="number">54</span>, <span class="number">55</span>, <span class="number">48</span>, <span class="number">50</span>])</span><br><span class="line"></span><br><span class="line">sections = [<span class="number">35</span>,<span class="number">40</span>,<span class="number">45</span>,<span class="number">50</span>,<span class="number">55</span>,<span class="number">60</span>,<span class="number">65</span>,<span class="number">70</span>]</span><br><span class="line">group_names = [<span class="string">'36~40'</span>,<span class="string">'41~45'</span>,<span class="string">'46~50'</span>,<span class="string">'51~55'</span>,<span class="string">'56~60'</span>,<span class="string">'61~65'</span>,<span class="string">'66~70'</span>]</span><br><span class="line">cuts = pd.cut(weights,sections,labels=group_names)</span><br></pre></td></tr></table></figure>
+<p>计算频数：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">counts = pd.value_counts(cuts)</span><br><span class="line">dict(counts)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>{‘36~40’: 3,<br> ‘41~45’: 11,<br> ‘46~50’: 33,<br> ‘51~55’: 19,<br> ‘56~60’: 7,<br> ‘61~65’: 5,<br> ‘66~70’: 2}</p>
+</blockquote>
+<h3 id="直方图"><a href="#直方图" class="headerlink" title="直方图"></a>直方图</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cuts.value_counts().plot(kind=<span class="string">'bar'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/170708_bar.png" alt=""></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BB%9F%E8%AE%A1/" rel="tag"># 统计</a>
+              <a href="/tags/pandas/" rel="tag"># pandas</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/07/07/170707_dont_care_about_myself/" rel="prev" title="你以为你过了1天，其实你只是过了0天">
+      <i class="fa fa-chevron-left"></i> 你以为你过了1天，其实你只是过了0天
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/07/09/170709_statistics/" rel="next" title="统计学与pandas学习（二）">
+      统计学与pandas学习（二） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#理论"><span class="nav-number">1.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习"><span class="nav-number">2.</span> <span class="nav-text">练习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目"><span class="nav-number">2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#频数分布"><span class="nav-number">2.2.</span> <span class="nav-text">频数分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直方图"><span class="nav-number">2.3.</span> <span class="nav-text">直方图</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

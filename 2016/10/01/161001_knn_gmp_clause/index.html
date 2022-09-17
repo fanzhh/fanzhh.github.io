@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="机器学习的一个小练习，输入对药品生产企业的检查缺陷，使用K-近邻分类算法预测其对应的药品GMP条款。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用K-近邻预测药品生产企业检查缺陷对应GMP条款">
+<meta property="og:url" content="http://fanzhh.pw/2016/10/01/161001_knn_gmp_clause/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="机器学习的一个小练习，输入对药品生产企业的检查缺陷，使用K-近邻分类算法预测其对应的药品GMP条款。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://fanzhh.pw/images/161001_knn_gmpclause.png">
+<meta property="article:published_time" content="2016-09-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-08T00:47:24.829Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="machine learning">
+<meta property="article:tag" content="GMP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://fanzhh.pw/images/161001_knn_gmpclause.png">
+
+<link rel="canonical" href="http://fanzhh.pw/2016/10/01/161001_knn_gmp_clause/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>使用K-近邻预测药品生产企业检查缺陷对应GMP条款 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2016/10/01/161001_knn_gmp_clause/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用K-近邻预测药品生产企业检查缺陷对应GMP条款
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-10-01 00:00:00" itemprop="dateCreated datePublished" datetime="2016-10-01T00:00:00+08:00">2016-10-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-08 08:47:24" itemprop="dateModified" datetime="2022-01-08T08:47:24+08:00">2022-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>机器学习的一个小练习，输入对药品生产企业的检查缺陷，使用K-近邻分类算法预测其对应的药品GMP条款。<br><a id="more"></a></p>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在依据《药品生产质量管理规范》（Good Manufacturing Practice, 简称GMP）标准对药品生产企业的监督检查中，检查报告中一般会列举发现不符合GMP的缺陷。根据缺陷查找对应的条款是一项繁琐的工作，所以有了这个应用机器学习K-近邻算法来分类的小程序。样本来自工作中积累的2825条缺陷，这些缺陷涉及条款331个。因为类别多，样本数量少，按照2:1的训练、测试样本预测，准确率仅为18%。全部数据作为训练样本，输入缺陷测试，准确率大约为30%。相信随着训练样本数量的增加，准确率将会继续提高。</p>
+<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 knn<span class="selector-class">.py</span> <span class="string">'缺陷描述；'</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/161001_knn_gmpclause.png" alt="&#39;用法截图&#39;" title="用法截图"></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*-coding:utf-8-*-</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"></span><br><span class="line"><span class="comment"># 为提高速度，如果目录下存在numpy数据文件，则优先读取，否则读取csv数据。</span></span><br><span class="line">VOCABLIST_FILE = <span class="string">'vocablist.npy'</span>		<span class="comment"># 词汇表</span></span><br><span class="line">TRAINMAT_FILE = <span class="string">'trainmat.npy'</span>			<span class="comment"># 训练向量矩阵</span></span><br><span class="line">CLASSVEC_FILE = <span class="string">'classvec.npy'</span>			<span class="comment"># 分类矩阵</span></span><br><span class="line">SAMPLE_FILE = <span class="string">'./defect_sample_1610010806.csv'</span>	<span class="comment"># csv源数据</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">seg_sentence</span><span class="params">(sentence)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    分词。使用结巴分词，https://github.com/fxsjy/jieba 。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 分词时，删除无效词及标点符合、数字。</span></span><br><span class="line">    chinese_punctuation = (<span class="string">'，'</span>,<span class="string">'“'</span>,<span class="string">'”'</span>,<span class="string">'：'</span>,<span class="string">'；'</span>,<span class="string">'。'</span>,<span class="string">'（'</span>,<span class="string">'）'</span>,<span class="string">'《'</span>,<span class="string">'》'</span>,<span class="string">','</span>,<span class="string">'.'</span>,<span class="string">';'</span>,<span class="string">' '</span>,<span class="string">'、'</span>,<span class="string">'等'</span>,<span class="string">'的'</span>,<span class="string">'在'</span>,<span class="string">'与'</span>,<span class="string">'之'</span>,<span class="string">'上'</span>,<span class="string">'将'</span>,<span class="string">'中'</span>,<span class="string">'一'</span>,<span class="string">'二'</span>,<span class="string">'三'</span>,<span class="string">'四'</span>,<span class="string">'五'</span>,<span class="string">'六'</span>,<span class="string">'七'</span>,<span class="string">'八'</span><span class="string">'九'</span>,<span class="string">'十'</span>,<span class="string">'为'</span>,<span class="string">'了'</span>,<span class="string">'——'</span>,<span class="string">'—'</span>,<span class="string">'-'</span>)</span><br><span class="line">    s = re.sub(<span class="string">"[A-Za-z0-9\[\`\~\!\@\#\$\^\&amp;\*\(\)\=\|\&#123;\&#125;\'\:\;\'\,\[\]\.\&lt;\&gt;\/\?\~\！\@\#\\\&amp;\*\%]"</span>, <span class="string">""</span>, sentence.strip())</span><br><span class="line">    seg_list = jieba.cut(s,cut_all=<span class="literal">False</span>)</span><br><span class="line">    seg_list = [x <span class="keyword">for</span> x <span class="keyword">in</span> seg_list <span class="keyword">if</span> <span class="keyword">not</span> x.replace(<span class="string">'.'</span>,<span class="string">''</span>).replace(<span class="string">'-'</span>,<span class="string">''</span>).isdigit()]</span><br><span class="line">    seg_list = [x <span class="keyword">for</span> x <span class="keyword">in</span> seg_list <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> chinese_punctuation]</span><br><span class="line">    <span class="keyword">return</span> seg_list</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadDataSet</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    导入数据，创建样本。返回缺陷列表及对应分类。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    defect_list = []</span><br><span class="line">    classVec = []</span><br><span class="line">    <span class="keyword">with</span> open(SAMPLE_FILE) <span class="keyword">as</span> csvfile:</span><br><span class="line">        reader = csv.reader(csvfile)</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> reader:</span><br><span class="line">            seg_list = seg_sentence(row[<span class="number">1</span>])</span><br><span class="line">            defect_list.append(seg_list)</span><br><span class="line">            classVec.append(int(row[<span class="number">2</span>]))</span><br><span class="line">    <span class="keyword">return</span> defect_list,classVec</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setOfWords2Vec</span><span class="params">(vocabList,inputSet)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    输入参数为词汇表及某个文档，输出文档向量，向量的每一个</span></span><br><span class="line"><span class="string">    元素为1或0，分别表示词汇表中的词在输入文档中是否出现。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 创建一个其中元素都为0的向量</span></span><br><span class="line">    returnVec = [<span class="number">0</span>]*len(vocabList) </span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> inputSet:</span><br><span class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> vocabList:</span><br><span class="line">            returnVec[vocabList.index(word)] = <span class="number">1</span></span><br><span class="line">        <span class="comment"># else:</span></span><br><span class="line">        <span class="comment">#    print("the word: %s is not in my Vocabulary!" % word)</span></span><br><span class="line">    <span class="keyword">return</span> returnVec</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createVocabList</span><span class="params">(dataSet)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    创建一个包含在所有缺陷中出现的不重复的词列表。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    vocabSet = set([])</span><br><span class="line">    <span class="keyword">for</span> document <span class="keyword">in</span> dataSet:</span><br><span class="line">        vocabSet = vocabSet | set(document)</span><br><span class="line">    <span class="keyword">return</span> list(vocabSet)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classify0</span><span class="params">(inX,dataSet,labels,k)</span>:</span></span><br><span class="line">    dataSetSize = dataSet.shape[<span class="number">0</span>]</span><br><span class="line">    diffMat = np.tile(inX,(dataSetSize,<span class="number">1</span>)) - dataSet</span><br><span class="line">    sqDiffMat = diffMat**<span class="number">2</span></span><br><span class="line">    sqDistances = sqDiffMat.sum(axis=<span class="number">1</span>)</span><br><span class="line">    distances = sqDistances**<span class="number">0.5</span></span><br><span class="line">    sortedDistIndicies = distances.argsort()</span><br><span class="line">    classCount = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k):</span><br><span class="line">        voteIlabel = labels[sortedDistIndicies[i]]</span><br><span class="line">        classCount[voteIlabel] = classCount.get(voteIlabel,<span class="number">0</span>) + <span class="number">1</span></span><br><span class="line">    print(classCount)</span><br><span class="line">    sortedClassCount = sorted(classCount.items(),key=operator.itemgetter(<span class="number">1</span>),reverse=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> sortedClassCount[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">testingKNN</span><span class="params">(defect_in)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> (os.path.isfile(VOCABLIST_FILE)) <span class="keyword">and</span> (os.path.isfile(CLASSVEC_FILE)):</span><br><span class="line">        myVocabList = np.load(VOCABLIST_FILE)</span><br><span class="line">        myVocabList = myVocabList.tolist()</span><br><span class="line">        class_vec = np.load(CLASSVEC_FILE)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        defect_list, class_vec = loadDataSet()</span><br><span class="line">        myVocabList = createVocabList(defect_list)</span><br><span class="line">        np.save(VOCABLIST_FILE,myVocabList)</span><br><span class="line">        np.save(CLASSVEC_FILE,class_vec)</span><br><span class="line">    <span class="keyword">if</span> os.path.isfile(TRAINMAT_FILE):</span><br><span class="line">        trainMat = np.load(TRAINMAT_FILE)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        trainMat = []</span><br><span class="line">        <span class="keyword">for</span> defect <span class="keyword">in</span> defect_list:</span><br><span class="line">            trainMat.append(setOfWords2Vec(myVocabList,defect))</span><br><span class="line">        np.save(TRAINMAT_FILE,trainMat)</span><br><span class="line">    thisDefect = np.array(setOfWords2Vec(myVocabList,seg_sentence(defect_in)))</span><br><span class="line">    clause = classify0(thisDefect,np.array(trainMat),np.array(class_vec),<span class="number">5</span>)</span><br><span class="line">    <span class="keyword">return</span> clause</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="keyword">if</span> len(sys.argv) &lt;= <span class="number">1</span>:</span><br><span class="line">        print(<span class="string">"您没有输入缺陷。"</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line">    sentence = sys.argv[<span class="number">1</span>]</span><br><span class="line">    clause = testingKNN(sentence)</span><br><span class="line">    print(<span class="string">'最有可能符合该缺陷的条款是：'</span>,clause)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+              <a href="/tags/GMP/" rel="tag"># GMP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/09/18/160917-beijing/" rel="prev" title="我的北马">
+      <i class="fa fa-chevron-left"></i> 我的北马
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/10/09/161009-ml-gmpcluase/" rel="next" title="使用sklearn中贝叶斯分类算法预测药品生产企业缺陷GMP条款">
+      使用sklearn中贝叶斯分类算法预测药品生产企业缺陷GMP条款 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Usage"><span class="nav-number">2.</span> <span class="nav-text">Usage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

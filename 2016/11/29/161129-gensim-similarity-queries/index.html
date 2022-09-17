@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="gensim学习笔记，相似性查询，官网链接点击这儿 。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gensim — 相似性查询">
+<meta property="og:url" content="http://fanzhh.pw/2016/11/29/161129-gensim-similarity-queries/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="gensim学习笔记，相似性查询，官网链接点击这儿 。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-11-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-08T00:47:24.829Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="gensim">
+<meta property="article:tag" content="语义分析">
+<meta property="article:tag" content="统计">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://fanzhh.pw/2016/11/29/161129-gensim-similarity-queries/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>gensim — 相似性查询 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2016/11/29/161129-gensim-similarity-queries/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          gensim — 相似性查询
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-11-29 00:00:00" itemprop="dateCreated datePublished" datetime="2016-11-29T00:00:00+08:00">2016-11-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-08 08:47:24" itemprop="dateModified" datetime="2022-01-08T08:47:24+08:00">2022-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>gensim学习笔记，相似性查询，官网链接<a href="https://radimrehurek.com/gensim/tut3.html" target="_blank" rel="noopener">点击这儿</a> 。<br><a id="more"></a><br>如果你想看到日志记录，做如下设置：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">In</span> [1]: import logging</span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [2]: logging.basicConfig(<span class="attribute">format</span>=<span class="string">'%(asctime)s : %(levelname)s : %(message)s'</span>, <span class="attribute">level</span>=logging.INFO)</span><br></pre></td></tr></table></figure></p>
+<h2 id="相似性查询"><a href="#相似性查询" class="headerlink" title="相似性查询"></a>相似性查询</h2><p>在前面的数据集与向量空间和主题与转换两节中，我们介绍了在向量空间中创建数据集以及如何在不同向量空间之间转换数据集。做上述工作的常见原因是我们想要确定文档对之间的相似性，或者特定文档和一组其他文档（例如用户查询与索引文档）之间的相似性。</p>
+<p>为了说明在gensim中如何做到这一点，让我们考虑与前面的例子（它最初来自Deerwester等人的“<a href="http://www.cs.bham.ac.uk/~pxt/IDA/lsa_ind.pdf" target="_blank" rel="noopener">Indexing by Latent Semantic Analysis</a> ”semion 1990 article）一样的文档库：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">In[<span class="number">17</span>]:  <span class="keyword">from</span> gensim <span class="keyword">import</span> corpora, models, similarities</span><br><span class="line"></span><br><span class="line">In [<span class="number">18</span>]: <span class="built_in">dictionary</span> = corpora.Dictionary.load(<span class="string">'/tmp/deerwester.dict'</span>)<span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">43</span>:<span class="number">24</span>,<span class="number">555</span> : INFO : loading Dictionary object <span class="keyword">from</span> /tmp/deerwester.dict</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">43</span>:<span class="number">24</span>,<span class="number">555</span> : INFO : loaded /tmp/deerwester.dict</span><br><span class="line"></span><br><span class="line">In [<span class="number">19</span>]: corpus = corpora.MmCorpus(<span class="string">'/tmp/deerwester.mm'</span>)</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">44</span>:<span class="number">00</span>,<span class="number">602</span> : INFO : loaded corpus index <span class="keyword">from</span> /tmp/deerwester.mm.index</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">44</span>:<span class="number">00</span>,<span class="number">602</span> : INFO : initializing corpus reader <span class="keyword">from</span> /tmp/deerwester.mm</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">44</span>:<span class="number">00</span>,<span class="number">602</span> : INFO : accepted corpus with <span class="number">9</span> documents, <span class="number">12</span> features, <span class="number">28</span> non-zero entries</span><br><span class="line"></span><br><span class="line">In [<span class="number">20</span>]: print(corpus)</span><br><span class="line">MmCorpus(<span class="number">9</span> documents, <span class="number">12</span> features, <span class="number">28</span> non-zero entries)</span><br></pre></td></tr></table></figure><br>为了使用Deerwester这个例子，我们用这个小文档集定义两个2维LSI空间：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">21</span>]: lsi = models.LsiModel(corpus,id2word=<span class="built_in">dictionary</span>,num_topics=<span class="number">2</span>)</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">48</span>:<span class="number">25</span>,<span class="number">750</span> : INFO : using serial LSI version on <span class="keyword">this</span> node</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">48</span>:<span class="number">25</span>,<span class="number">751</span> : INFO : updating model with new documents</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">48</span>:<span class="number">25</span>,<span class="number">752</span> : INFO : preparing a new chunk of documents</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">48</span>:<span class="number">25</span>,<span class="number">753</span> : INFO : using <span class="number">100</span> extra samples <span class="keyword">and</span> <span class="number">2</span> power iterations</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">48</span>:<span class="number">25</span>,<span class="number">753</span> : INFO : <span class="number">1</span>st phase: constructing (<span class="number">12</span>, <span class="number">102</span>) action matrix</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">48</span>:<span class="number">25</span>,<span class="number">807</span> : INFO : orthonormalizing (<span class="number">12</span>, <span class="number">102</span>) action matrix</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">48</span>:<span class="number">26</span>,<span class="number">016</span> : INFO : <span class="number">2</span>nd phase: running dense svd on (<span class="number">12</span>, <span class="number">9</span>) matrix</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">48</span>:<span class="number">26</span>,<span class="number">050</span> : INFO : computing the <span class="keyword">final</span> decomposition</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">48</span>:<span class="number">26</span>,<span class="number">051</span> : INFO : keeping <span class="number">2</span> factors (discarding <span class="number">43.156</span>% of energy spectrum)</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">48</span>:<span class="number">26</span>,<span class="number">067</span> : INFO : processed documents up to #<span class="number">9</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">48</span>:<span class="number">26</span>,<span class="number">096</span> : INFO : topic #<span class="number">0</span>(<span class="number">3.341</span>): <span class="number">0.644</span>*<span class="string">"system"</span> + <span class="number">0.404</span>*<span class="string">"user"</span> + <span class="number">0.301</span>*<span class="string">"eps"</span> + <span class="number">0.265</span>*<span class="string">"time"</span> + <span class="number">0.265</span>*<span class="string">"response"</span> + <span class="number">0.240</span>*<span class="string">"computer"</span> + <span class="number">0.221</span>*<span class="string">"human"</span> + <span class="number">0.206</span>*<span class="string">"survey"</span> + <span class="number">0.198</span>*<span class="string">"interface"</span> + <span class="number">0.036</span>*<span class="string">"graph"</span></span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">19</span>:<span class="number">48</span>:<span class="number">26</span>,<span class="number">097</span> : INFO : topic #<span class="number">1</span>(<span class="number">2.542</span>): <span class="number">0.623</span>*<span class="string">"graph"</span> + <span class="number">0.490</span>*<span class="string">"trees"</span> + <span class="number">0.451</span>*<span class="string">"minors"</span> + <span class="number">0.274</span>*<span class="string">"survey"</span> + <span class="number">-0.167</span>*<span class="string">"system"</span> + <span class="number">-0.141</span>*<span class="string">"eps"</span> + <span class="number">-0.113</span>*<span class="string">"human"</span> + <span class="number">0.107</span>*<span class="string">"time"</span> + <span class="number">0.107</span>*<span class="string">"response"</span> + <span class="number">-0.072</span>*<span class="string">"interface"</span></span><br></pre></td></tr></table></figure><br>现在假设一个用户输入以下查询“Human computer interaction”。我们希望将文档集中的9个文档按照与这个查询的相关性降序排列。与现代搜索引擎不同，这里我们只关注可能相似的一个方面 —— 对它们的文本（单词）的明显语义相关性。没有超链接，没有随机漫步静态排名，只是布尔关键字匹配的语义扩展：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">22</span>]: doc = <span class="string">"Human computer interaction"</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">23</span>]: vec_bow = <span class="built_in">dictionary</span>.doc2bow(doc.lower().split())</span><br><span class="line"></span><br><span class="line">In [<span class="number">24</span>]: vec_lsi = lsi[vec_bow] # 将查询转换为LSI空间</span><br><span class="line"></span><br><span class="line">In [<span class="number">25</span>]: print(vec_lsi)</span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.46182100453271602</span>), (<span class="number">1</span>, <span class="number">-0.070027665279000381</span>)]</span><br></pre></td></tr></table></figure><br>此外，我们将考虑余弦相似性（<a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank" rel="noopener">cosine similarity</a> ）以确定两个向量的相似性。余弦相似性是矢量空间建模中的标准测量，但是无论矢量表示概率分布如何，不同相似性测量（<a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence#Symmetrised_divergence" target="_blank" rel="noopener">different similarity measures</a> ）可能更合适。</p>
+<h3 id="初始化查询结构"><a href="#初始化查询结构" class="headerlink" title="初始化查询结构"></a>初始化查询结构</h3><p>为了准备相似性查询，我们需要输入所有要与后续查询进行比较的文档。在我们的例子中，它们是用于训练LSI的9个文档，转换为2-D LSA空间。但这只是偶然的，我们也可能索引一个不同的文档库。<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">27</span>]: index = similarities.MatrixSimilarity(lsi[corpus])</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">20</span>:<span class="number">01</span>:<span class="number">22</span>,<span class="number">882</span> : WARNING : scanning corpus to determine the number of features (consider setting `num_features` explicitly)</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">20</span>:<span class="number">01</span>:<span class="number">22</span>,<span class="number">885</span> : INFO : creating matrix with <span class="number">9</span> documents <span class="keyword">and</span> <span class="number">2</span> features</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>警告：sililarities.MatrixSimilarity类仅当整套向量拟合到内存中时才适用。例如，当与这个类一起使用时，一百万个文档的文档库在256维LSI空间中将需要2GB的RAM。没有2G的空闲内存时，你需要similarities.Similarity类。通过在磁盘上的多个文件（称为碎片）上拆分索引，这个类在固定内存上操作。它在内部使用similarities.MatrixSimilarity与similarities.SparseMatrixSimilarity类，所以速度仍然很快，虽然稍有复杂。</p>
+</blockquote>
+<p>通过save()与load()功能来实现索引序列化：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">28</span>]: index.save(<span class="string">'/tmp/deerwester.index'</span>)</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">20</span>:<span class="number">07</span>:<span class="number">58</span>,<span class="number">905</span> : INFO : saving MatrixSimilarity object under /tmp/deerwester.index, separately None</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">20</span>:<span class="number">07</span>:<span class="number">58</span>,<span class="number">906</span> : INFO : saved /tmp/deerwester.index</span><br><span class="line"></span><br><span class="line">In [<span class="number">29</span>]: index = similarities.MatrixSimilarity.load(<span class="string">'/tmp/deerwester.index'</span>)</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">20</span>:<span class="number">08</span>:<span class="number">22</span>,<span class="number">086</span> : INFO : loading MatrixSimilarity object <span class="keyword">from</span> /tmp/deerwester.index</span><br><span class="line"><span class="number">2016</span><span class="number">-11</span><span class="number">-29</span> <span class="number">20</span>:<span class="number">08</span>:<span class="number">22</span>,<span class="number">087</span> : INFO : loaded /tmp/deerwester.index</span><br></pre></td></tr></table></figure><br>这适用于所有索引类（similarities.Similarity, similarities.MatrixSimilarity and similarities.SparseMatrixSimilarity）。正如下面所示，index可以是这些类中的任意对象。拿不定主意的时候，用similarities.Similarity类，因为它可扩展性最好，并且支持后续增加更多文档。</p>
+<h3 id="执行查询"><a href="#执行查询" class="headerlink" title="执行查询"></a>执行查询</h3><p>要获得我们查询的文档与已建立索引的9个文档的相似性：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">30</span>]: sims = index[vec_lsi]</span><br><span class="line"></span><br><span class="line">In [<span class="number">31</span>]: print(list(enumerate(sims)))</span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.99809301</span>), (<span class="number">1</span>, <span class="number">0.93748635</span>), (<span class="number">2</span>, <span class="number">0.99844527</span>), (<span class="number">3</span>, <span class="number">0.98658866</span>), (<span class="number">4</span>, <span class="number">0.90755945</span>), (<span class="number">5</span>, <span class="number">-0.12416792</span>), (<span class="number">6</span>, <span class="number">-0.10639259</span>), (<span class="number">7</span>, <span class="number">-0.098794632</span>), (<span class="number">8</span>, <span class="number">0.050041772</span>)]</span><br></pre></td></tr></table></figure><br>余弦度量返回范围&lt;-1,1&gt;（相似度越大，越相似）的相似性，使得第一个文档的分数为0.99809301。</p>
+<p>使用一些标准的Python神奇功能，我们将这些相似性按降序排序，并获得查询“Human computer interaction”的最终答案：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">In</span> [32]: sims = sorted(enumerate(sims),<span class="attribute">key</span>=lambda item:-item[1])</span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [33]: <span class="builtin-name">print</span>(sims)</span><br><span class="line">[(2, 0.99844527), # The EPS<span class="built_in"> user interface </span>management system</span><br><span class="line">(0, 0.99809301), # Human machine<span class="built_in"> interface </span><span class="keyword">for</span> lab abc computer applications</span><br><span class="line">(3, 0.9865886), #<span class="built_in"> System </span><span class="keyword">and</span> human<span class="built_in"> system </span>engineering testing of EPS</span><br><span class="line">(1, 0.93748635), # A survey of<span class="built_in"> user </span>opinion of computer<span class="built_in"> system </span>response time</span><br><span class="line">(4, 0.90755945), # Relation of<span class="built_in"> user </span>perceived response time <span class="keyword">to</span> <span class="builtin-name">error</span> measurement</span><br><span class="line">(8, 0.050041795), # Graph minors A survey</span><br><span class="line">(7, -0.098794639), # Graph minors IV Widths of trees <span class="keyword">and</span> well quasi ordering</span><br><span class="line">(6, -0.1063926), # The intersection graph of paths <span class="keyword">in</span> trees</span><br><span class="line">(5, -0.12416792)] # The generation of random binary unordered trees</span><br></pre></td></tr></table></figure><br>这里要注意的是文档2（“The EPS user interface management system”）和文档4（“Relation of user perceived response time to error measurement”）将不会通过标准布尔全文搜索返回，因为它们与“Human computer interaction”没有任何共享的词。然而，在应用LSI之后，我们可以观察到它们两者都获得了相当高的相似性分数（实际上，2是最相似的！），这更好地对应于我们对它们与查询共享“计算机 - 人”相关主题的直觉。事实上，这种语义泛化是我们首先应用变换和做主题建模的原因。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/gensim/" rel="tag"># gensim</a>
+              <a href="/tags/%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90/" rel="tag"># 语义分析</a>
+              <a href="/tags/%E7%BB%9F%E8%AE%A1/" rel="tag"># 统计</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/11/29/161129-gensim-topics-and-transformation/" rel="prev" title="gensim — 主题与转换">
+      <i class="fa fa-chevron-left"></i> gensim — 主题与转换
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/12/05/20161114-how-to-meditate/" rel="next" title="如何进行冥想">
+      如何进行冥想 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#相似性查询"><span class="nav-number">1.</span> <span class="nav-text">相似性查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化查询结构"><span class="nav-number">1.1.</span> <span class="nav-text">初始化查询结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行查询"><span class="nav-number">1.2.</span> <span class="nav-text">执行查询</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

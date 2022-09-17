@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Export wordpress posts to markdown file">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Export wordpress posts to markdown file">
+<meta property="og:url" content="http://fanzhh.pw/2016/06/11/160611-export-wd-to-grav-md/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="Export wordpress posts to markdown file">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-06-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-08T00:47:24.829Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="grav">
+<meta property="article:tag" content="wordpress">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://fanzhh.pw/2016/06/11/160611-export-wd-to-grav-md/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Export wordpress posts to markdown file | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2016/06/11/160611-export-wd-to-grav-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Export wordpress posts to markdown file
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-06-11 00:00:00" itemprop="dateCreated datePublished" datetime="2016-06-11T00:00:00+08:00">2016-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-08 08:47:24" itemprop="dateModified" datetime="2022-01-08T08:47:24+08:00">2022-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Export wordpress posts to markdown file</p>
+<a id="more"></a>
+<h1 id="wordpress2markdown"><a href="#wordpress2markdown" class="headerlink" title="wordpress2markdown"></a>wordpress2markdown</h1><p>Export wordpress’s posts to markdown files contain images.</p>
+<p>A few years ago, I once built my blog use wordpress. Later I learned markdown and enjoy it, now I built blog use <a href="https://getgrav.org/" target="_blank" rel="noopener">grav</a>, a cms system based markdown file. I want to export my old blogs in wordpress into  grav system, so I write this python code.</p>
+<p>This file supposed you have copy your entire wordpress direcotry to local, and import the wordpress mysql database to your local mysql. </p>
+<p>Generally speaking, the path of images in a post in wordpress should in direcotry like this:<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">wordpress</span> root direcotry)/wp-content/uploads/(<span class="name">year</span>)/(<span class="name">month</span>)/</span><br></pre></td></tr></table></figure><br>This python file’s job is to read posts in wordpress and write it into a markdown file, at the same time copy the images in the posts into the markdown same direcotry and update links in markdown file.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> MySQLdb</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> shutil <span class="keyword">import</span> copyfile</span><br><span class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> basename</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(<span class="string">'utf8'</span>)</span><br><span class="line"></span><br><span class="line">db = MySQLdb.connect(host=<span class="string">"localhost"</span>, <span class="comment"># your host, usually localhost</span></span><br><span class="line">                    user=<span class="string">"username"</span>,       <span class="comment"># your username</span></span><br><span class="line">                    passwd=<span class="string">"passwd"</span>, <span class="comment"># your passwd</span></span><br><span class="line">                    db=<span class="string">"dbname"</span>,        <span class="comment"># name of the data base</span></span><br><span class="line">                    charset=<span class="string">"utf8"</span>,    <span class="comment"># set charset</span></span><br><span class="line">                    use_unicode=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">cur = db.cursor()</span><br><span class="line"></span><br><span class="line"><span class="comment"># The wordpress's posts in'wp_posts' table, so we just get it.</span></span><br><span class="line">sql_string = <span class="string">"""select post_title, post_name, post_date, </span></span><br><span class="line"><span class="string">post_content,ID from wp_posts </span></span><br><span class="line"><span class="string">where post_status = 'publish' and post_type = 'post'"""</span></span><br><span class="line"></span><br><span class="line">cur.execute(sql_string)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> cur.fetchall():</span><br><span class="line">    title = row[<span class="number">0</span>]      <span class="comment"># post's title</span></span><br><span class="line">    post_date = row[<span class="number">2</span>]  <span class="comment"># post's publish date</span></span><br><span class="line">    folder_name = post_date.strftime(<span class="string">"%Y%m%d%H%M%S"</span>)    <span class="comment">#we use each post's publish data as markdown file's dicrecotry name</span></span><br><span class="line">    folder_name = <span class="string">'blogs/'</span> + folder_name    <span class="comment"># put all exported posts in 'blogs' dicrecotry</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(folder_name):</span><br><span class="line">        os.makedirs(folder_name)</span><br><span class="line">    f = open(folder_name+<span class="string">'/item.md'</span>,<span class="string">'w'</span>)    <span class="comment"># we set all posts name as item.md</span></span><br><span class="line">    f.write(<span class="string">'---\n'</span>)    <span class="comment"># write markdown file header information</span></span><br><span class="line">    f.write(<span class="string">'title: '</span>+title+<span class="string">'\n'</span>)</span><br><span class="line">    f.write(<span class="string">'date: '</span>+post_date.strftime(<span class="string">"%m/%d/%Y %H:%M:%S"</span>)+<span class="string">'\n'</span>)</span><br><span class="line">    f.write(<span class="string">'---\n'</span>)</span><br><span class="line">    post_content = row[<span class="number">3</span>]</span><br><span class="line">    lst = post_content.splitlines() <span class="comment"># split post content as a list</span></span><br><span class="line">    <span class="keyword">for</span> str <span class="keyword">in</span> lst:</span><br><span class="line">        caption = <span class="string">''</span></span><br><span class="line">        <span class="keyword">if</span> str.startswith(<span class="string">'[caption'</span>): <span class="comment"># get image's caption information</span></span><br><span class="line">            caption = re.search(<span class="string">'caption="(.*)"]'</span>,str).group(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">'&lt;img '</span> <span class="keyword">in</span> str) <span class="keyword">and</span> (<span class="string">'/wp-content/uploads/'</span> <span class="keyword">in</span> str):</span><br><span class="line">            start = <span class="string">'wp-content/'</span>       </span><br><span class="line">            end = <span class="string">'.jpg'</span></span><br><span class="line">            img_path = str.split(start)[<span class="number">1</span>].split(end)[<span class="number">0</span>] <span class="comment"># get image path</span></span><br><span class="line">            <span class="keyword">if</span> img_path:</span><br><span class="line">                img_path = img_path + <span class="string">'.jpg'</span>            </span><br><span class="line">            filename = basename(img_path)</span><br><span class="line">            copyfile(<span class="string">'wp-content/'</span>+img_path,folder_name+<span class="string">'/'</span>+filename)   <span class="comment"># copy image to the same direcotry of markdown file </span></span><br><span class="line">            f.write(<span class="string">'!['</span>+caption+<span class="string">']('</span>+filename+<span class="string">'"'</span>+caption+<span class="string">'")\n'</span>)      <span class="comment"># insert image mark into markdown file</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            soup = BeautifulSoup(str)   <span class="comment"># if image or cation not in line, then just write text into markdown file</span></span><br><span class="line">            f.write(soup.get_text()+<span class="string">'\n'</span>)</span><br><span class="line">    f.close()</span><br><span class="line">    </span><br><span class="line">db.close()</span><br></pre></td></tr></table></figure>
+<p>I’ve put this file on github, click <a href="https://github.com/fanzhh/wordpress2markdown" target="_blank" rel="noopener">this</a>.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
+              <a href="/tags/grav/" rel="tag"># grav</a>
+              <a href="/tags/wordpress/" rel="tag"># wordpress</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/06/10/160610-csv-to-postgresql/" rel="prev" title="将csv文件中的数据导入至postgresql">
+      <i class="fa fa-chevron-left"></i> 将csv文件中的数据导入至postgresql
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/06/12/160619-conda-python/" rel="next" title="使用conda搭建python数据分析开发环境">
+      使用conda搭建python数据分析开发环境 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#wordpress2markdown"><span class="nav-number">1.</span> <span class="nav-text">wordpress2markdown</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

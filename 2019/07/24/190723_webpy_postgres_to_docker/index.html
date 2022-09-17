@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="So，6年之前使用python2的web.py框架+postgresql搭建的项目，今年年初起停止使用，但偶尔地又需要访问一下数据。大家都知道搭建项目环境多么难，在这台电脑上运行得好好的，换台电脑出现各种错误。近期开始学习docker，相见恨晚哪。于是有了这篇边学习边实践的笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用docker封装古董python web.py + postgresql应用">
+<meta property="og:url" content="http://fanzhh.pw/2019/07/24/190723_webpy_postgres_to_docker/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="So，6年之前使用python2的web.py框架+postgresql搭建的项目，今年年初起停止使用，但偶尔地又需要访问一下数据。大家都知道搭建项目环境多么难，在这台电脑上运行得好好的，换台电脑出现各种错误。近期开始学习docker，相见恨晚哪。于是有了这篇边学习边实践的笔记。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://fanzhh.pw/images/190723_docker_ps_postgres.png">
+<meta property="og:image" content="http://fanzhh.pw/images/190723_docker_ps_postgres.png">
+<meta property="article:published_time" content="2019-07-24T07:50:00.000Z">
+<meta property="article:modified_time" content="2022-01-08T00:47:24.837Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="postgresql">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="web.py">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://fanzhh.pw/images/190723_docker_ps_postgres.png">
+
+<link rel="canonical" href="http://fanzhh.pw/2019/07/24/190723_webpy_postgres_to_docker/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>使用docker封装古董python web.py + postgresql应用 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2019/07/24/190723_webpy_postgres_to_docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用docker封装古董python web.py + postgresql应用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-24 15:50:00" itemprop="dateCreated datePublished" datetime="2019-07-24T15:50:00+08:00">2019-07-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-08 08:47:24" itemprop="dateModified" datetime="2022-01-08T08:47:24+08:00">2022-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/images/190723_docker_ps_postgres.png" alt=""></p>
+<p>So，6年之前使用<code>python2</code>的<code>web.py</code>框架+<code>postgresql</code>搭建的项目，今年年初起停止使用，但偶尔地又需要访问一下数据。大家都知道搭建项目环境多么难，在这台电脑上运行得好好的，换台电脑出现各种错误。近期开始学习<code>docker</code>，相见恨晚哪。于是有了这篇边学习边实践的笔记。</p>
+<a id="more"></a>
+<h2 id="web-py项目"><a href="#web-py项目" class="headerlink" title="web.py项目"></a>web.py项目</h2><h3 id="requirements-txt文件"><a href="#requirements-txt文件" class="headerlink" title="requirements.txt文件"></a>requirements.txt文件</h3><p>主程序名称为<code>index.py</code>，运行中需使用3个包，<code>pip freeze &gt; requirements.txt</code>，内容如下：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">psycopg2</span>==<span class="number">2.8</span>.<span class="number">3</span></span><br><span class="line"><span class="attr">pygal</span>==<span class="number">2.4</span>.<span class="number">0</span></span><br><span class="line"><span class="attr">web.py</span>==<span class="number">0.39</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Dockerfile文件"><a href="#Dockerfile文件" class="headerlink" title="Dockerfile文件"></a>Dockerfile文件</h3><p>在<code>web.py</code>项目目录下新建<code>Dockerfile</code>文件，内容如下：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">2.7</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> requirements.txt /code/</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /code/</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> pip install -r requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . /code/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"python"</span>]</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"index.py"</span>]</span></span><br></pre></td></tr></table></figure><br>第1行<code>FROM python:2.7</code>，指明使用<code>python:2.7</code>镜像。<br>第2行拷贝<code>requirements.txt</code>文件到Docker的<code>/code/</code>目录。<br>第3行指明<code>/code/</code>为工作目录。<br>第4行在docker中安装需要的包。<br>第5行拷贝当前目录下所有文件到docker工作目录中。<br>第6行、第7行指明启动<code>python index.py</code>。</p>
+<h3 id="建立image"><a href="#建立image" class="headerlink" title="建立image"></a>建立image</h3><p>在<code>web.py</code>项目目录下，输入(jifdaypk_mini是image名称)：<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">build </span>-t <span class="keyword">jifdaypk_mini:latest </span>.</span><br></pre></td></tr></table></figure><br>会有一系列输出，最后出现这个，说明创建成功：<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Successfully <span class="keyword">tagged</span> jifdaypk_mini:latest</span><br></pre></td></tr></table></figure></p>
+<p>执行<code>docker image ls</code>，应该能够看到刚刚创建的image了。</p>
+<h3 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h3><p>输入：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -p <span class="number">8080</span>:<span class="number">8080</span> jifdaypk_mini</span><br></pre></td></tr></table></figure><br>回车，打开浏览器输入：<code>localhost:8080</code>，浏览器出现<code>internal server error</code>提示。看命令行，出现一大坨错误，其中一行内容是：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OperationalError: could <span class="keyword">not</span> connect <span class="keyword">to</span> server: <span class="literal">No</span> such file <span class="keyword">or</span> directory</span><br><span class="line">	Is the<span class="built_in"> server </span>running locally <span class="keyword">and</span> accepting</span><br><span class="line">	connections on Unix domain socket <span class="string">"/var/run/postgresql/.s.PGSQL.5432"</span>?</span><br></pre></td></tr></table></figure><br>这就对了，因为我还没有配置<code>postgresql</code>嘛。</p>
+<h2 id="配置postgres"><a href="#配置postgres" class="headerlink" title="配置postgres"></a>配置<code>postgres</code></h2><h3 id="拉取postgres"><a href="#拉取postgres" class="headerlink" title="拉取postgres"></a>拉取<code>postgres</code></h3><p>因为我使用<code>postgres</code>的版本为<code>9.5</code>，所以拉取：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull postgre:<span class="number">9.5</span></span><br></pre></td></tr></table></figure><br>命令之后成功后，使用<code>docker image ls</code>，应该可以看到<code>postgres:9.5</code>的镜像了。</p>
+<h3 id="执行postgres容器"><a href="#执行postgres容器" class="headerlink" title="执行postgres容器"></a>执行postgres容器</h3><p>命令行输入：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">run</span><span class="bash"> postgres:9.5</span></span><br></pre></td></tr></table></figure><br>一大坨输出之后，出现<code>PostgreSQL init process complete; ready for start up.</code>说明容器运行成功，<code>Ctrl+C</code>退出。</p>
+<h3 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h3><p>原来项目中的数据需要导入<code>postgres</code>中，原导出的格式为<code>pd_dump</code>生成的<code>sql</code>文件。</p>
+<h4 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h4><p>要在本机和docker容器之间传输文件，需明白3个前提：</p>
+<ol>
+<li>每个docker容器都有自己的卷（<code>volumes</code>），将它们想象为你本机的磁盘就好。</li>
+<li>可以在本机上执行容器中的命令，格式为：`docker exec &lt;容器名字&gt; &lt;你的命令&gt;。</li>
+<li>当你打算在容器中运行操作具体文件的命令，这些文件应该在容器自身的卷(<code>volumes</code>)中。</li>
+</ol>
+<h4 id="找到运行postgres实例的容器名字"><a href="#找到运行postgres实例的容器名字" class="headerlink" title="找到运行postgres实例的容器名字"></a>找到运行<code>postgres</code>实例的容器名字</h4><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>docker ps</span><br></pre></td></tr></table></figure>
+<p><img src="/images/190723_docker_ps_postgres.png" alt=""></p>
+<h4 id="找到这个容器中的卷"><a href="#找到这个容器中的卷" class="headerlink" title="找到这个容器中的卷"></a>找到这个容器中的卷</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker inspect -f '&#123;&#123; json .Mounts &#125;&#125;' &lt;容器id&gt; <span class="string">| python -m json.tool</span></span><br></pre></td></tr></table></figure>
+<p>结果：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"Type"</span>: <span class="string">"volume"</span>,</span><br><span class="line">        <span class="attr">"Name"</span>: <span class="string">"a515c798849fd4e2e79a24ce16dc0d"</span>,</span><br><span class="line">        <span class="attr">"Source"</span>: <span class="string">"/mnt/docker-data/volumes/a51fd60a2c9a10438849fd4e2e79a24ce16dc0d/_data"</span>,</span><br><span class="line">        <span class="attr">"Destination"</span>: <span class="string">"/var/lib/postgresql/data"</span>,</span><br><span class="line">        <span class="attr">"Driver"</span>: <span class="string">"local"</span>,</span><br><span class="line">        <span class="attr">"Mode"</span>: <span class="string">""</span>,</span><br><span class="line">        <span class="attr">"RW"</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">"Propagation"</span>: <span class="string">""</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure><br>那么，<code>/var/lib/postgresql/data</code>便是我们要找的卷路径。</p>
+<h4 id="拷贝备份文件到卷上"><a href="#拷贝备份文件到卷上" class="headerlink" title="拷贝备份文件到卷上"></a>拷贝备份文件到卷上</h4><p>于是我运行：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>docker cp <span class="number">2019_07_22_16_11</span>.sql &lt;容器id&gt;<span class="symbol">:/var/lib/postgresql/data/</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="创建用户和数据库"><a href="#创建用户和数据库" class="headerlink" title="创建用户和数据库"></a>创建用户和数据库</h4><p>创建用户：<br><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it &lt;容器id&gt; psql -U postgres -c "<span class="keyword">create</span> <span class="keyword">user</span> user1 <span class="keyword">with</span> <span class="keyword">password</span> <span class="string">'123456'</span>;"</span><br></pre></td></tr></table></figure><br>创建数据库：<br><figure class="highlight scilab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it &lt;容器id&gt; psql -U postgres -c <span class="string">"create database mydb with owner '</span>fanzhh' encoding <span class="string">'UTF8'</span> lc_collate=<span class="string">'en_US.UTF-8'</span> lc_ctype=<span class="string">'en_US.UTF-8'</span> TEMPLATE template0;<span class="string">"</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="导入数据-1"><a href="#导入数据-1" class="headerlink" title="导入数据"></a>导入数据</h4><p><em>按照google的教程，应该将备份文件拷贝到卷中后导入，其实不拷贝备份文件，以下方式也可导入。</em><br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat <span class="number">2019</span>_<span class="number">07_22_16_11</span>.sql | docker exec -i aa<span class="number">06d5a52006</span> psql -U user1 -d mydb</span><br></pre></td></tr></table></figure><br>试一下看看导入成功没：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it &lt;容器id&gt; psql -U user1 -d mydb -c <span class="string">"select id,check_date from checkrecord limit 1;"</span></span><br><span class="line"> id  | check_date </span><br><span class="line">-----+------------</span><br><span class="line"> <span class="number">158</span> | <span class="number">2013</span><span class="number">-06</span><span class="number">-20</span></span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure><br>可以说非常OK了。</p>
+<h2 id="使用docker-compose多容器协作"><a href="#使用docker-compose多容器协作" class="headerlink" title="使用docker-compose多容器协作"></a>使用docker-compose多容器协作</h2><p>虽然上一步导入数据到<code>postgres</code>了，但不要高兴太早，结束容器再重启之后，数据消失无影了。因为容器是动态存在的，kill之后，容器内的一切数据不再存在。若要永久保存，需要将容器的<code>volume</code>映射到本地。以上分别建立的image之间并没什么关系，现在要用到<code>docker-compose</code>神器，部署多容器之间协作了。</p>
+<h3 id="docker-compose文件"><a href="#docker-compose文件" class="headerlink" title="docker-compose文件"></a>docker-compose文件</h3><p>在<code>web.py</code>项目目录下新建<code>docker-compose</code>文件：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">version:</span> <span class="string">'2'</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">services:</span></span><br><span class="line"><span class="symbol">  db:</span></span><br><span class="line"><span class="symbol">    image:</span> postgres:<span class="number">9.5</span></span><br><span class="line"><span class="symbol">    container_name:</span> postgres_ypk</span><br><span class="line"><span class="symbol">    restart:</span> always</span><br><span class="line"><span class="symbol">    environment:</span></span><br><span class="line">        - POSTGRES_USER=$&#123;POSTGRES_USER&#125;</span><br><span class="line">        - POSTGRES_PASSWORD=$&#123;POSTGRES_PASSWORD&#125;</span><br><span class="line">        - POSTGRES_DB=$&#123;POSTGRES_DB&#125;</span><br><span class="line"><span class="symbol">    volumes:</span></span><br><span class="line">        - .<span class="meta-keyword">/postgres-data/</span>postgres:<span class="meta-keyword">/var/</span>lib<span class="meta-keyword">/postgresql/</span>data</span><br><span class="line"><span class="symbol">    ports:</span></span><br><span class="line">        - <span class="string">"5432:5432"</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">  web:</span></span><br><span class="line"><span class="symbol">    build:</span> .</span><br><span class="line"><span class="symbol">    entrypoint:</span> [<span class="string">"python"</span>, <span class="string">"index.py"</span>]</span><br><span class="line"><span class="symbol">    restart:</span> always</span><br><span class="line"><span class="symbol">    volumes:</span></span><br><span class="line">      - .:/code</span><br><span class="line"><span class="symbol">    ports:</span></span><br><span class="line">      - <span class="string">"8080:8080"</span></span><br><span class="line"><span class="symbol">    depends_on:</span></span><br><span class="line">      - db</span><br></pre></td></tr></table></figure><br><code>db</code>的<code>volumes</code>将本地文件夹映射至容器卷中，实现数据永久保存。注意<code>db</code>中<code>environment</code>的内容，在相同目录下新建<code>.env</code>文件存放环境变量：<br> <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">POSTGRES_USER</span>=user1</span><br><span class="line"><span class="attr">POSTGRES_PASSWORD</span>=<span class="number">123456</span></span><br><span class="line"><span class="attr">POSTGRES_DB</span>=mydb</span><br></pre></td></tr></table></figure></p>
+<h3 id="docker-compose建立和运行"><a href="#docker-compose建立和运行" class="headerlink" title="docker-compose建立和运行"></a>docker-compose建立和运行</h3><p>输入以下命令建立<code>docker-compose</code>：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>docker-compose build</span><br></pre></td></tr></table></figure><br>输入以下命令运行<code>docker-compose</code>：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>docker-compose up</span><br></pre></td></tr></table></figure><br>会出现一坨结果，大意是说<code>db</code>和<code>web</code>分别启动了。</p>
+<h3 id="再次导入数据"><a href="#再次导入数据" class="headerlink" title="再次导入数据"></a>再次导入数据</h3><p>我们访问数据库容器：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -ti &lt;容器id&gt; bash</span></span><br></pre></td></tr></table></figure><br>进入容器操作界面，输入：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>psql -U user1 mydb</span><br></pre></td></tr></table></figure><br>进入数据库界面，输入：<br><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mydb=# <span class="keyword">create</span> <span class="keyword">database</span> mydb2 <span class="keyword">with</span> <span class="keyword">owner</span> <span class="string">'user1'</span> <span class="keyword">encoding</span> <span class="string">'UTF8'</span> lc_collate=<span class="string">'en_US.UTF-8'</span> lc_ctype=<span class="string">'en_US.UTF-8'</span> <span class="keyword">TEMPLATE</span> template0;</span><br></pre></td></tr></table></figure><br>建立数据库。为什么不直接用<code>mydb</code>?因为数据库内容有中文，新建数据库指定utf8放心。<br>退出数据库界面，退出容器界面，输入：<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> <span class="number">2019</span>_07_22_16_11.sql | docker exec -<span class="built_in">i</span> &lt;容器id&gt; psql -U user1 -d mydb2</span><br></pre></td></tr></table></figure><br>导入数据。关掉<code>docker-compose</code>，重启，再次访问数据库，数据依然在，OK。</p>
+<p>但现在， 浏览器访问<code>localhost:8080</code>依然显示<code>internal server error</code>。不慌，慢慢解决。</p>
+<p>明明<code>postgres</code>容器已经启动，在本地使用<code>psql -h localhost -U user1 -d mydb</code>可以访问数据，但<code>localhost:8080</code>页面始终无法访问，后台显示错误：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">could <span class="keyword">not</span> connect <span class="keyword">to</span> server: Cannot assign requested address</span><br><span class="line">web_1  | 	Is the<span class="built_in"> server </span>running on host <span class="string">"localhost"</span> (::1) <span class="keyword">and</span> accepting</span><br><span class="line">web_1  | 	TCP<span class="built_in">/IP </span>connections on<span class="built_in"> port </span>5432?</span><br></pre></td></tr></table></figure><br>（1天时间过去了。。。）</p>
+<p>终于在<a href="https://forums.docker.com/t/cant-get-postgres-to-work/29580/4" target="_blank" rel="noopener">这个</a>地方发现问题所在，我原来的连接参数为：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">db</span>=web.database(</span><br><span class="line">    <span class="attribute">dbn</span>=<span class="string">'postgres'</span>,</span><br><span class="line">    <span class="attribute">host</span>=<span class="string">'localhost'</span>,</span><br><span class="line">    <span class="attribute">db</span>=<span class="string">'ypkdb2'</span>,</span><br><span class="line">    <span class="attribute">user</span>=<span class="string">'fanzhh'</span>,</span><br><span class="line">    <span class="attribute">password</span>=<span class="string">'56805696'</span>,</span><br><span class="line">    <span class="attribute">port</span>=<span class="string">'5432'</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure><br>修改<code>host</code>内容，将<code>localhost</code>改为容器名字，问题解决！</p>
+<h3 id="python镜像安装app"><a href="#python镜像安装app" class="headerlink" title="python镜像安装app"></a>python镜像安装app</h3><p>应用中需要用到<code>abiword</code>，镜像默认没有安装这个应用，报错，于是：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker exec -<span class="keyword">it</span> <span class="number">4351e2</span>d268de apt-<span class="keyword">get</span> update</span><br><span class="line">docker exec -<span class="keyword">it</span> <span class="number">4351e2</span>d268de apt-<span class="keyword">get</span> install abiword</span><br></pre></td></tr></table></figure><br>OK。</p>
+<h2 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h2><p>我使用的滴滴云容器服务器，先登陆：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker login --username=&lt;仓库用户名&gt; hub<span class="selector-class">.didiyun</span><span class="selector-class">.com</span></span><br></pre></td></tr></table></figure><br>输入密码。</p>
+<p>将公共镜像改为似有镜像：<br><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker tag <span class="string">[镜像名称:Tag]</span>或<span class="string">[镜像ID]</span> hub.didiyun.com/<span class="string">[命名空间]</span>/<span class="string">[仓库名称]</span>:<span class="string">[版本号（Tag）]</span></span><br></pre></td></tr></table></figure><br>推送标志好的镜像到镜像仓库：<br><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push hub.didiyun.com/<span class="string">[命名空间]</span>/<span class="string">[仓库名称]</span>:<span class="string">[版本号（Tag）]</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://simkimsia.com/how-to-restore-database-dumps-for-postgres-in-docker-container/" target="_blank" rel="noopener">How to Restore Database Dumps for Postgres in Docker Container</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/postgresql/" rel="tag"># postgresql</a>
+              <a href="/tags/docker/" rel="tag"># docker</a>
+              <a href="/tags/web-py/" rel="tag"># web.py</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/07/18/190718_deploy_hexo_to_github_pages/" rel="prev" title="如何使用Hexo发布博客到GitHub Pages">
+      <i class="fa fa-chevron-left"></i> 如何使用Hexo发布博客到GitHub Pages
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/05/190805_react_captcha/" rel="next" title="React人机验证控件">
+      React人机验证控件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#web-py项目"><span class="nav-number">1.</span> <span class="nav-text">web.py项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#requirements-txt文件"><span class="nav-number">1.1.</span> <span class="nav-text">requirements.txt文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dockerfile文件"><span class="nav-number">1.2.</span> <span class="nav-text">Dockerfile文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立image"><span class="nav-number">1.3.</span> <span class="nav-text">建立image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行容器"><span class="nav-number">1.4.</span> <span class="nav-text">运行容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置postgres"><span class="nav-number">2.</span> <span class="nav-text">配置postgres</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拉取postgres"><span class="nav-number">2.1.</span> <span class="nav-text">拉取postgres</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行postgres容器"><span class="nav-number">2.2.</span> <span class="nav-text">执行postgres容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入数据"><span class="nav-number">2.3.</span> <span class="nav-text">导入数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前提"><span class="nav-number">2.3.1.</span> <span class="nav-text">前提</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#找到运行postgres实例的容器名字"><span class="nav-number">2.3.2.</span> <span class="nav-text">找到运行postgres实例的容器名字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#找到这个容器中的卷"><span class="nav-number">2.3.3.</span> <span class="nav-text">找到这个容器中的卷</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拷贝备份文件到卷上"><span class="nav-number">2.3.4.</span> <span class="nav-text">拷贝备份文件到卷上</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建用户和数据库"><span class="nav-number">2.3.5.</span> <span class="nav-text">创建用户和数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导入数据-1"><span class="nav-number">2.3.6.</span> <span class="nav-text">导入数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用docker-compose多容器协作"><span class="nav-number">3.</span> <span class="nav-text">使用docker-compose多容器协作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose文件"><span class="nav-number">3.1.</span> <span class="nav-text">docker-compose文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose建立和运行"><span class="nav-number">3.2.</span> <span class="nav-text">docker-compose建立和运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再次导入数据"><span class="nav-number">3.3.</span> <span class="nav-text">再次导入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python镜像安装app"><span class="nav-number">3.4.</span> <span class="nav-text">python镜像安装app</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传镜像"><span class="nav-number">4.</span> <span class="nav-text">上传镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

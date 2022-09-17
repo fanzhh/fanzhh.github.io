@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="gensim学习笔记，主题与转换 ，点击链接可访问官网原文。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gensim — 主题与转换">
+<meta property="og:url" content="http://fanzhh.pw/2016/11/29/161129-gensim-topics-and-transformation/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="gensim学习笔记，主题与转换 ，点击链接可访问官网原文。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-11-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-08T00:47:24.833Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="gensim">
+<meta property="article:tag" content="语义分析">
+<meta property="article:tag" content="统计">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://fanzhh.pw/2016/11/29/161129-gensim-topics-and-transformation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>gensim — 主题与转换 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2016/11/29/161129-gensim-topics-and-transformation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          gensim — 主题与转换
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-11-29 00:00:00" itemprop="dateCreated datePublished" datetime="2016-11-29T00:00:00+08:00">2016-11-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-08 08:47:24" itemprop="dateModified" datetime="2022-01-08T08:47:24+08:00">2022-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>gensim学习笔记，<a href="https://radimrehurek.com/gensim/tut2.html" target="_blank" rel="noopener">主题与转换</a> ，点击链接可访问官网原文。<br><a id="more"></a><br>如果你想把事件记录在日志立，首先设置日志：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">In</span> [1]: import logging</span><br><span class="line"><span class="keyword">In</span> [2]: logging.basicConfig(<span class="attribute">format</span>=<span class="string">'%(asctime)s : %(levelname)s : %(message)s'</span>, <span class="attribute">level</span>=logging.INFO)</span><br></pre></td></tr></table></figure></p>
+<h2 id="转换接口"><a href="#转换接口" class="headerlink" title="转换接口"></a>转换接口</h2><p>在上一节关于文档库和向量空间的教程中，我们创建了一个表示为向量流的文档语料库。继续，让我们启动gensim并使用该文档库：<br><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">In</span></span> [<span class="number">3</span>]: <span class="variable">import</span> <span class="variable">os</span></span><br><span class="line"></span><br><span class="line"><span class="variable"><span class="keyword">In</span></span> [<span class="number">4</span>]: <span class="variable"><span class="keyword">if</span></span> (<span class="variable">os</span>.path.exists(<span class="string">"/tmp/deerwester.dict"</span>)):</span><br><span class="line">    <span class="variable">dictionary</span> = <span class="variable">corpora</span>.Dictionary.load(<span class="string">'/tmp/deerwester.dict'</span>)</span><br><span class="line">    <span class="variable">corpus</span> = <span class="variable">corpora</span>.MmCorpus(<span class="string">'/tmp/deerwester.mm'</span>)</span><br><span class="line">    <span class="function"><span class="title">print</span>(<span class="string">"Used files generated from first tutorial"</span>)</span></span><br><span class="line"><span class="variable"><span class="keyword">else</span></span>:</span><br><span class="line">    <span class="function"><span class="title">print</span>(<span class="string">"Please run first tutorial to generate data set"</span>)</span></span><br><span class="line">   ...:     </span><br><span class="line"><span class="variable">Used</span> <span class="variable">files</span> <span class="variable">generated</span> <span class="variable">from</span> <span class="variable">first</span> <span class="variable">tutorial</span></span><br></pre></td></tr></table></figure><br>MmCorpus（9个文档，12个特征，28个非零条目） </p>
+<p>在本教程中，我将演示如何将文档从一个向量表示转换为另一个向量表示。这个过程有两个目标：    </p>
+<ol>
+<li>为了揭示文档库中的隐藏结构，发现词之间的关系，并使用它们以新的（希望）更具语义的方式描述文档。     </li>
+<li>使文档表示更加紧凑。这既提高效率（表示消耗较少的资源）和效能（忽略边际数据趋势，降低噪声）。</li>
+</ol>
+<h3 id="创建转换"><a href="#创建转换" class="headerlink" title="创建转换"></a>创建转换</h3><p>转换是标准的python对象，一般通过训练文档库来初始化：<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">In</span> [<span class="number">5</span>]: tfidf = models.TfidfModel(corpus)  <span class="meta"># 第一步 — 初始化模型</span></span><br></pre></td></tr></table></figure><br>我们使用上一个教程中的旧文档库来初始化（训练）变换模型。不同的变换可能需要不同的初始化参数；在TfIdf的情况下，“训练”包括简单地经历所提供的文档库一次并计算其所有特征的文档频率。训练其他模型，如潜在语义分析（Latent Semantic Analysis）或Latent Dirichlet Allocation，需要更多的参与，因此，需也要更多的时间。</p>
+<blockquote>
+<p>注意：转换总是在两个特定向量空间之间进行。必须使用相同的向量空间（=相同的特征ids集）用于训练以及后续向量转换。如果不使用相同的输入特征空间，例如应用不同的字符串预处理，使用不同的特征id，或者使用预期的TfIdf向量的单词包输入向量，将导致在转换调用期间的特征不匹配，输出和/或运行时异常。</p>
+</blockquote>
+<h3 id="转换向量"><a href="#转换向量" class="headerlink" title="转换向量"></a>转换向量</h3><p>从现在开始，tfidf被视为只读对象，可以用于将任何向量从旧的表示（词袋整数计数）转换为新的表示（TfIdf实值权重）：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">6</span>]: doc_bow = [(<span class="number">0</span>,<span class="number">1</span>),(<span class="number">1</span>,<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">In [<span class="number">7</span>]: print(tfidf[doc_bow]) # 第二步 — 使用这个模型转换向量</span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.7071067811865476</span>), (<span class="number">1</span>, <span class="number">0.7071067811865476</span>)]</span><br></pre></td></tr></table></figure><br>或者对整个文档库应用转换：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">9</span>]: corpus_tfidf = tfidf[corpus]</span><br><span class="line"></span><br><span class="line">In [<span class="number">10</span>]: <span class="keyword">for</span> doc <span class="keyword">in</span> corpus_tfidf:</span><br><span class="line">   ....:     print(doc)</span><br><span class="line">   ....:     </span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.5773502691896257</span>), (<span class="number">1</span>, <span class="number">0.5773502691896257</span>), (<span class="number">2</span>, <span class="number">0.5773502691896257</span>)]</span><br><span class="line">[(<span class="number">2</span>, <span class="number">0.44424552527467476</span>), (<span class="number">3</span>, <span class="number">0.44424552527467476</span>), (<span class="number">4</span>, <span class="number">0.3244870206138555</span>), (<span class="number">5</span>, <span class="number">0.3244870206138555</span>), (<span class="number">6</span>, <span class="number">0.44424552527467476</span>), (<span class="number">7</span>, <span class="number">0.44424552527467476</span>)]</span><br><span class="line">[(<span class="number">1</span>, <span class="number">0.5710059809418182</span>), (<span class="number">4</span>, <span class="number">0.4170757362022777</span>), (<span class="number">5</span>, <span class="number">0.4170757362022777</span>), (<span class="number">8</span>, <span class="number">0.5710059809418182</span>)]</span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.49182558987264147</span>), (<span class="number">4</span>, <span class="number">0.7184811607083769</span>), (<span class="number">8</span>, <span class="number">0.49182558987264147</span>)]</span><br><span class="line">[(<span class="number">3</span>, <span class="number">0.6282580468670046</span>), (<span class="number">5</span>, <span class="number">0.45889394536615247</span>), (<span class="number">6</span>, <span class="number">0.6282580468670046</span>)]</span><br><span class="line">[(<span class="number">9</span>, <span class="number">1.0</span>)]</span><br><span class="line">[(<span class="number">9</span>, <span class="number">0.7071067811865475</span>), (<span class="number">10</span>, <span class="number">0.7071067811865475</span>)]</span><br><span class="line">[(<span class="number">9</span>, <span class="number">0.5080429008916749</span>), (<span class="number">10</span>, <span class="number">0.5080429008916749</span>), (<span class="number">11</span>, <span class="number">0.695546419520037</span>)]</span><br><span class="line">[(<span class="number">7</span>, <span class="number">0.6282580468670046</span>), (<span class="number">10</span>, <span class="number">0.45889394536615247</span>), (<span class="number">11</span>, <span class="number">0.6282580468670046</span>)]</span><br></pre></td></tr></table></figure><br>在这种特殊情况下，我们正在转换我们用于训练的同一个文档库，但这种情况并不常见。一旦变换模型已经被初始化，它可以用于任何向量（当然，假设它们来自相同的向量空间），即使它们在训练文档库中没有使用。这是通过称为折叠LSA的过程，通过LDA等的主题推断来实现的。</p>
+<blockquote>
+<p>注意：调用模型[corpus]只会在旧文档库文档流周围创建一个包装器 - 实际转换是在文档迭代期间即时完成的。我们不能在调用corpus_transformed = model [corpus]时转换整个语料库，因为这意味着将结果存储在主内存中，这与gensim的内存独立性的目标相矛盾。如果您将多次迭代转换的corpus_transformed，转换成本较高，应将生成的文档库首先<a href="https://radimrehurek.com/gensim/tut1.html#corpus-formats" target="_blank" rel="noopener">序列化</a> 到磁盘，然后继续使用。</p>
+</blockquote>
+<p>转换也可以序列化，一个在另一个之上，形成一个链：<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">In <span class="literal">[<span class="number">11</span>]</span>: lsi = models.<span class="constructor">LsiModel(<span class="params">corpus_tfidf</span>,<span class="params">id2word</span>=<span class="params">dictionary</span>,<span class="params">num_topics</span>=2)</span> #  初始化一个LSI转换</span><br><span class="line"></span><br><span class="line">In <span class="literal">[<span class="number">12</span>]</span>: corpus_lsi=lsi<span class="literal">[<span class="identifier">corpus_tfidf</span>]</span> # 在原始文档库上创建一个双重包装：bow-&gt; tfidf-&gt; fold-<span class="keyword">in</span>-lsi</span><br></pre></td></tr></table></figure><br>在这里，我们通过潜在语义索引（<a href="https://en.wikipedia.org/wiki/Latent_semantic_indexing" target="_blank" rel="noopener">Latent Semantic Indexing</a> ）将我们的Tf-Idf文档库转换为潜在的2-D空间（2-D，因为我们设置num_topics = 2）。现在你可能想知道：这两个潜在维度代表什么？让我们用models.LsiModel.print_topics（）检查：<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">In</span> [<span class="number">13</span>]: lsi.print_topics(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">Out</span>[<span class="number">13</span>]: </span><br><span class="line">[(<span class="number">0</span>,</span><br><span class="line">  '<span class="number">0.703</span>*<span class="string">"trees"</span> + <span class="number">0.538</span>*<span class="string">"graph"</span> + <span class="number">0.402</span>*<span class="string">"minors"</span> + <span class="number">0.187</span>*<span class="string">"survey"</span> + <span class="number">0.061</span>*<span class="string">"system"</span> + <span class="number">0.060</span>*<span class="string">"response"</span> + <span class="number">0.060</span>*<span class="string">"time"</span> + <span class="number">0.058</span>*<span class="string">"user"</span> + <span class="number">0.049</span>*<span class="string">"computer"</span> + <span class="number">0.035</span>*<span class="string">"interface"</span>'),</span><br><span class="line"> (<span class="number">1</span>,</span><br><span class="line">  '<span class="number">0.460</span>*<span class="string">"system"</span> + <span class="number">0.373</span>*<span class="string">"user"</span> + <span class="number">0.332</span>*<span class="string">"eps"</span> + <span class="number">0.328</span>*<span class="string">"interface"</span> + <span class="number">0.320</span>*<span class="string">"time"</span> + <span class="number">0.320</span>*<span class="string">"response"</span> + <span class="number">0.293</span>*<span class="string">"computer"</span> + <span class="number">0.280</span>*<span class="string">"human"</span> + <span class="number">0.171</span>*<span class="string">"survey"</span> + -<span class="number">0.161</span>*<span class="string">"trees"</span>')]</span><br></pre></td></tr></table></figure><br>（主题打印到日志 - 请参阅本页顶部关于激活日志记录的注释） </p>
+<p>看来根据LSI，“trees”，“graph”和“minors”都是相关词（并且对第一主题的方向贡献最大），而第二主题实际上与所有其他词相关。如预期，前五个文件与第二个主题更加密切相关，而其余四个文件与第一个主题相关：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">14</span>]: <span class="keyword">for</span> doc <span class="keyword">in</span> corpus_lsi: # 在这里，实时执行bow-&gt; tfidf和tfidf-&gt; lsi变换</span><br><span class="line">   ....:     print(doc)</span><br><span class="line">   ....:     </span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.066007833960902151</span>), (<span class="number">1</span>, <span class="number">0.5200703306361848</span>)] # <span class="string">"Human machine interface for lab abc computer applications"</span></span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.19667592859142344</span>), (<span class="number">1</span>, <span class="number">0.76095631677000575</span>)] # <span class="string">"A survey of user opinion of computer system response time"</span></span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.08992639972446273</span>), (<span class="number">1</span>, <span class="number">0.72418606267525132</span>)] # <span class="string">"The EPS user interface management system"</span></span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.075858476521779988</span>), (<span class="number">1</span>, <span class="number">0.63205515860034323</span>)] # <span class="string">"System and human system engineering testing of EPS"</span></span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.1015029918498003</span>), (<span class="number">1</span>, <span class="number">0.57373084830029641</span>)] # <span class="string">"Relation of user perceived response time to error measurement"</span></span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.70321089393783165</span>), (<span class="number">1</span>, <span class="number">-0.16115180214025676</span>)] # <span class="string">"The generation of random binary unordered trees"</span></span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.87747876731198382</span>), (<span class="number">1</span>, <span class="number">-0.16758906864659251</span>)] # <span class="string">"The intersection graph of paths in trees"</span></span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.90986246868185872</span>), (<span class="number">1</span>, <span class="number">-0.14086553628718851</span>)] # <span class="string">"Graph minors IV Widths of trees and well quasi ordering"</span></span><br><span class="line">[(<span class="number">0</span>, <span class="number">0.61658253505692862</span>), (<span class="number">1</span>, <span class="number">0.05392907566389505</span>)] # <span class="string">"Graph minors A survey"</span></span><br></pre></td></tr></table></figure><br>模型持久性通过save()和load()来实现：<br><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">In</span> [<span class="number">15</span>]: lsi.save(<span class="string">'/tmp/model.lsi'</span>) </span><br><span class="line"></span><br><span class="line"><span class="keyword">In</span> [<span class="number">16</span>]: lsi = models.LsiModel.<span class="keyword">load</span>(<span class="string">'/tmp/model.lsi'</span>)</span><br></pre></td></tr></table></figure><br>下一个问题可能是：这些文档之间的相似程度如何？有没有一种方式来形式化相似性，所以对于给定的输入文档，我们可以根据他们的相似性订购一些其他文档集？相似性查询在下一个教程中介绍。</p>
+<h2 id="可用的转换器"><a href="#可用的转换器" class="headerlink" title="可用的转换器"></a>可用的转换器</h2><p>Gensim实现了以下几个常用向量空间模型算法：</p>
+<ul>
+<li>术语频率*逆文档频率，<a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf" target="_blank" rel="noopener">Tf-Idf</a> 期望在初始化期间的词袋（整数值）训练语料库。在转换期间，它将输入一个向量并返回相同维度的另一个向量，除了在训练语文档库中罕见的特征将具有增加的值以外。因此，它将整数值向量转换为实值向量，同时保持维数不变。它还可以任选地将所得载体标准化为（欧几里得）单位长度。<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">In</span> [18]: model = models.TfidfModel(corpus,<span class="attribute">normalize</span>=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></li>
+<li>潜在语义索引，<a href="https://en.wikipedia.org/wiki/Latent_semantic_indexing" target="_blank" rel="noopener">LSI</a> （或有时LSA）将文档从字词袋或（优选地）TfIdf加权空间转换为较低维度的潜在空间。对于上面的测试文档库，我们只使用了2个潜在维度，但在真实文档库中，目标维度200-500被推荐为“黄金标准”。LSI训练是独一无二的，因为我们可以随时继续“训练”，只需提供更多的训练文档。这是通过对基础模型的增量更新，在称为在线学习的过程中完成的。由于这个特征，输入文档流甚至可以是无限的 - 只是在其到达时保持馈送LSI新文档，同时使用计算的变换模型作为只读。有关如何使LSI逐渐“忘记”无限流中的旧的观察的详细信息，请参阅<a href="https://radimrehurek.com/gensim/models/lsimodel.html#module-gensim.models.lsimodel" target="_blank" rel="noopener">gensim.models.lsimodel</a> 文档。如果你想使坏，还有一些参数可以调整影响速度与内存占用与LSI算法的数值精度。 gensim使用了一个新的在线增量流分布式训练算法（相当一口气！），我已在<a href="https://radimrehurek.com/gensim/tut2.html#id10" target="_blank" rel="noopener">这儿</a> 发表。 gensim还执行Halko等人的随机多遍算法。参见英语维基百科上的<a href="https://radimrehurek.com/gensim/wiki.html" target="_blank" rel="noopener">实验</a> ，通过在计算机集群上分布计算，进一步加快速度。</li>
+<li><a href="http://www.cis.hut.fi/ella/publications/randproj_kdd.pdf" target="_blank" rel="noopener">随机投影</a> ，旨在减少向量空间维数。这是一种非常有效的（内存和CPU友好）方法，通过投入一个随机性来近似文档之间的TfIdf距离。推荐的目标维度是数百/千，取决于您的数据集。</li>
+<li>潜在Dirichlet分配<a href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation" target="_blank" rel="noopener">Latent Dirichlet Allocation, LDA</a> ，LDA是另一个从词袋数量到较低维度的主题空间的转换。 LDA是LSA（也称为多项PCA）的概率扩展，因此LDA的主题可以被解释为词语的概率分布。这些分布，就像LSA一样，从训练文档库自动推断。文档又被解释为这些主题的（软）混合（就像LSA一样）。</li>
+</ul>
+<p>值得重申的是，这些算法都是独特的，增量实现，其不要求整个训练文档库同时加载于主存储器中。为占用尽量少的内存，我正在改进分布式计算，以同时提高CPU效率。如果你觉得你可以贡献（通过测试，提供用例或代码），请让<a href="radimrehurek@seznam.cz">作者</a> 作者知道。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/gensim/" rel="tag"># gensim</a>
+              <a href="/tags/%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90/" rel="tag"># 语义分析</a>
+              <a href="/tags/%E7%BB%9F%E8%AE%A1/" rel="tag"># 统计</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/11/28/161128-gensim-corpora-vector-spaces/" rel="prev" title="gensim — 文档集与向量空间">
+      <i class="fa fa-chevron-left"></i> gensim — 文档集与向量空间
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/11/29/161129-gensim-similarity-queries/" rel="next" title="gensim — 相似性查询">
+      gensim — 相似性查询 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#转换接口"><span class="nav-number">1.</span> <span class="nav-text">转换接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建转换"><span class="nav-number">1.1.</span> <span class="nav-text">创建转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转换向量"><span class="nav-number">1.2.</span> <span class="nav-text">转换向量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可用的转换器"><span class="nav-number">2.</span> <span class="nav-text">可用的转换器</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

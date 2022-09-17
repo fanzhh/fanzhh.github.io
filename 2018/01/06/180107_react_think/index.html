@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="以React.js的方式思考。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以React.js的方式思考">
+<meta property="og:url" content="http://fanzhh.pw/2018/01/06/180107_react_think/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="以React.js的方式思考。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/38605-0a0baa5d842d8d5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/38605-acecb53b2e85d623.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2018-01-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-08T00:47:24.833Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="react">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/38605-0a0baa5d842d8d5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="canonical" href="http://fanzhh.pw/2018/01/06/180107_react_think/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>以React.js的方式思考 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://fanzhh.pw/2018/01/06/180107_react_think/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          以React.js的方式思考
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-01-06 00:00:00" itemprop="dateCreated datePublished" datetime="2018-01-06T00:00:00+08:00">2018-01-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-08 08:47:24" itemprop="dateModified" datetime="2022-01-08T08:47:24+08:00">2022-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>以React.js的方式思考。<br><a id="more"></a></p>
+<p>这是 <a href="https://reactjs.org/" target="_blank" rel="noopener">React</a> 官方文档中的一章，为了加深理解所以翻译出来，原文在<a href="https://reactjs.org/docs/thinking-in-react.html" target="_blank" rel="noopener">这儿</a>。</p>
+<!---more-->
+<hr>
+<p>React 很棒的一点是创建应用中引导你思考的过程。这篇文档中，我们将通过运用React创建一个产品搜索列表，来引导你熟悉这个思考过程。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>假设我们已经有了一个JSON API和前端工程师设计的界面，如下面这样：<br><img src="http://upload-images.jianshu.io/upload_images/38605-0a0baa5d842d8d5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>我们的JSON API返回的数据是这个样子：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;<span class="string">category:</span> <span class="string">"Sporting Goods"</span>, <span class="string">price:</span> <span class="string">"$49.99"</span>, <span class="string">stocked:</span> <span class="literal">true</span>, <span class="string">name:</span> <span class="string">"Football"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">category:</span> <span class="string">"Sporting Goods"</span>, <span class="string">price:</span> <span class="string">"$9.99"</span>, <span class="string">stocked:</span> <span class="literal">true</span>, <span class="string">name:</span> <span class="string">"Baseball"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">category:</span> <span class="string">"Sporting Goods"</span>, <span class="string">price:</span> <span class="string">"$29.99"</span>, <span class="string">stocked:</span> <span class="literal">false</span>, <span class="string">name:</span> <span class="string">"Basketball"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">category:</span> <span class="string">"Electronics"</span>, <span class="string">price:</span> <span class="string">"$99.99"</span>, <span class="string">stocked:</span> <span class="literal">true</span>, <span class="string">name:</span> <span class="string">"iPod Touch"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">category:</span> <span class="string">"Electronics"</span>, <span class="string">price:</span> <span class="string">"$399.99"</span>, <span class="string">stocked:</span> <span class="literal">false</span>, <span class="string">name:</span> <span class="string">"iPhone 5"</span>&#125;,</span><br><span class="line">  &#123;<span class="string">category:</span> <span class="string">"Electronics"</span>, <span class="string">price:</span> <span class="string">"$199.99"</span>, <span class="string">stocked:</span> <span class="literal">true</span>, <span class="string">name:</span> <span class="string">"Nexus 7"</span>&#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure></p>
+<h2 id="第一步：把界面分解为部件层次"><a href="#第一步：把界面分解为部件层次" class="headerlink" title="第一步：把界面分解为部件层次"></a>第一步：把界面分解为部件层次</h2><p>很可能你要做的第一件事，是在每个部件（子部件）周围画方框并为它们取名字。如果你和一名设计师一起工作，很可能他们已经这样做了。那么去和他们聊聊，或许他们Photoshop中图层的名字直接可以作为你的React部件的名字呢！</p>
+<p>但你怎样定义一个部件呢？你日常编程中怎样决定创建一个函数或对象的？道理相同。一个类似的技术是<a href="https://en.wikipedia.org/wiki/Single_responsibility_principle" target="_blank" rel="noopener">功能单一原则（single responsibility principle）</a>, 意思是，一个部件应该只做一件事情。如果它越来越大，那么它应该被分为更小的部件。</p>
+<p>由于你常常将JSON数据展示给用户看，你会发现，如果数据模型建得不错，你的UI（与你的部件结构）也相应的不会太差。原因是UI和数据模型往往依赖相同的<strong>信息架构</strong>，这也意味着把UI分解为部件常常不是太难，不过是根据数据模型来分解罢了。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/38605-acecb53b2e85d623.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>你会看到我们这个简单的示例程序里有5个部件。</p>
+<ol>
+<li>FilterableProductTable（橙色）：整个示例程序</li>
+<li>SearchBar（蓝色）：接收所有的<em>用户输入</em></li>
+<li>ProductTable（绿色）：根据用户输入显示和过滤数据</li>
+<li>ProductCategoryRow（青绿色）：显示类别</li>
+<li>ProductRow（红色）：显示产品行</li>
+</ol>
+<p>如果仔细看<code>ProductTable</code>，会发现表头（Name和Price）不是它自己的部件。这是个见仁见智的问题，使用哪种方式还有争论。这个例子中，我们把它作为ProductTable的一部分，因为渲染数据集是ProductTable的责任。然而，如果这个表头过于复杂（如果以后我们增加点击表头排序），当然应该作为一个独立的部件ProductTableHeader来创建。</p>
+<p>现在我们在原型中已经明确了部件，接下来把它们按照层次结构组织起来。原型中一个部件在另一个部件中，层次结构中应该为父子层级关系：</p>
+<ul>
+<li>FilterableProductTable<ul>
+<li>SearchBar</li>
+<li>ProductTable<ul>
+<li>ProductCategoryRow</li>
+<li>ProductRow</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="第二步：建立静态版本"><a href="#第二步：建立静态版本" class="headerlink" title="第二步：建立静态版本"></a>第二步：建立静态版本</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductCategoryRow</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    const category = <span class="keyword">this</span>.props.category;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">        &lt;th colSpan=<span class="string">"2"</span>&gt;</span><br><span class="line">          &#123;category&#125;</span><br><span class="line">        &lt;/th&gt;</span><br><span class="line">      &lt;/tr&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductRow</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    const product = <span class="keyword">this</span>.props.product;</span><br><span class="line">    const name = product.stocked ?</span><br><span class="line">      product.name :</span><br><span class="line">      &lt;span style=&#123;&#123;color: <span class="symbol">'re</span>d'&#125;&#125;&gt;</span><br><span class="line">        &#123;product.name&#125;</span><br><span class="line">      &lt;/span&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">        &lt;td&gt;&#123;name&#125;&lt;/td&gt;</span><br><span class="line">        &lt;td&gt;&#123;product.price&#125;&lt;/td&gt;</span><br><span class="line">      &lt;/tr&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductTable</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    const rows = [];</span><br><span class="line">    let lastCategory = <span class="literal">null</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">this</span>.props.products.forEach((product) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (product.category !== lastCategory) &#123;</span><br><span class="line">        rows.push(</span><br><span class="line">          &lt;<span class="type">ProductCategoryRow</span></span><br><span class="line">            category=&#123;product.category&#125;</span><br><span class="line">            key=&#123;product.category&#125; /&gt;</span><br><span class="line">        );</span><br><span class="line">      &#125;</span><br><span class="line">      rows.push(</span><br><span class="line">        &lt;<span class="type">ProductRow</span></span><br><span class="line">          product=&#123;product&#125;</span><br><span class="line">          key=&#123;product.name&#125; /&gt;</span><br><span class="line">      );</span><br><span class="line">      lastCategory = product.category;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;table&gt;</span><br><span class="line">        &lt;thead&gt;</span><br><span class="line">          &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;<span class="type">Name</span>&lt;/th&gt;</span><br><span class="line">            &lt;th&gt;<span class="type">Price</span>&lt;/th&gt;</span><br><span class="line">          &lt;/tr&gt;</span><br><span class="line">        &lt;/thead&gt;</span><br><span class="line">        &lt;tbody&gt;&#123;rows&#125;&lt;/tbody&gt;</span><br><span class="line">      &lt;/table&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SearchBar</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;form&gt;</span><br><span class="line">        &lt;input <span class="class"><span class="keyword">type</span></span>=<span class="string">"text"</span> placeholder=<span class="string">"Search..."</span> /&gt;</span><br><span class="line">        &lt;p&gt;</span><br><span class="line">          &lt;input <span class="class"><span class="keyword">type</span></span>=<span class="string">"checkbox"</span> /&gt;</span><br><span class="line">          &#123;' '&#125;</span><br><span class="line">          <span class="type">Only</span> show products in stock</span><br><span class="line">        &lt;/p&gt;</span><br><span class="line">      &lt;/form&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FilterableProductTable</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;<span class="type">SearchBar</span> /&gt;</span><br><span class="line">        &lt;<span class="type">ProductTable</span> products=&#123;<span class="keyword">this</span>.props.products&#125; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const <span class="type">PRODUCTS</span> = [</span><br><span class="line">  &#123;category: <span class="symbol">'Sporting</span> <span class="type">Goods</span>', price: '$<span class="number">49.99</span>', stocked: <span class="literal">true</span>, name: <span class="symbol">'Footbal</span>l'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Sporting</span> <span class="type">Goods</span>', price: '$<span class="number">9.99</span>', stocked: <span class="literal">true</span>, name: <span class="symbol">'Basebal</span>l'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Sporting</span> <span class="type">Goods</span>', price: '$<span class="number">29.99</span>', stocked: <span class="literal">false</span>, name: <span class="symbol">'Basketbal</span>l'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Electronic</span>s', price: '$<span class="number">99.99</span>', stocked: <span class="literal">true</span>, name: <span class="symbol">'iPod</span> <span class="type">Touch</span>'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Electronic</span>s', price: '$<span class="number">399.99</span>', stocked: <span class="literal">false</span>, name: <span class="symbol">'iPhone</span> <span class="number">5</span>'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Electronic</span>s', price: '$<span class="number">199.99</span>', stocked: <span class="literal">true</span>, name: <span class="symbol">'Nexus</span> <span class="number">7</span>'&#125;</span><br><span class="line">];</span><br><span class="line"> </span><br><span class="line"><span class="type">ReactDOM</span>.render(</span><br><span class="line">  &lt;<span class="type">FilterableProductTable</span> products=&#123;<span class="type">PRODUCTS</span>&#125; /&gt;,</span><br><span class="line">  document.getElementById(<span class="symbol">'containe</span>r')</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>现在你有了部件层级，是时候实现应用了。最容易的方法是先建立一个获取数据、渲染UI但没有交互的版本。把这些过程分离出来，是因为建立静态版本需要很多输入操作但不需要过多思考，增加交互功能不需要太多输入但需要很多思考。接下来我们会看到我这么说的原因。</p>
+<p>建立渲染数据模型的静态版本，你需要创建使用其他部件的部件并且用<code>props</code>来传递数据。<code>props</code>是从父部件向子部件传递数据的一种方法。如果你对状态<code>state</code>的概念熟悉，在创建应用的静态版本时一定别使用<code>state</code>。状态只保留在交互的时候用。</p>
+<p>你可以由底向上或从上到底开始。或者说，你可以首先创建最顶层的部件（例如从FilterableProductTable开始）或首先创建最底层部件（从ProductRow开始）。在简单的应用中，一般采取由上到底的方式；复杂的应用为了便于边创建边测试则相反。</p>
+<p>这一步结束的时候，你会有了一个渲染数据模型的可重用部件库。因为这是应用的静态版，部件只包含<code>render()</code>方法。最顶层的部件（<code>FilterableProductTable</code>）或取数据模型为<code>prop</code>。如果数据模型中的数据有改变，重新调用<code>render()</code>，UI会相应的更新。静态版本复杂性不高，会很容易的看到UI如何更新。React单向数据流（<code>one-way data flow</code>或<code>one-way-binding</code>）保证了模块化和相应速度。</p>
+<h3 id="属性（Props）和状态（State）的插曲"><a href="#属性（Props）和状态（State）的插曲" class="headerlink" title="属性（Props）和状态（State）的插曲"></a>属性（Props）和状态（State）的插曲</h3><p>React中有两种模型数据：props和state。理解两者之间的区别非常重要；进一步了解请参考<a href="https://reactjs.org/docs/interactivity-and-dynamic-uis.html" target="_blank" rel="noopener">官方文档</a>。</p>
+<h2 id="第三步：确定最少（但功能齐全）的UI状态"><a href="#第三步：确定最少（但功能齐全）的UI状态" class="headerlink" title="第三步：确定最少（但功能齐全）的UI状态"></a>第三步：确定最少（但功能齐全）的UI状态</h2><p>使UI具备交互功能，需要底层数据触发事件。React的状态<code>state</code>让这一点的实现很简单。</p>
+<p>为了正确地创建应用，要首先思考应用需要的最小的状态变化。关键是别重复造轮子——<a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself" target="_blank" rel="noopener">DRY: <em>Don’t Repeat Yourself</em></a>. 找出应用需要的最少的数据，据此在计算其他的。例如，如果要创建TODO列表，只要有个保存TODO项目的数组即可，不需要TODO项目数量的数据。因为数量可以由获取数组长度很容易地得到。</p>
+<p>考虑我们这个例子中需要的数据，我们有了：</p>
+<ul>
+<li>产品原始列表</li>
+<li>用户输入的搜索文本</li>
+<li>复选框的值</li>
+<li>过滤的产品列表</li>
+</ul>
+<p>我们逐一分析，看看哪个是状态。对每一个数据，只要问三个问题：</p>
+<ol>
+<li>它是父部件经由props传递给子部件的吗？如果是，很可能不是状态。</li>
+<li>它的值在应用操作过程中会改变吗？如果不会，很可能不是状态。</li>
+<li>它的值能由其他状态或属性计算得到吗？如果是，很可能不是状态。</li>
+</ol>
+<p>原始数据列表经props传入，那它不是状态。搜索文本和复选框的值会在应用操作过程中被改变，而且不能由其他属性或状态计算获得，看起来是状态。最后，过滤的产品列表不是状态，因为它可以经过计算原始数据列表、搜索文本和复选框的值获得。</p>
+<p>最后，我们的状态是：</p>
+<ul>
+<li>用户输入的搜索文本</li>
+<li>复选框的值</li>
+</ul>
+<h2 id="第四步：确定状态的位置"><a href="#第四步：确定状态的位置" class="headerlink" title="第四步：确定状态的位置"></a>第四步：确定状态的位置</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductCategoryRow</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    const category = <span class="keyword">this</span>.props.category;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">        &lt;th colSpan=<span class="string">"2"</span>&gt;</span><br><span class="line">          &#123;category&#125;</span><br><span class="line">        &lt;/th&gt;</span><br><span class="line">      &lt;/tr&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductRow</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    const product = <span class="keyword">this</span>.props.product;</span><br><span class="line">    const name = product.stocked ?</span><br><span class="line">      product.name :</span><br><span class="line">      &lt;span style=&#123;&#123;color: <span class="symbol">'re</span>d'&#125;&#125;&gt;</span><br><span class="line">        &#123;product.name&#125;</span><br><span class="line">      &lt;/span&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">        &lt;td&gt;&#123;name&#125;&lt;/td&gt;</span><br><span class="line">        &lt;td&gt;&#123;product.price&#125;&lt;/td&gt;</span><br><span class="line">      &lt;/tr&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductTable</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    const filterText = <span class="keyword">this</span>.props.filterText;</span><br><span class="line">    const inStockOnly = <span class="keyword">this</span>.props.inStockOnly;</span><br><span class="line"></span><br><span class="line">    const rows = [];</span><br><span class="line">    let lastCategory = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.props.products.forEach((product) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (product.name.indexOf(filterText) === <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (inStockOnly &amp;&amp; !product.stocked) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (product.category !== lastCategory) &#123;</span><br><span class="line">        rows.push(</span><br><span class="line">          &lt;<span class="type">ProductCategoryRow</span></span><br><span class="line">            category=&#123;product.category&#125;</span><br><span class="line">            key=&#123;product.category&#125; /&gt;</span><br><span class="line">        );</span><br><span class="line">      &#125;</span><br><span class="line">      rows.push(</span><br><span class="line">        &lt;<span class="type">ProductRow</span></span><br><span class="line">          product=&#123;product&#125;</span><br><span class="line">          key=&#123;product.name&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      );</span><br><span class="line">      lastCategory = product.category;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;table&gt;</span><br><span class="line">        &lt;thead&gt;</span><br><span class="line">          &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;<span class="type">Name</span>&lt;/th&gt;</span><br><span class="line">            &lt;th&gt;<span class="type">Price</span>&lt;/th&gt;</span><br><span class="line">          &lt;/tr&gt;</span><br><span class="line">        &lt;/thead&gt;</span><br><span class="line">        &lt;tbody&gt;&#123;rows&#125;&lt;/tbody&gt;</span><br><span class="line">      &lt;/table&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SearchBar</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    const filterText = <span class="keyword">this</span>.props.filterText;</span><br><span class="line">    const inStockOnly = <span class="keyword">this</span>.props.inStockOnly;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;form&gt;</span><br><span class="line">        &lt;input</span><br><span class="line">          <span class="class"><span class="keyword">type</span></span>=<span class="string">"text"</span></span><br><span class="line">          placeholder=<span class="string">"Search..."</span></span><br><span class="line">          value=&#123;filterText&#125; /&gt;</span><br><span class="line">        &lt;p&gt;</span><br><span class="line">          &lt;input</span><br><span class="line">            <span class="class"><span class="keyword">type</span></span>=<span class="string">"checkbox"</span></span><br><span class="line">            checked=&#123;inStockOnly&#125; /&gt;</span><br><span class="line">          &#123;' '&#125;</span><br><span class="line">          <span class="type">Only</span> show products in stock</span><br><span class="line">        &lt;/p&gt;</span><br><span class="line">      &lt;/form&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FilterableProductTable</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      filterText: '',</span><br><span class="line">      inStockOnly: <span class="literal">false</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;<span class="type">SearchBar</span></span><br><span class="line">          filterText=&#123;<span class="keyword">this</span>.state.filterText&#125;</span><br><span class="line">          inStockOnly=&#123;<span class="keyword">this</span>.state.inStockOnly&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;<span class="type">ProductTable</span></span><br><span class="line">          products=&#123;<span class="keyword">this</span>.props.products&#125;</span><br><span class="line">          filterText=&#123;<span class="keyword">this</span>.state.filterText&#125;</span><br><span class="line">          inStockOnly=&#123;<span class="keyword">this</span>.state.inStockOnly&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const <span class="type">PRODUCTS</span> = [</span><br><span class="line">  &#123;category: <span class="symbol">'Sporting</span> <span class="type">Goods</span>', price: '$<span class="number">49.99</span>', stocked: <span class="literal">true</span>, name: <span class="symbol">'Footbal</span>l'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Sporting</span> <span class="type">Goods</span>', price: '$<span class="number">9.99</span>', stocked: <span class="literal">true</span>, name: <span class="symbol">'Basebal</span>l'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Sporting</span> <span class="type">Goods</span>', price: '$<span class="number">29.99</span>', stocked: <span class="literal">false</span>, name: <span class="symbol">'Basketbal</span>l'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Electronic</span>s', price: '$<span class="number">99.99</span>', stocked: <span class="literal">true</span>, name: <span class="symbol">'iPod</span> <span class="type">Touch</span>'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Electronic</span>s', price: '$<span class="number">399.99</span>', stocked: <span class="literal">false</span>, name: <span class="symbol">'iPhone</span> <span class="number">5</span>'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Electronic</span>s', price: '$<span class="number">199.99</span>', stocked: <span class="literal">true</span>, name: <span class="symbol">'Nexus</span> <span class="number">7</span>'&#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="type">ReactDOM</span>.render(</span><br><span class="line">  &lt;<span class="type">FilterableProductTable</span> products=&#123;<span class="type">PRODUCTS</span>&#125; /&gt;,</span><br><span class="line">  document.getElementById(<span class="symbol">'containe</span>r')</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>我们确定了应用中的最少的状态，接下来，我们确定这些状态属于哪个部件。</p>
+<p>记住：React的部件中数据是单向由顶向下流动。哪些部件传递这些状态可能不能马上弄清楚。<strong>这往往是新手理解起来最难的部分</strong>，按照下面的流程确定：</p>
+<p>对于应用中每一个状态：</p>
+<ul>
+<li>确定依赖这个状态来渲染的每一个部件</li>
+<li>寻找共同的父部件（在部件层级中，位于所有需要这个状态的部件之上的父部件）</li>
+<li>或者拥有这些状态的层级更高的部件</li>
+<li>如果找不到拥有这个状态的部件，创建一个持有这个状态的新部件，加到部件层级中，位置在共同父部件之上。</li>
+</ul>
+<p>我们根据上面的原则检视一下：</p>
+<ul>
+<li>ProductTable需要根据状态过滤产品，SearchBar需要显示搜索文本和复选框状态</li>
+<li>它们共同的父部件是FilterableProductTable</li>
+<li>过滤文本和复选框值放在FilterableProductTable看起来有意义</li>
+</ul>
+<p>酷，那么我们决定把状态放在FilterableProductTable中。首先，在FilterableProductTable构造器constructor中增加<code>this.state = {filterText: &#39;&#39;, inStockOnly: false}</code>来设置应用的初始状态。接着，将<code>filterText</code>和<code>inStockOnly</code>作为属性传递到ProductTable和SearchBar中。最后，用这些属性过滤ProductTable的数据，同时显示在SearchBar表单中。</p>
+<p>你会开始看到应用如何反应：设置<code>filterText</code>为<code>“ball”</code>然后刷新应用。你会看到数据表正确地刷新了。</p>
+<h2 id="第五步：添加反向数据流"><a href="#第五步：添加反向数据流" class="headerlink" title="第五步：添加反向数据流"></a>第五步：添加反向数据流</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductCategoryRow</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    const category = <span class="keyword">this</span>.props.category;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">        &lt;th colSpan=<span class="string">"2"</span>&gt;</span><br><span class="line">          &#123;category&#125;</span><br><span class="line">        &lt;/th&gt;</span><br><span class="line">      &lt;/tr&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductRow</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    const product = <span class="keyword">this</span>.props.product;</span><br><span class="line">    const name = product.stocked ?</span><br><span class="line">      product.name :</span><br><span class="line">      &lt;span style=&#123;&#123;color: <span class="symbol">'re</span>d'&#125;&#125;&gt;</span><br><span class="line">        &#123;product.name&#125;</span><br><span class="line">      &lt;/span&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">        &lt;td&gt;&#123;name&#125;&lt;/td&gt;</span><br><span class="line">        &lt;td&gt;&#123;product.price&#125;&lt;/td&gt;</span><br><span class="line">      &lt;/tr&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductTable</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    const filterText = <span class="keyword">this</span>.props.filterText;</span><br><span class="line">    const inStockOnly = <span class="keyword">this</span>.props.inStockOnly;</span><br><span class="line"></span><br><span class="line">    const rows = [];</span><br><span class="line">    let lastCategory = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.props.products.forEach((product) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (product.name.indexOf(filterText) === <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (inStockOnly &amp;&amp; !product.stocked) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (product.category !== lastCategory) &#123;</span><br><span class="line">        rows.push(</span><br><span class="line">          &lt;<span class="type">ProductCategoryRow</span></span><br><span class="line">            category=&#123;product.category&#125;</span><br><span class="line">            key=&#123;product.category&#125; /&gt;</span><br><span class="line">        );</span><br><span class="line">      &#125;</span><br><span class="line">      rows.push(</span><br><span class="line">        &lt;<span class="type">ProductRow</span></span><br><span class="line">          product=&#123;product&#125;</span><br><span class="line">          key=&#123;product.name&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      );</span><br><span class="line">      lastCategory = product.category;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;table&gt;</span><br><span class="line">        &lt;thead&gt;</span><br><span class="line">          &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;<span class="type">Name</span>&lt;/th&gt;</span><br><span class="line">            &lt;th&gt;<span class="type">Price</span>&lt;/th&gt;</span><br><span class="line">          &lt;/tr&gt;</span><br><span class="line">        &lt;/thead&gt;</span><br><span class="line">        &lt;tbody&gt;&#123;rows&#125;&lt;/tbody&gt;</span><br><span class="line">      &lt;/table&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SearchBar</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.handleFilterTextChange = <span class="keyword">this</span>.handleFilterTextChange.bind(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.handleInStockChange = <span class="keyword">this</span>.handleInStockChange.bind(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  handleFilterTextChange(e) &#123;</span><br><span class="line">    <span class="keyword">this</span>.props.onFilterTextChange(e.target.value);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  handleInStockChange(e) &#123;</span><br><span class="line">    <span class="keyword">this</span>.props.onInStockChange(e.target.checked);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;form&gt;</span><br><span class="line">        &lt;input</span><br><span class="line">          <span class="class"><span class="keyword">type</span></span>=<span class="string">"text"</span></span><br><span class="line">          placeholder=<span class="string">"Search..."</span></span><br><span class="line">          value=&#123;<span class="keyword">this</span>.props.filterText&#125;</span><br><span class="line">          onChange=&#123;<span class="keyword">this</span>.handleFilterTextChange&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;p&gt;</span><br><span class="line">          &lt;input</span><br><span class="line">            <span class="class"><span class="keyword">type</span></span>=<span class="string">"checkbox"</span></span><br><span class="line">            checked=&#123;<span class="keyword">this</span>.props.inStockOnly&#125;</span><br><span class="line">            onChange=&#123;<span class="keyword">this</span>.handleInStockChange&#125;</span><br><span class="line">          /&gt;</span><br><span class="line">          &#123;' '&#125;</span><br><span class="line">          <span class="type">Only</span> show products in stock</span><br><span class="line">        &lt;/p&gt;</span><br><span class="line">      &lt;/form&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FilterableProductTable</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      filterText: '',</span><br><span class="line">      inStockOnly: <span class="literal">false</span></span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">this</span>.handleFilterTextChange = <span class="keyword">this</span>.handleFilterTextChange.bind(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.handleInStockChange = <span class="keyword">this</span>.handleInStockChange.bind(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleFilterTextChange(filterText) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      filterText: filterText</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  handleInStockChange(inStockOnly) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      inStockOnly: inStockOnly</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;<span class="type">SearchBar</span></span><br><span class="line">          filterText=&#123;<span class="keyword">this</span>.state.filterText&#125;</span><br><span class="line">          inStockOnly=&#123;<span class="keyword">this</span>.state.inStockOnly&#125;</span><br><span class="line">          onFilterTextChange=&#123;<span class="keyword">this</span>.handleFilterTextChange&#125;</span><br><span class="line">          onInStockChange=&#123;<span class="keyword">this</span>.handleInStockChange&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;<span class="type">ProductTable</span></span><br><span class="line">          products=&#123;<span class="keyword">this</span>.props.products&#125;</span><br><span class="line">          filterText=&#123;<span class="keyword">this</span>.state.filterText&#125;</span><br><span class="line">          inStockOnly=&#123;<span class="keyword">this</span>.state.inStockOnly&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const <span class="type">PRODUCTS</span> = [</span><br><span class="line">  &#123;category: <span class="symbol">'Sporting</span> <span class="type">Goods</span>', price: '$<span class="number">49.99</span>', stocked: <span class="literal">true</span>, name: <span class="symbol">'Footbal</span>l'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Sporting</span> <span class="type">Goods</span>', price: '$<span class="number">9.99</span>', stocked: <span class="literal">true</span>, name: <span class="symbol">'Basebal</span>l'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Sporting</span> <span class="type">Goods</span>', price: '$<span class="number">29.99</span>', stocked: <span class="literal">false</span>, name: <span class="symbol">'Basketbal</span>l'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Electronic</span>s', price: '$<span class="number">99.99</span>', stocked: <span class="literal">true</span>, name: <span class="symbol">'iPod</span> <span class="type">Touch</span>'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Electronic</span>s', price: '$<span class="number">399.99</span>', stocked: <span class="literal">false</span>, name: <span class="symbol">'iPhone</span> <span class="number">5</span>'&#125;,</span><br><span class="line">  &#123;category: <span class="symbol">'Electronic</span>s', price: '$<span class="number">199.99</span>', stocked: <span class="literal">true</span>, name: <span class="symbol">'Nexus</span> <span class="number">7</span>'&#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="type">ReactDOM</span>.render(</span><br><span class="line">  &lt;<span class="type">FilterableProductTable</span> products=&#123;<span class="type">PRODUCTS</span>&#125; /&gt;,</span><br><span class="line">  document.getElementById(<span class="symbol">'containe</span>r')</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>现在为止，我们创建的这个应用能够根据属性和状态正确地渲染。现在是时候支持反向数据流了：在部件层级内部的表单需要更新FilterableProductTable状态。</p>
+<p>React使这个数据流清晰易懂，以便理解你的程序是如何工作的，但是它需要比传统的双向数据绑定更多的输入。</p>
+<p>如果你尝试在当前版本的示例中键入或选中该框，则会看到React忽略了你的输入。这是因为我们已经将输入的值prop设置为始终等于从FilterableProductTable传入的状态。</p>
+<p>让我们想想我们希望发生的事。我们希望确保每当用户更改表单时，我们都会更新状态以反映用户的输入。由于组件应该只更新自己的状态，FilterableProductTable会将回调传递给SearchBar，只要状态更新就会触发。我们可以使用输入上的onChange事件来通知它。FilterableProductTable传递的回调将调用setState（），应用将被更新。</p>
+<p>虽然这听起来很复杂，实际上只是几行代码。这真的使数据如何在整个应用程序中如何流动一目了然。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>希望这可以让你了解如何用React来构建组件和应用。 尽管可能需要会比以前更多地输入内容，但请记住，代码的可读性远远比代码的编写重要，读取模块化的显式代码非常容易。当你开始构建大型组件库时，将会体会到这种明确性和模块性，通过代码重用，你的代码行将开始缩小。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/react/" rel="tag"># react</a>
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/12/31/171231_books/" rel="prev" title="我的2017年书单">
+      <i class="fa fa-chevron-left"></i> 我的2017年书单
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/01/06/180106_react/" rel="next" title="React.js 概念与入门">
+      React.js 概念与入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开始"><span class="nav-number">1.</span> <span class="nav-text">开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步：把界面分解为部件层次"><span class="nav-number">2.</span> <span class="nav-text">第一步：把界面分解为部件层次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步：建立静态版本"><span class="nav-number">3.</span> <span class="nav-text">第二步：建立静态版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性（Props）和状态（State）的插曲"><span class="nav-number">3.1.</span> <span class="nav-text">属性（Props）和状态（State）的插曲</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步：确定最少（但功能齐全）的UI状态"><span class="nav-number">4.</span> <span class="nav-text">第三步：确定最少（但功能齐全）的UI状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四步：确定状态的位置"><span class="nav-number">5.</span> <span class="nav-text">第四步：确定状态的位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五步：添加反向数据流"><span class="nav-number">6.</span> <span class="nav-text">第五步：添加反向数据流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">7.</span> <span class="nav-text">结语</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
