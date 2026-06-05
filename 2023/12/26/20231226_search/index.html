@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本文是檀东东·Tango 搜索技术，普通人变强的唯一外挂的笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搜索技术">
+<meta property="og:url" content="http://blog.fanzhh.pw/2023/12/26/20231226_search/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="本文是檀东东·Tango 搜索技术，普通人变强的唯一外挂的笔记。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.devlabs.cc/202312261.png">
+<meta property="article:published_time" content="2023-12-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-04T22:35:40.263Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="科技">
+<meta property="article:tag" content="搜索">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.devlabs.cc/202312261.png">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2023/12/26/20231226_search/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>搜索技术 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2023/12/26/20231226_search/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          搜索技术
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-12-26 00:00:00" itemprop="dateCreated datePublished" datetime="2023-12-26T00:00:00+08:00">2023-12-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-02-05 06:35:40" itemprop="dateModified" datetime="2026-02-05T06:35:40+08:00">2026-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.devlabs.cc/202312261.png" alt=""><br>本文是<a href="https://www.youtube.com/@user-lw1db2ge8q" target="_blank" rel="noopener">檀东东·Tango</a> <a href="https://www.youtube.com/watch?v=tiN6T1LewmQ" target="_blank" rel="noopener">搜索技术，普通人变强的唯一外挂</a>的笔记。</p>
+<a id="more"></a>
+<h2 id="为什么搜索技术非常重要"><a href="#为什么搜索技术非常重要" class="headerlink" title="为什么搜索技术非常重要"></a>为什么搜索技术非常重要</h2><p>在互联网时代，学会善于使用各类搜索技术非常重要，原因如下：</p>
+<ol>
+<li>海量信息：互联网上存在着大量的信息和数据，其中包括文章、新闻、论坛帖子、视频、音频等各种形式的内容。搜索技术可以帮助我们在这个海量的信息中快速找到所需的内容，节省时间和精力。    </li>
+<li>知识获取：搜索技术使得获取知识变得更加便捷。通过搜索引擎，我们可以访问到全球各地的知识库，包括学术研究、专业知识、历史资料等。无论是在学习、工作还是日常生活中，我们可以通过搜索技术获取到我们所需的知识。    </li>
+<li>决策支持：在做出决策时，搜索技术可以提供相关的背景信息和数据，帮助我们做出更明智的选择。无论是购买商品、选择旅游目的地、了解市场趋势，还是查找医疗信息等，搜索技术都能提供有用的信息来支持我们的决策。    </li>
+<li>解决问题：当我们遇到问题或者困惑时，搜索技术可以帮助我们找到解决方案。通过搜索引擎，我们可以查找到其他人提供的类似问题的答案、专家的意见、社区的讨论等，从而更好地解决自己的问题。    </li>
+<li>更新知识：互联网上的信息在不断更新和演进，搜索技术可以帮助我们及时获取最新的知识。无论是关注新闻动态、追踪行业发展，还是学习最新的科学研究成果，搜索技术都能帮助我们保持知识的更新。</li>
+</ol>
+<p>总之，搜索技术是普通人变强的唯一外挂，可以帮助人们学习的比别人快，做的比别人好。 掌握搜索技术是互联网时代获取信息的关键，可以极大程度地缩小信息差距。 </p>
+<h2 id="搜索技术的分类"><a href="#搜索技术的分类" class="headerlink" title="搜索技术的分类"></a>搜索技术的分类</h2><p>搜索目的可分为4类：</p>
+<ul>
+<li>了解信息(Know Something) </li>
+<li>学习技能(Learn Something) </li>
+<li>创作内容(Create Something) </li>
+<li>完成任务(Do Something) </li>
+</ul>
+<p>搜索内容又可分为4类：</p>
+<ul>
+<li>信息资讯：新闻、事件等 </li>
+<li>知识技能：概念、教程等</li>
+<li>素材文件：图片、视频、文档等 </li>
+<li>工具软件：各类工具、插件等 </li>
+</ul>
+<h2 id="搜索信息资讯"><a href="#搜索信息资讯" class="headerlink" title="搜索信息资讯"></a>搜索信息资讯</h2><p>在搜索信息资讯方面，谷歌的效率明显高于百度，谷歌能提供更准确的答案和更可靠的数据来源。</p>
+<p>在运用谷歌搜索时，可运用搜索语法提升效率，以下是部分搜索限定关键词的用法：</p>
+<ul>
+<li>引号限定精确匹配：使用双引号将关键词括起来，可以限定搜索结果只包含完全匹配该短语的页面。例如，在搜索中输入”人工智能”，将只返回包含完整短语”人工智能”的页面，而不是包含单独的”人工”或”智能”的页面。</li>
+<li>intitle：使用 intitle: 关键词可以限定搜索结果仅包含在页面标题中包含特定关键词的页面。例如，搜索 intitle:人工智能 将只返回页面标题中包含关键词 “人工智能” 的结果。如果希望标题里面出现多个关键词，可以使用allintitle:，如搜索 allintitle:AI google 将返回页面标题同时包含AI和google的页面。</li>
+<li>intext：用于指定搜索结果中必须包含特定关键词的页面。通过使用 intext:，可以将搜索结果限定在网页的正文文本中包含指定关键词的页面。输入 intext:健康饮食 这将返回包含健康饮食关键词的页面，可以用来查找有关健康饮食的文章、指南或建议。</li>
+<li>inurl：使用 inurl: 关键词可以限定搜索结果仅包含在 URL 中包含特定关键词的页面。例如，搜索 inurl:人工智能 将只返回 URL 中包含关键词 “人工智能” 的结果。    </li>
+</ul>
+<ol start="4">
+<li>:site：使用 :site 关键词可以限定搜索结果仅来自特定网站。例如，搜索 “人工智能 site:wikipedia.org” 将只返回来自维基百科网站的与人工智能相关的页面。    </li>
+<li>imagesize：使用 imagesize: 关键词可以限定搜索结果仅包含特定图像尺寸的图片。例如，搜索 imagesize:800x600 将只返回尺寸为 800x600 的图片。    </li>
+<li>filetype：使用 filetype: 关键词可以限定搜索结果为特定的文件类型。例如，搜索 “人工智能 filetype:pdf” 将只返回与人工智能相关的 PDF 文档。</li>
+</ol>
+<h2 id="搜索知识技能"><a href="#搜索知识技能" class="headerlink" title="搜索知识技能"></a>搜索知识技能</h2><p>主要平台：谷歌、得到APP、B站、油管、优质视频网站等。主要分为三种类型：</p>
+<ul>
+<li>免费全公开，通过谷歌等各种搜索工具能够搜到</li>
+<li>免费私域，如微信公众号上的内容，谷歌搜不到，搜狗可以</li>
+<li>收费私域，如得道APP</li>
+</ul>
+<p>中文简体的知识，15年前集中在百度知道、百度贴吧、各类论坛，10年前集中在知乎、简书、公众号，5年前开始集中于小红书、抖音、快手、B站、得道App等。知识的载体从电脑端向移动端转移。知识的载体也从文字转向了视频。</p>
+<p>如果知识技能不局限于中文简体，那么使用Google和Youtube基本上可以满足你对知识的所有要求。</p>
+<p>作者推荐一个网站<a href="https://www.similarsites.com/" target="_blank" rel="noopener">https://www.similarsites.com/</a>,SimilarSites.com是一个创新的推荐引擎，它能在互联网上搜索到更多你喜欢的内容。SimilarSites.com根据相关内容、网站结构、链接分析算法、详细的用户冲浪行为和庞大的用户排名社区，找到与用户浏览的网站相似的网站，从而打破网络的杂乱无章。</p>
+<p>如果要搜索学术期刊，推荐<a href="https://scholar.google.com/" target="_blank" rel="noopener">谷歌学术</a>和<a href="https://sci-hub.se/" target="_blank" rel="noopener">sci-hub</a>。Sci-Hub最初是一个用来快速查阅科学期刊文章的工具 - 这些文章是当今科学界知识传播的主要媒介。 现在Sci-Hub已经成长为一个 <a href="https://sci-hub.se/database" target="_blank" rel="noopener">储存有88,343,822 篇研究文章和书籍的数据库</a> - 任何人都可以免费访问，阅读和下载。当然，访问这两个网站的同时，可以使用SimilarSites.com找到更多类似的网站。</p>
+<p>如果搜图书，中文推荐<a href="https://www.jiumodiary.com/" target="_blank" rel="noopener">鸠摩搜索</a>, <a href="https://www.book123.info/" target="_blank" rel="noopener">无名图书</a>，其他可谷歌搜索 ebook free download site 会有很多结果，常见网站有<a href="https://z-lib.is/" target="_blank" rel="noopener">ZLibrary</a>，<a href="https://manybooks.net/" target="_blank" rel="noopener">manybooks</a>，<a href="https://www.pdfbooksworld.com/" target="_blank" rel="noopener">pdfbooksworld</a>。</p>
+<p>如果要找在线学习课程，可谷歌搜索 best online learing sites。如果找网盘内容，可以访问学搜搜、盘搜搜、云盘狗等，或谷歌 百度网盘搜索引擎。 </p>
+<h2 id="搜索素材文件"><a href="#搜索素材文件" class="headerlink" title="搜索素材文件"></a>搜索素材文件</h2><p>可利用免费素材网站、版权网站等。使用中注意遵守版权，非商用的话基本没有风险。 以下是推荐的素材网站：</p>
+<ul>
+<li><a href="https://www.pexels.com/zh-cn/" target="_blank" rel="noopener">pexels</a>, 是一个广受欢迎的免费图片和视频素材网站。它提供了庞大的素材库，其中包含高质量、版权免费的照片、视频和插图素材，供个人和商业用途使用。</li>
+<li><a href="https://mixkit.co/" target="_blank" rel="noopener">mixkit</a>，致力于为创意人员、设计师和视频制作人提供高质量的免费资源。</li>
+</ul>
+<p>当然你仍然可以谷歌搜索 best sites for free stock videos 获得结果。对于youtube上的视频，可以使用<a href="https://9xbuddy.xyz/zh-1cd" target="_blank" rel="noopener">9x</a>，<a href="https://save.tube/" target="_blank" rel="noopener">save.tube</a>下载。</p>
+<h2 id="搜索工具软件"><a href="#搜索工具软件" class="headerlink" title="搜索工具软件"></a>搜索工具软件</h2><p>工具软件优先考虑在线工具，其次是客户端软件，最后是插件。大多数需求都能找到对应的在线工具，可用similarsites找相似工具网站。推荐的一些工具网站：</p>
+<ul>
+<li><a href="https://www.canva.com/" target="_blank" rel="noopener">Canva</a> ，广受欢迎的在线平台，提供丰富的设计工具和素材库，旨在帮助用户创建各种视觉内容，包括海报、名片、社交媒体图像、演示文稿等。</li>
+<li><a href="https://miro.com/" target="_blank" rel="noopener">Miro</a> ，在线团队协作工具，它提供了丰富的功能，包括白板、流程图、脑图、项目管理等。用户可以在Miro上创建和分享各种类型的内容，与团队成员实时协作，从而提高工作效率。</li>
+<li><a href="https://www.clipchamp.com/" target="_blank" rel="noopener">Clipchamp</a> ，在线视频编辑和转换工具，它允许用户快速轻松地编辑、压缩和转换视频文件。用户可以使用 Clipchamp 在线剪辑、添加滤镜、调整色彩和音频等，而无需下载任何软件。</li>
+<li><a href="https://www.flexclip.com/" target="_blank" rel="noopener">Flexclip</a> ，在线视频编辑工具，它可以帮助用户快速简单地制作和编辑视频。用户可以在FlexClip上添加文字、音乐、过渡效果等，从而制作出高质量的视频内容。</li>
+<li><a href="https://zenvideo.qq.com/" target="_blank" rel="noopener">腾讯智影</a> 。腾讯智影是一个集素材搜集、视频剪辑、后期包装、渲染导出和发布于一体的在线剪辑平台，能够为用户提供从端到端的一站式视频剪辑及制作服务。</li>
+<li><a href="https://www.islide.cc/" target="_blank" rel="noopener">islide</a> ，一款专业的PPT设计工具，它提供了丰富的PPT模板、图标、图片和设计工具，帮助用户快速制作出精美的演示文稿。iSlide还具有智能设计功能，可以根据用户的内容自动调整布局和风格，提高PPT制作效率和质量。</li>
+<li>其他奇奇怪怪的网站。<a href="https://thispersondoesnotexist.com/" target="_blank" rel="noopener">生成一个不存在的人的照片</a> ，<a href="https://fast.com" target="_blank" rel="noopener">测网速</a> ，<a href="https://www.futureme.org/?utm_source=domainforward&amp;utm_medium=redirect&amp;utm_campaign=com" target="_blank" rel="noopener">给未来的自己写信</a> ，<a href="https://alternativeto.net/" target="_blank" rel="noopener">找各种软件的替代软件</a> ，其他可以谷歌 xx需求+online 搜到。</li>
+</ul>
+<p>许多软件的功能在chrome等浏览器的插件也有实现，可以在插件搜索。如上面提到的similarsites就有浏览器插件的实现。</p>
+<h2 id="运用AI工具"><a href="#运用AI工具" class="headerlink" title="运用AI工具"></a>运用AI工具</h2><p>ChatGPT等AI工具可直接回答问题,无需搜索，可进行追问、对比、推理等，功能强大；这些工具结合传统搜索技术和AI工具,形成超级搜索技术。 人工智能的出现对传统网页搜索产生了多方面的影响：</p>
+<ol>
+<li>智能搜索结果：人工智能技术可以改进搜索引擎的算法和模型，使其能够更准确地理解用户的意图和查询意图。通过自然语言处理、语义理解和机器学习等技术，搜索引擎可以提供更智能、更相关的搜索结果。    </li>
+<li>个性化搜索体验：人工智能使搜索引擎能够根据用户的兴趣、偏好和历史行为进行个性化调整。通过分析用户的搜索历史、浏览行为和社交媒体数据等信息，搜索引擎可以为每个用户提供定制化的搜索结果，提高搜索的个性化体验。    </li>
+<li>直接回答和知识图谱：人工智能技术使得搜索引擎能够直接回答一些简单的问题，并展示有关特定主题的知识图谱。通过整合结构化数据和语义理解，搜索引擎可以提供更直接、更全面的答案，而不仅仅是返回相关的网页链接。    </li>
+<li>视觉和语音搜索：人工智能的发展推动了视觉和语音搜索的发展。通过图像识别和语音识别技术，搜索引擎可以接受用户通过拍照或语音输入的搜索请求，并返回相应的结果。这提供了更直观、更便捷的搜索方式。    </li>
+<li>智能推荐和相关内容：人工智能技术使得搜索引擎能够提供更智能的推荐和相关内容。通过分析用户的行为和兴趣，搜索引擎可以推荐相关的新闻、文章、视频和产品等内容，增强用户的发现和探索体验。    </li>
+</ol>
+<p>总体而言，人工智能的出现使得传统网页搜索变得更加智能、个性化和多样化。它提供了更准确、更直接的搜索结果，并丰富了搜索体验，使用户能够更便捷地获取所需信息。 </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/%E7%A7%91%E6%8A%80/" rel="tag"># 科技</a>
+              <a href="/tags/%E6%90%9C%E7%B4%A2/" rel="tag"># 搜索</a>
+              <a href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag"># 工具</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/26/20231226_hushi/" rel="prev" title="胡适是怎样成为无神论者的">
+      <i class="fa fa-chevron-left"></i> 胡适是怎样成为无神论者的
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/12/27/20231127_hushi/" rel="next" title="胡适的《四十自述》">
+      胡适的《四十自述》 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么搜索技术非常重要"><span class="nav-number">1.</span> <span class="nav-text">为什么搜索技术非常重要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索技术的分类"><span class="nav-number">2.</span> <span class="nav-text">搜索技术的分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索信息资讯"><span class="nav-number">3.</span> <span class="nav-text">搜索信息资讯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索知识技能"><span class="nav-number">4.</span> <span class="nav-text">搜索知识技能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索素材文件"><span class="nav-number">5.</span> <span class="nav-text">搜索素材文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索工具软件"><span class="nav-number">6.</span> <span class="nav-text">搜索工具软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运用AI工具"><span class="nav-number">7.</span> <span class="nav-text">运用AI工具</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Cloudflare是一家提供全球性网络安全解决方案的公司。他们提供一系列的网络安全产品，包括DDoS攻击防护、防火墙、CDN等等。除了网络安全产品，他们还提供了许多其他的网络服务，例如Cloudflare Pages，这是一个免费的前端部署服务，可以帮助开发者将其前端项目部署到互联网上。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Cloudflare Pages发布前端页面">
+<meta property="og:url" content="http://blog.fanzhh.pw/2023/05/02/20230502_cloudflare_pages/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="Cloudflare是一家提供全球性网络安全解决方案的公司。他们提供一系列的网络安全产品，包括DDoS攻击防护、防火墙、CDN等等。除了网络安全产品，他们还提供了许多其他的网络服务，例如Cloudflare Pages，这是一个免费的前端部署服务，可以帮助开发者将其前端项目部署到互联网上。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.devlabs.cc/cloudflare_pages.PNG">
+<meta property="article:published_time" content="2023-05-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-04T22:35:40.269Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="cloudflare">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="vps">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.devlabs.cc/cloudflare_pages.PNG">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2023/05/02/20230502_cloudflare_pages/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>使用Cloudflare Pages发布前端页面 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2023/05/02/20230502_cloudflare_pages/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用Cloudflare Pages发布前端页面
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-05-02 00:00:00" itemprop="dateCreated datePublished" datetime="2023-05-02T00:00:00+08:00">2023-05-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-02-05 06:35:40" itemprop="dateModified" datetime="2026-02-05T06:35:40+08:00">2026-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.devlabs.cc/cloudflare_pages.PNG" alt=""><br><a href="https://dash.cloudflare.com/" target="_blank" rel="noopener">Cloudflare</a>是一家提供全球性网络安全解决方案的公司。他们提供一系列的网络安全产品，包括DDoS攻击防护、防火墙、CDN等等。除了网络安全产品，他们还提供了许多其他的网络服务，例如Cloudflare Pages，这是一个免费的前端部署服务，可以帮助开发者将其前端项目部署到互联网上。<br><a id="more"></a></p>
+<p>你可以使用Pages连接到你的GitHub库，自定义构建设置，并仅需几个点击即可完成站点的部署。关键是，它完全免费！因此，如果你正在寻找托管前端项目的方式，<code>Cloudflare Pages</code>是我目之所及的最佳选择。</p>
+<h2 id="遇到Cloudflare之前"><a href="#遇到Cloudflare之前" class="headerlink" title="遇到Cloudflare之前"></a>遇到Cloudflare之前</h2><h3 id="VPS"><a href="#VPS" class="headerlink" title="VPS"></a>VPS</h3><p>在使用Cloudflare Pages之前，我通常租用一个VPS（虚拟专用服务器）来托管项目。我需要自己安装和配置Web服务器软件如Nginx、ReactJS，并负责管理服务器的安全性和稳定性。这都需要一定的金钱成本、技术知识和时间投入。我的项目除了个人博客和极少的Http+Js的静态网站，大多数是采用 <code>Django REST</code>后端 + <code>React</code>前端。</p>
+<p>先从容易的开始。</p>
+<h3 id="博客"><a href="#博客" class="headerlink" title="博客"></a>博客</h3><p>我的个人博客使用 <code>Hexo</code> 搭建。<a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>是一个快速、简单且强大的静态博客框架，它使用Markdown文件来生成静态网站。与其他静态博客框架相比，Hexo具有以下优势：</p>
+<ul>
+<li>快速：Hexo使用EJS模板引擎，生成速度非常快。</li>
+<li>易于使用：Hexo使用Markdown文件来生成网站，使得写作和发布变得非常简单。</li>
+<li>多种主题：Hexo有很多主题可以选择，也可以自己编写主题。</li>
+<li>插件丰富：Hexo有很多插件可以帮助你扩展功能，如Google Analytics、Disqus等。</li>
+</ul>
+<p>原来在VPS配置好博客Nginx后，写博客的流程为：</p>
+<ol>
+<li>在本地以Markdown格式写文章 </li>
+<li>本地运行 <code>hexo g</code> 生成内容 </li>
+<li><code>git push</code> 到 github </li>
+<li>登录 VPS <code>git pull</code> 获取更新后的内容</li>
+<li>完成博客更新</li>
+</ol>
+<h3 id="其他项目"><a href="#其他项目" class="headerlink" title="其他项目"></a>其他项目</h3><p>如前所述，我的项目大多采用 <code>Django REST</code> 后端 + <code>React</code>前端。部署在VPS上，前端Nginx指向React Build后的文件夹，后端则使用 <code>Nginx → uwsgi → Django REST。</code></p>
+<p>更新项目的流程为：</p>
+<ol>
+<li>本地使用VSCode编辑调试代码</li>
+<li><code>git push</code> 到 VPS</li>
+<li>VPS <code>git pull</code></li>
+<li>完成内容更新</li>
+</ol>
+<h2 id="使用-Cloudflare-Pages-之后"><a href="#使用-Cloudflare-Pages-之后" class="headerlink" title="使用 Cloudflare Pages 之后"></a>使用 <code>Cloudflare Pages</code> 之后</h2><p>当然需要在Cloudflare上注册账号。</p>
+<h3 id="博客-1"><a href="#博客-1" class="headerlink" title="博客"></a>博客</h3><ol>
+<li>在本地计算机上使用Hexo创建博客，并将其部署到GitHub（或GitLab）等支持的代码托管平台上</li>
+<li>在Cloudflare Pages控制台中创建一个新project，创建类型选择 <code>connect to git</code> </li>
+<li>若还没授权Cloudflare Pages访问您的GitHub或GitLab仓库请授权，你需要提供代码托管平台的登录凭据，以便Cloudflare Pages能够获取您的存储库</li>
+<li>选择你的代码托管平台上想要发布的repository</li>
+<li>配置构建设置，为你的博客配置构建命令和输出目录。对于Hexo，构建命令应为hexo generate，输出目录应为public</li>
+<li>点击“Deploy Site”按钮，Cloudflare将开始构建站点并将其部署到全球边缘节点</li>
+<li>完成后，Hexo博客就可以通过Cloudflare Pages进行访问了</li>
+<li>此时你的访问地址应为 <code>你的项目名字.pages.dev</code> ，若你有单独域名，请到你的域名服务商新增一条新的CName记录，目的地址指向  <code>你的项目名字.pages.dev</code> </li>
+<li>在Cloudflare Pages该项目的配置下，<code>Custom domains</code>设置自定义域名指向你的独立博客地址</li>
+</ol>
+<p>以后更新博客，你只需在本地编辑博客，<code>git push</code> 到代码托管平台，Cloudflare Pages会自动重新构建和部署站点。</p>
+<h3 id="其他项目-1"><a href="#其他项目-1" class="headerlink" title="其他项目"></a>其他项目</h3><p>步骤大致同上面，Build注意以下几项（我使用的React）：</p>
+<ul>
+<li>Build command: npm run build</li>
+<li>Build output directory: /build</li>
+<li>Root directory: /front （这个是我前端的子目录名字）</li>
+</ul>
+<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>纯粹静态网站的话，使用 Cloudflare Pages 完全可以抛开VPS了。现在我的项目前端会陆续迁移到 Cloudflare Pages 上，但API还需在VPS上运行。下一步希望通过使用 Cloudflare Workers 提供 Django REST API服务。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/cloudflare/" rel="tag"># cloudflare</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/vps/" rel="tag"># vps</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/01/20230501_why_react_renders/" rel="prev" title="探究React的渲染">
+      <i class="fa fa-chevron-left"></i> 探究React的渲染
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/20/230514_tokyo_story/" rel="next" title="重看《东京物语》">
+      重看《东京物语》 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到Cloudflare之前"><span class="nav-number">1.</span> <span class="nav-text">遇到Cloudflare之前</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VPS"><span class="nav-number">1.1.</span> <span class="nav-text">VPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#博客"><span class="nav-number">1.2.</span> <span class="nav-text">博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他项目"><span class="nav-number">1.3.</span> <span class="nav-text">其他项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Cloudflare-Pages-之后"><span class="nav-number">2.</span> <span class="nav-text">使用 Cloudflare Pages 之后</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#博客-1"><span class="nav-number">2.1.</span> <span class="nav-text">博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他项目-1"><span class="nav-number">2.2.</span> <span class="nav-text">其他项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#未完待续"><span class="nav-number">3.</span> <span class="nav-text">未完待续</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

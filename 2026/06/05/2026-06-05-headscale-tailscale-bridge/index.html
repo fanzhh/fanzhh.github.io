@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="当一台云VPS同时运行Headscale服务器和Tailscale官方节点时，通过iptables SNAT双向桥接+精确子网路由广播，实现两个WireGuard网络之间的互通。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VPS 既是 Headscale 节点又是 Tailscale 节点：实现双网互通">
+<meta property="og:url" content="http://blog.fanzhh.pw/2026/06/05/2026-06-05-headscale-tailscale-bridge/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="当一台云VPS同时运行Headscale服务器和Tailscale官方节点时，通过iptables SNAT双向桥接+精确子网路由广播，实现两个WireGuard网络之间的互通。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://blog.fanzhh.pw/images/headscale-tailscale-bridge-cover.png">
+<meta property="article:published_time" content="2026-06-05T05:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-05T05:56:43.812Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="Tailscale">
+<meta property="article:tag" content="Headscale">
+<meta property="article:tag" content="双网互通">
+<meta property="article:tag" content="SNAT">
+<meta property="article:tag" content="子网路由">
+<meta property="article:tag" content="WireGuard">
+<meta property="article:tag" content="iptables">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.fanzhh.pw/images/headscale-tailscale-bridge-cover.png">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2026/06/05/2026-06-05-headscale-tailscale-bridge/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>VPS 既是 Headscale 节点又是 Tailscale 节点：实现双网互通 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2026/06/05/2026-06-05-headscale-tailscale-bridge/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VPS 既是 Headscale 节点又是 Tailscale 节点：实现双网互通
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2026-06-05 13:00:00 / Modified: 13:56:43" itemprop="dateCreated datePublished" datetime="2026-06-05T13:00:00+08:00">2026-06-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">技术教程</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">当一台云VPS同时运行Headscale服务器和Tailscale官方节点时，通过iptables SNAT双向桥接+精确子网路由广播，实现两个WireGuard网络之间的互通。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+            <img src="/images/headscale-tailscale-bridge-cover.png" itemprop="contentUrl">
+        </div>
+        <p><img src="/images/headscale-tailscale-bridge-cover.png" alt=""></p>
+<h1 id="VPS-既是-Headscale-节点又是-Tailscale-节点：实现双网互通"><a href="#VPS-既是-Headscale-节点又是-Tailscale-节点：实现双网互通" class="headerlink" title="VPS 既是 Headscale 节点又是 Tailscale 节点：实现双网互通"></a>VPS 既是 Headscale 节点又是 Tailscale 节点：实现双网互通</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>有一台云 VPS，同时承担了两个角色：</p>
+<ul>
+<li><strong>Headscale 服务器</strong>：自建的 Tailscale 协调服务器，管理一个私有网络。</li>
+<li><strong>Tailscale 官方节点</strong>：同时加入了 Tailscale 官方 SaaS 网络。</li>
+</ul>
+<p>两个网络各自运行，Headscale 网络内的节点和 Tailscale 官方网络内的节点无法互相访问。由于 VPS 是两个网络的唯一交汇点，利用它做路由转发即可打通。</p>
+<h2 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Headscale 网络 (私网)              VPS                        Tailscale 官方网络</span><br><span class="line">┌──────────────────┐      ┌─────────────────────────┐      ┌──────────────────┐</span><br><span class="line">│ Desktop           │      │  tailscale-hs0: 100.64.0.2│    │ Mac              │</span><br><span class="line">│ 100.64.0.1        │◄────►│  tailscale0: &lt;TS_VPS_IP&gt; │◄──►│ &lt;TS_Node_B_IP&gt;   │</span><br><span class="line">│                  │      │                         │      │                  │</span><br><span class="line">│ Laptop           │      │  headscale<span class="built_in"> server </span>      │      │ Server-B         │</span><br><span class="line">│ 100.64.0.3        │      │  iptables SNAT<span class="built_in"> bridge </span>  │      │ &lt;TS_Node_C_IP&gt;  │</span><br><span class="line">└──────────────────┘      └─────────────────────────┘      └──────────────────┘</span><br></pre></td></tr></table></figure>
+<p>VPS 上运行两个独立的 <code>tailscaled</code> 进程，分别通过 <code>tailscale0</code> 和 <code>tailscale-hs0</code> 两张虚拟网卡连接两个网络。</p>
+<h2 id="核心问题：IP-地址段重叠"><a href="#核心问题：IP-地址段重叠" class="headerlink" title="核心问题：IP 地址段重叠"></a>核心问题：IP 地址段重叠</h2><p>Headscale 默认的地址池是 <code>100.64.0.0/10</code>，Tailscale 官方同样使用 <code>100.64.0.0/10</code>。两个网络分配的具体 IP 如下：</p>
+<ul>
+<li>Headscale 节点：<code>100.64.0.1</code>, <code>100.64.0.2</code>, <code>100.64.0.3</code>（占用 <code>100.64.0.0/24</code> 子网）</li>
+<li>Tailscale 官方节点：<code>100.72.x.x</code> ~ <code>100.126.x.x</code>（实际分散在 <code>100.64.0.0/10</code> 的其余空间中）</li>
+</ul>
+<p>虽然网段重叠，但 Headscale 节点实际只用了 <code>100.64.0.0/24</code>，Tailscale 官方没有分配这个子网内的地址。因此可以通过精确路由广播 + SNAT 实现互通。</p>
+<h2 id="核心思路：SNAT-双向桥接"><a href="#核心思路：SNAT-双向桥接" class="headerlink" title="核心思路：SNAT 双向桥接"></a>核心思路：SNAT 双向桥接</h2><p>VPS 作为中间人，通过 iptables SNAT 让两个网络的流量看起来都是从 VPS 发出的。</p>
+<ul>
+<li><strong>Headscale 节点 → Tailscale 官方节点</strong>：流量从 <code>tailscale-hs0</code> 进入 VPS，经内核路由从 <code>tailscale0</code> 出去，同时做 SNAT 将源 IP 改写为 VPS 在官方网络的 IP（记为 <code>&lt;TS_VPS_IP&gt;</code>）。</li>
+<li><strong>Tailscale 官方节点 → Headscale 节点</strong>：流量从 <code>tailscale0</code> 进入，从 <code>tailscale-hs0</code> 出去，SNAT 将源 IP 改写为 <code>100.64.0.2</code>（VPS 在 Headscale 网络的 IP）。</li>
+</ul>
+<p>配合子网路由广播，两个网络的节点都知道应该把去往对方的流量送到 VPS。</p>
+<h2 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h2><p>以下所有操作在 VPS 上执行。</p>
+<h3 id="1-确认现状"><a href="#1-确认现状" class="headerlink" title="1. 确认现状"></a>1. 确认现状</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看两个 tailscale 实例的状态</span></span><br><span class="line">tailscale status                    <span class="comment"># 官方侧 (tailscale0)</span></span><br><span class="line">sudo tailscale --socket=/run/tailscale-headscale/tailscaled.sock status  <span class="comment"># headscale 侧 (tailscale-hs0)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 IP 地址</span></span><br><span class="line">tailscale ip                        <span class="comment"># VPS 在官方网络的 IP</span></span><br><span class="line">sudo tailscale --socket=/run/tailscale-headscale/tailscaled.sock ip      <span class="comment"># 100.64.0.2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 Headscale 节点列表</span></span><br><span class="line">sudo headscale nodes list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 headscale 配置的 IP 段</span></span><br><span class="line">grep -A5 <span class="string">"ip_prefixes"</span> /etc/headscale/config.yaml</span><br></pre></td></tr></table></figure>
+<p>确认两件事：VPS 在两个网络中的 IP（后续 SNAT 要用），以及 VPS 在 Headscale 中的节点 ID（后续批准路由要用）。</p>
+<p>两个 <code>tailscaled</code> 进程应分别由独立的 systemd service 管理，官方侧通常是默认的 <code>tailscaled.service</code>，Headscale 侧需要单独创建（本例中为 <code>tailscaled-headscale.service</code>）。</p>
+<h3 id="2-开启-IP-转发"><a href="#2-开启-IP-转发" class="headerlink" title="2. 开启 IP 转发"></a>2. 开启 IP 转发</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 临时开启</span></span><br><span class="line">sysctl -w net.ipv4.ip_forward=1</span><br><span class="line">sysctl -w net.ipv6.conf.all.forwarding=1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 持久化</span></span><br><span class="line">cat &gt; /etc/sysctl.d/99-tailscale.conf &lt;&lt; EOF</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">net.ipv6.conf.all.forwarding = 1</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h3 id="3-配置-iptables-SNAT-和-FORWARD"><a href="#3-配置-iptables-SNAT-和-FORWARD" class="headerlink" title="3. 配置 iptables SNAT 和 FORWARD"></a>3. 配置 iptables SNAT 和 FORWARD</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># FORWARD 双向放行</span></span><br><span class="line">iptables -I FORWARD -i tailscale0 -o tailscale-hs0 -j ACCEPT</span><br><span class="line">iptables -I FORWARD -i tailscale-hs0 -o tailscale0 -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># SNAT：Headscale → Tailscale 官方（流量从 tailscale-hs0 进入、从 tailscale0 出去时改写源 IP）</span></span><br><span class="line">iptables -t nat -A POSTROUTING -o tailscale0 -j SNAT --to-source &lt;TS_VPS_IP&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># SNAT：Tailscale 官方 → Headscale（从 tailscale0 进入、从 tailscale-hs0 出去时改写源 IP）</span></span><br><span class="line">iptables -t nat -A POSTROUTING -o tailscale-hs0 -j SNAT --to-source 100.64.0.2</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>&lt;TS_VPS_IP&gt;</code> 替换为 VPS 在 Tailscale 官方网络的 IP（通过 <code>tailscale ip</code> 获取）。</p>
+</blockquote>
+<h3 id="4-持久化-iptables-规则"><a href="#4-持久化-iptables-规则" class="headerlink" title="4. 持久化 iptables 规则"></a>4. 持久化 iptables 规则</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建恢复脚本</span></span><br><span class="line">cat &gt; /etc/tailscale-bridge-iptables.sh &lt;&lt; <span class="string">'EOF'</span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">iptables -C FORWARD -i tailscale0 -o tailscale-hs0 -j ACCEPT 2&gt;/dev/null || \</span><br><span class="line">  iptables -I FORWARD -i tailscale0 -o tailscale-hs0 -j ACCEPT</span><br><span class="line">iptables -C FORWARD -i tailscale-hs0 -o tailscale0 -j ACCEPT 2&gt;/dev/null || \</span><br><span class="line">  iptables -I FORWARD -i tailscale-hs0 -o tailscale0 -j ACCEPT</span><br><span class="line">iptables -t nat -C POSTROUTING -o tailscale-hs0 -j SNAT --to-source 100.64.0.2 2&gt;/dev/null || \</span><br><span class="line">  iptables -t nat -A POSTROUTING -o tailscale-hs0 -j SNAT --to-source 100.64.0.2</span><br><span class="line">EOF</span><br><span class="line">chmod +x /etc/tailscale-bridge-iptables.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 systemd service</span></span><br><span class="line">cat &gt; /etc/systemd/system/tailscale-bridge-iptables.service &lt;&lt; <span class="string">'EOF'</span></span><br><span class="line">[Unit]</span><br><span class="line">Description=Restore iptables <span class="keyword">for</span> tailscale-headscale bridge</span><br><span class="line">After=network-online.target tailscaled.service tailscaled-headscale.service</span><br><span class="line">Wants=network-online.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=oneshot</span><br><span class="line">RemainAfterExit=yes</span><br><span class="line">ExecStart=/etc/tailscale-bridge-iptables.sh</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> tailscale-bridge-iptables.service</span><br></pre></td></tr></table></figure>
+<h3 id="5-Headscale-侧：向-Headscale-网络广播-Tailscale-官方子网路由"><a href="#5-Headscale-侧：向-Headscale-网络广播-Tailscale-官方子网路由" class="headerlink" title="5. Headscale 侧：向 Headscale 网络广播 Tailscale 官方子网路由"></a>5. Headscale 侧：向 Headscale 网络广播 Tailscale 官方子网路由</h3><p>在 Headscale 侧广播 Tailscale 官方节点所在的网段，排除 <code>100.64.0.0/24</code>（Headscale 自用段）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 Headscale 侧 tailscale 实例广播子网路由</span></span><br><span class="line">sudo tailscale --socket=/run/tailscale-headscale/tailscaled.sock up \</span><br><span class="line">  --advertise-routes=100.64.1.0/24,100.65.0.0/16,100.66.0.0/15,100.68.0.0/14,100.72.0.0/13,100.80.0.0/12,100.96.0.0/11 \</span><br><span class="line">  --accept-routes \</span><br><span class="line">  --advertise-exit-node \</span><br><span class="line">  --reset</span><br></pre></td></tr></table></figure>
+<p><strong>批准路由</strong>（Headscale 管理面需要手动 approve）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看待批准路由（`&lt;N&gt;` 为 VPS 在 headscale 中的节点 ID）</span></span><br><span class="line">sudo headscale nodes list-routes --identifier &lt;N&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 批准全部路由</span></span><br><span class="line">sudo headscale nodes approve-routes \</span><br><span class="line">  --identifier &lt;N&gt; \</span><br><span class="line">  --routes <span class="string">"0.0.0.0/0,100.96.0.0/11,100.80.0.0/12,100.72.0.0/13,100.68.0.0/14,100.66.0.0/15,100.65.0.0/16,100.64.1.0/24,::/0"</span></span><br></pre></td></tr></table></figure>
+<p>执行后 <code>headscale nodes list-routes</code> 会看到所有路由状态变为 <code>Serving</code>。</p>
+<h3 id="6-Tailscale-官方侧：向官方网络广播-Headscale-子网"><a href="#6-Tailscale-官方侧：向官方网络广播-Headscale-子网" class="headerlink" title="6. Tailscale 官方侧：向官方网络广播 Headscale 子网"></a>6. Tailscale 官方侧：向官方网络广播 Headscale 子网</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo tailscale up \</span><br><span class="line">  --advertise-routes=100.64.0.0/24 \</span><br><span class="line">  --accept-routes</span><br></pre></td></tr></table></figure>
+<p>这一步完成后，登录 <a href="https://login.tailscale.com/admin/machines" target="_blank" rel="noopener">Tailscale Admin Console</a>，找到 VPS 对应的那台机器，在 <strong>Edit route settings</strong> 中批准 <code>100.64.0.0/24</code> 路由。</p>
+<h3 id="7-让-Headscale-客户端接受路由"><a href="#7-让-Headscale-客户端接受路由" class="headerlink" title="7. 让 Headscale 客户端接受路由"></a>7. 让 Headscale 客户端接受路由</h3><p>在所有 Headscale 客户端节点上执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tailscale up --accept-routes</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>在 VPS 上确认规则生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看 iptables 规则</span></span><br><span class="line">iptables -S FORWARD | grep tailscale</span><br><span class="line">iptables -t nat -L POSTROUTING -n -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 Headscale 路由批准状态</span></span><br><span class="line">sudo headscale nodes list-routes --identifier &lt;N&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Tailscale ping 测试（Tailscale 自身的 ping 工具能绕过对端 ICMP 限制）</span></span><br><span class="line">tailscale ping &lt;TS_Node_IP&gt;          <span class="comment"># VPS → Tailscale 官方节点</span></span><br><span class="line">sudo tailscale --socket=/run/tailscale-headscale/tailscaled.sock ping 100.64.0.1  <span class="comment"># VPS → Headscale 节点</span></span><br></pre></td></tr></table></figure>
+<p>在两个网络的其他节点上互相 ping 或访问服务，确认双向可达。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li><p><strong>IP 段不冲突的前提</strong>：Headscale 节点全部在 <code>100.64.0.0/24</code> 内，与 Tailscale 官方分配的 IP 没有实际重叠。如果将来 Headscale 节点数量增加，需要调整路由广播的粒度。</p>
+</li>
+<li><p><strong>SNAT 导致源 IP 丢失</strong>：对端看到的连接源 IP 始终是 VPS 的地址，而非原始发起节点的 IP。如果应用层需要识别真实来源，需要用其他方式传递。</p>
+</li>
+<li><p><strong>防火墙干扰</strong>：Tailscale 节点之间 ICMP ping 不通很可能是对端防火墙拦截，不影响 TCP/UDP 服务访问。<code>tailscale ping</code> 命令能更准确地验证连通性。</p>
+</li>
+<li><p><strong>重启恢复</strong>：iptables 规则通过 systemd service 在启动时自动加载，路由广播信息存储在 tailscale 本地状态中，重启后会自动恢复。</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在不修改 Headscale 地址池的前提下，通过 iptables SNAT 双向桥接 + 精确子网路由广播，实现了 Headscale 私有网络与 Tailscale 官方网络之间的互通。核心依赖 VPS 作为两个网络的唯一交汇点，配置完成后两侧节点可以像在同一网络内一样互相访问。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Tailscale/" rel="tag"># Tailscale</a>
+              <a href="/tags/Headscale/" rel="tag"># Headscale</a>
+              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+              <a href="/tags/VPN/" rel="tag"># VPN</a>
+              <a href="/tags/WireGuard/" rel="tag"># WireGuard</a>
+              <a href="/tags/iptables/" rel="tag"># iptables</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/03/09/2026-03-09-digital-assistant-with-openclaw-para/" rel="prev" title="用 OpenClaw + PARA 搭建个人数字知识助理">
+      <i class="fa fa-chevron-left"></i> 用 OpenClaw + PARA 搭建个人数字知识助理
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#VPS-既是-Headscale-节点又是-Tailscale-节点：实现双网互通"><span class="nav-number">1.</span> <span class="nav-text">VPS 既是 Headscale 节点又是 Tailscale 节点：实现双网互通</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络拓扑"><span class="nav-number">1.2.</span> <span class="nav-text">网络拓扑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心问题：IP-地址段重叠"><span class="nav-number">1.3.</span> <span class="nav-text">核心问题：IP 地址段重叠</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心思路：SNAT-双向桥接"><span class="nav-number">1.4.</span> <span class="nav-text">核心思路：SNAT 双向桥接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置步骤"><span class="nav-number">1.5.</span> <span class="nav-text">配置步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-确认现状"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 确认现状</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-开启-IP-转发"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 开启 IP 转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-配置-iptables-SNAT-和-FORWARD"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. 配置 iptables SNAT 和 FORWARD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-持久化-iptables-规则"><span class="nav-number">1.5.4.</span> <span class="nav-text">4. 持久化 iptables 规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Headscale-侧：向-Headscale-网络广播-Tailscale-官方子网路由"><span class="nav-number">1.5.5.</span> <span class="nav-text">5. Headscale 侧：向 Headscale 网络广播 Tailscale 官方子网路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Tailscale-官方侧：向官方网络广播-Headscale-子网"><span class="nav-number">1.5.6.</span> <span class="nav-text">6. Tailscale 官方侧：向官方网络广播 Headscale 子网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-让-Headscale-客户端接受路由"><span class="nav-number">1.5.7.</span> <span class="nav-text">7. 让 Headscale 客户端接受路由</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证"><span class="nav-number">1.6.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">1.7.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.8.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

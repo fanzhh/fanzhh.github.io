@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近在老旧的Netgear WNDR4300路由器上成功部署了OpenClash，经过多次调试终于稳定运行。本文将详细介绍在资源受限的OpenWrt设备上配置OpenClash的全过程，包括配置优化、性能调优和故障排除。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenWrt路由器部署OpenClash手记">
+<meta property="og:url" content="http://blog.fanzhh.pw/2025/10/04/2025-10-04-OpenWrt-OpenClash/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="最近在老旧的Netgear WNDR4300路由器上成功部署了OpenClash，经过多次调试终于稳定运行。本文将详细介绍在资源受限的OpenWrt设备上配置OpenClash的全过程，包括配置优化、性能调优和故障排除。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-04T05:20:31.194Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="vps">
+<meta property="article:tag" content="clash">
+<meta property="article:tag" content="openwrt">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2025/10/04/2025-10-04-OpenWrt-OpenClash/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>OpenWrt路由器部署OpenClash手记 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2025/10/04/2025-10-04-OpenWrt-OpenClash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenWrt路由器部署OpenClash手记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-10-04 00:00:00 / Modified: 13:20:31" itemprop="dateCreated datePublished" datetime="2025-10-04T00:00:00+08:00">2025-10-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近在老旧的Netgear WNDR4300路由器上成功部署了OpenClash，经过多次调试终于稳定运行。本文将详细介绍在资源受限的OpenWrt设备上配置OpenClash的全过程，包括配置优化、性能调优和故障排除。<br><a id="more"></a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为了正常上网，原来在路由器上安装了SSR+配合Hy2 socks5端口代理。但SSR+本身不支持Hy2，无奈只得在路由器上运行<code>hysteria-mips-sf -c config.yaml client</code>。一个节点不可靠，在后端同时运行3个进程。根据可访问性和速度轮换使用。毕竟这样太麻烦了，常常无法访问网络才手动切换。如果我输入节点信息，系统自动测速自动选择最优节点多好。于是有了国庆假期的这次成功折腾。</p>
+<h2 id="硬件环境"><a href="#硬件环境" class="headerlink" title="硬件环境"></a>硬件环境</h2><ul>
+<li><strong>路由器型号</strong>: Netgear WNDR4300 (N750)</li>
+<li><strong>闪存</strong>: 128MB NAND</li>
+<li><strong>内存</strong>: 256MB DDR2</li>
+<li><strong>处理器</strong>: Broadcom BCM47186 800MHz</li>
+<li><strong>OpenWrt版本</strong>: 23.05.2</li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="1-固件选择与准备"><a href="#1-固件选择与准备" class="headerlink" title="1. 固件选择与准备"></a>1. 固件选择与准备</h3><p>由于WNDR4300硬件配置有限，选择合适的固件版本至关重要：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查可用的存储空间</span></span><br><span class="line">df -h</span><br><span class="line"></span><br><span class="line"><span class="comment"># 确保有足够空间安装OpenClash</span></span><br><span class="line"><span class="comment"># 建议至少8MB可用空间</span></span><br></pre></td></tr></table></figure>
+<p><strong>推荐固件特性</strong>:</p>
+<ul>
+<li>启用USB存储支持（用于扩展空间）</li>
+<li>预安装必要的依赖包</li>
+<li>优化的内核配置</li>
+</ul>
+<h3 id="2-依赖包安装"><a href="#2-依赖包安装" class="headerlink" title="2. 依赖包安装"></a>2. 依赖包安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新包列表</span></span><br><span class="line">opkg update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装OpenClash核心依赖</span></span><br><span class="line">opkg install luci-app-openclash</span><br><span class="line">opkg install clash</span><br><span class="line">opkg install dnsmasq-full</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装额外工具（可选）</span></span><br><span class="line">opkg install curl</span><br><span class="line">opkg install ipset</span><br><span class="line">opkg install iptables-mod-tproxy</span><br></pre></td></tr></table></figure>
+<h2 id="OpenClash配置详解"><a href="#OpenClash配置详解" class="headerlink" title="OpenClash配置详解"></a>OpenClash配置详解</h2><h3 id="1-核心配置结构"><a href="#1-核心配置结构" class="headerlink" title="1. 核心配置结构"></a>1. 核心配置结构</h3><p>OpenClash的配置采用YAML格式，主要包含以下几个部分：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 端口配置</span></span><br><span class="line"><span class="attr">port:</span> <span class="number">7890</span></span><br><span class="line"><span class="attr">socks-port:</span> <span class="number">7891</span></span><br><span class="line"><span class="attr">redir-port:</span> <span class="number">7892</span></span><br><span class="line"><span class="attr">tproxy-port:</span> <span class="number">7893</span></span><br><span class="line"><span class="attr">mixed-port:</span> <span class="number">7894</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># DNS配置</span></span><br><span class="line"><span class="attr">dns:</span></span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  enhanced-mode:</span> <span class="string">fake-ip</span></span><br><span class="line"><span class="attr">  fake-ip-range:</span> <span class="number">198.18</span><span class="number">.0</span><span class="number">.1</span><span class="string">/16</span></span><br><span class="line"><span class="attr">  nameserver:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">223.5</span><span class="number">.5</span><span class="number">.5</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">119.29</span><span class="number">.29</span><span class="number">.29</span></span><br><span class="line"><span class="attr">  fallback:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-代理节点配置"><a href="#2-代理节点配置" class="headerlink" title="2. 代理节点配置"></a>2. 代理节点配置</h3><p>本项目配置了多种代理协议以适应不同场景：</p>
+<h4 id="VLESS-Reality-推荐"><a href="#VLESS-Reality-推荐" class="headerlink" title="VLESS + Reality (推荐)"></a>VLESS + Reality (推荐)</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">- name:</span> <span class="string">"Reality-节点"</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">vless</span></span><br><span class="line"><span class="attr">  server:</span> <span class="string">your-server.com</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">443</span></span><br><span class="line"><span class="attr">  uuid:</span> <span class="string">your-uuid</span></span><br><span class="line"><span class="attr">  tls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  reality-opts:</span></span><br><span class="line"><span class="attr">    public-key:</span> <span class="string">your-public-key</span></span><br><span class="line"><span class="attr">    short-id:</span> <span class="string">your-short-id</span></span><br></pre></td></tr></table></figure>
+<h4 id="Hysteria2-高性能"><a href="#Hysteria2-高性能" class="headerlink" title="Hysteria2 (高性能)"></a>Hysteria2 (高性能)</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">- name:</span> <span class="string">"H2-高性能"</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">hysteria2</span></span><br><span class="line"><span class="attr">  server:</span> <span class="string">your-server.com</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8443</span></span><br><span class="line"><span class="attr">  up:</span> <span class="number">50</span></span><br><span class="line"><span class="attr">  down:</span> <span class="number">100</span></span><br><span class="line"><span class="attr">  auth_str:</span> <span class="string">your-auth</span></span><br></pre></td></tr></table></figure>
+<h4 id="VMESS-兼容性好"><a href="#VMESS-兼容性好" class="headerlink" title="VMESS (兼容性好)"></a>VMESS (兼容性好)</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">- name:</span> <span class="string">"VMess-备用"</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">vmess</span></span><br><span class="line"><span class="attr">  server:</span> <span class="string">your-server.com</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">443</span></span><br><span class="line"><span class="attr">  uuid:</span> <span class="string">your-uuid</span></span><br><span class="line"><span class="attr">  alterId:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">  cipher:</span> <span class="string">auto</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-代理组策略"><a href="#3-代理组策略" class="headerlink" title="3. 代理组策略"></a>3. 代理组策略</h3><p>为了实现智能分流和负载均衡，配置了多层次的代理组：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">proxy-groups:</span></span><br><span class="line">  <span class="comment"># 自动选择组 - 延迟最优</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">"♻️ 自动选择"</span></span><br><span class="line"><span class="attr">    type:</span> <span class="string">url-test</span></span><br><span class="line"><span class="attr">    proxies:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"Reality-节点"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"H2-高性能"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"VMess-备用"</span></span><br><span class="line"><span class="attr">    url:</span> <span class="string">"http://www.gstatic.com/generate_204"</span></span><br><span class="line"><span class="attr">    interval:</span> <span class="number">300</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 手动选择组</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">"🔰 节点选择"</span></span><br><span class="line"><span class="attr">    type:</span> <span class="string">select</span></span><br><span class="line"><span class="attr">    proxies:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"♻️ 自动选择"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"Reality-节点"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"H2-高性能"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"DIRECT"</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-规则体系"><a href="#4-规则体系" class="headerlink" title="4. 规则体系"></a>4. 规则体系</h3><p>实现国内外流量智能分流的核心规则：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="comment"># 局域网直连</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">DOMAIN-SUFFIX,lan,DIRECT</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">IP-CIDR,127.0.0.0/8,DIRECT</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment"># 国内服务直连</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">GEOIP,CN,DIRECT</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">DOMAIN-SUFFIX,cn,DIRECT</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment"># 广告拦截</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">DOMAIN-SUFFIX,googlesyndication.com,REJECT</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">DOMAIN-SUFFIX,googleadservices.com,REJECT</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment"># 国外服务代理</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">MATCH,🔰</span> <span class="string">节点选择</span></span><br></pre></td></tr></table></figure>
+<h2 id="性能优化策略"><a href="#性能优化策略" class="headerlink" title="性能优化策略"></a>性能优化策略</h2><h3 id="1-内存优化"><a href="#1-内存优化" class="headerlink" title="1. 内存优化"></a>1. 内存优化</h3><p>针对WNDR4300的256MB内存限制：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 节省内存的配置</span></span><br><span class="line"><span class="attr">mode:</span> <span class="string">rule</span></span><br><span class="line"><span class="attr">log-level:</span> <span class="string">info</span></span><br><span class="line"><span class="attr">ipv6:</span> <span class="literal">false</span>  <span class="comment"># 禁用IPv6节省资源</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Geodata优化</span></span><br><span class="line"><span class="attr">geodata-mode:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">geodata-loader:</span> <span class="string">memconservative</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-DNS优化"><a href="#2-DNS优化" class="headerlink" title="2. DNS优化"></a>2. DNS优化</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dns:</span></span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  listen:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span><span class="string">:7874</span></span><br><span class="line"><span class="attr">  enhanced-mode:</span> <span class="string">fake-ip</span></span><br><span class="line"><span class="attr">  fake-ip-range:</span> <span class="number">198.18</span><span class="number">.0</span><span class="number">.1</span><span class="string">/16</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment"># 最小化DNS配置</span></span><br><span class="line"><span class="attr">  nameserver:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">223.5</span><span class="number">.5</span><span class="number">.5</span>      <span class="comment"># 阿里DNS</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">119.29</span><span class="number">.29</span><span class="number">.29</span>    <span class="comment"># 腾讯DNS</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">  fallback:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span>         <span class="comment"># Google DNS</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span>         <span class="comment"># Cloudflare DNS</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment"># 缓存配置</span></span><br><span class="line"><span class="attr">  cache-size:</span> <span class="number">1000</span></span><br><span class="line"><span class="attr">  cache-ttl:</span> <span class="number">600</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-连接优化"><a href="#3-连接优化" class="headerlink" title="3. 连接优化"></a>3. 连接优化</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 连接管理</span></span><br><span class="line"><span class="attr">global-client-fingerprint:</span> <span class="string">chrome</span></span><br><span class="line"><span class="attr">keep-alive-interval:</span> <span class="number">30</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 性能调优</span></span><br><span class="line"><span class="attr">unified-delay:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">tcp-concurrent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h2 id="故障排除"><a href="#故障排除" class="headerlink" title="故障排除"></a>故障排除</h2><h3 id="1-常见问题"><a href="#1-常见问题" class="headerlink" title="1. 常见问题"></a>1. 常见问题</h3><h4 id="问题1：OpenClash启动失败"><a href="#问题1：OpenClash启动失败" class="headerlink" title="问题1：OpenClash启动失败"></a>问题1：OpenClash启动失败</h4><p><strong>症状</strong>: 无法启动OpenClash服务<br><strong>解决方案</strong>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查配置文件语法</span></span><br><span class="line">clash -t /etc/openclash/config.yaml</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查端口占用</span></span><br><span class="line">netstat -tlnp | grep 7890</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看系统日志</span></span><br><span class="line">logread | grep openclash</span><br></pre></td></tr></table></figure></p>
+<h4 id="问题2：DNS解析异常"><a href="#问题2：DNS解析异常" class="headerlink" title="问题2：DNS解析异常"></a>问题2：DNS解析异常</h4><p><strong>症状</strong>: 部分网站无法访问<br><strong>解决方案</strong>:<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重置DNS配置</span></span><br><span class="line"><span class="attr">dns:</span></span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># 保存并应用</span></span><br><span class="line">  <span class="comment"># 然后重新启用</span></span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="问题3：连接速度慢"><a href="#问题3：连接速度慢" class="headerlink" title="问题3：连接速度慢"></a>问题3：连接速度慢</h4><p><strong>症状</strong>: 代理延迟高<br><strong>解决方案</strong>:<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调整URL测试间隔</span></span><br><span class="line"><span class="attr">proxy-groups:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">"♻️ 自动选择"</span></span><br><span class="line"><span class="attr">    interval:</span> <span class="number">600</span>  <span class="comment"># 增加到10分钟</span></span><br><span class="line"><span class="attr">    tolerance:</span> <span class="number">100</span>  <span class="comment"># 增加容错范围</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="2-性能监控"><a href="#2-性能监控" class="headerlink" title="2. 性能监控"></a>2. 性能监控</h3><h4 id="查看运行状态"><a href="#查看运行状态" class="headerlink" title="查看运行状态"></a>查看运行状态</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看Clash进程</span></span><br><span class="line">ps | grep clash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看内存使用</span></span><br><span class="line">free -m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看连接数</span></span><br><span class="line">cat /proc/net/netfilter/nf_conntrack | wc -l</span><br></pre></td></tr></table></figure>
+<h4 id="日志分析"><a href="#日志分析" class="headerlink" title="日志分析"></a>日志分析</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 实时查看日志</span></span><br><span class="line">logread -f | grep openclash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看错误日志</span></span><br><span class="line">cat /tmp/openclash.log | grep ERROR</span><br></pre></td></tr></table></figure>
+<h2 id="安全配置"><a href="#安全配置" class="headerlink" title="安全配置"></a>安全配置</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改默认密码</span></span><br><span class="line"><span class="attr">secret:</span> <span class="string">"your-secure-password"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 限制LAN访问</span></span><br><span class="line"><span class="attr">allow-lan:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">bind-address:</span> <span class="string">"192.168.1.1"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 外部控制器配置</span></span><br><span class="line"><span class="attr">external-controller:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span><span class="string">:9090</span></span><br></pre></td></tr></table></figure>
+<h2 id="维护与更新"><a href="#维护与更新" class="headerlink" title="维护与更新"></a>维护与更新</h2><h3 id="1-定期维护"><a href="#1-定期维护" class="headerlink" title="1. 定期维护"></a>1. 定期维护</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新GeoIP数据库</span></span><br><span class="line">wget -O /etc/openclash/Country.mmdb \</span><br><span class="line">  https://github.com/Loyalsoldier/geoip/releases/latest/download/Country.mmdb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新规则集</span></span><br><span class="line">/etc/openclash/update_rules.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理日志</span></span><br><span class="line">&gt; /tmp/openclash.log</span><br></pre></td></tr></table></figure>
+<h3 id="2-配置备份"><a href="#2-配置备份" class="headerlink" title="2. 配置备份"></a>2. 配置备份</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份配置</span></span><br><span class="line">cp /etc/openclash/config.yaml /mnt/usb/openclash_backup.yaml</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自动备份脚本</span></span><br><span class="line">cat &gt; /etc/cron.daily/openclash_backup &lt;&lt; <span class="string">'EOF'</span></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">DATE=$(date +%Y%m%d_%H%M%S)</span><br><span class="line">cp /etc/openclash/config.yaml /mnt/usb/config_<span class="variable">$DATE</span>.yaml</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h2 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h2><h3 id="1-延迟测试"><a href="#1-延迟测试" class="headerlink" title="1. 延迟测试"></a>1. 延迟测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 测试代理延迟</span></span><br><span class="line">curl -x http://127.0.0.1:7890 http://www.gstatic.com/generate_204</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试DNS解析</span></span><br><span class="line">nslookup google.com 127.0.0.1:7874</span><br></pre></td></tr></table></figure>
+<h3 id="2-吞吐量测试"><a href="#2-吞吐量测试" class="headerlink" title="2. 吞吐量测试"></a>2. 吞吐量测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载速度测试</span></span><br><span class="line">wget -O /dev/null http://speedtest.net/speedtest-config.php</span><br><span class="line"></span><br><span class="line"><span class="comment"># 并发连接测试</span></span><br><span class="line">ab -n 100 -c 10 http://example.com/</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在Netgear WNDR4300这样的老旧路由器上成功运行OpenClash需要：</p>
+<ol>
+<li><strong>合理的配置优化</strong>: 禁用不必要的功能，减少内存占用</li>
+<li><strong>精细的规则设计</strong>: 平衡性能和功能性</li>
+<li><strong>定期的维护更新</strong>: 保持规则库和GeoIP数据库更新</li>
+<li><strong>完善的监控机制</strong>: 及时发现和解决问题</li>
+</ol>
+<p>通过以上配置，WNDR4300能够稳定运行OpenClash，为家庭网络提供正常上网服务，同时保持良好的性能表现。</p>
+<hr>
+<p><strong>注意</strong>: 本文配置中的敏感信息已隐去，实际使用时请替换为自己的服务器信息和认证密钥。<br><strong>后记</strong>：这次安装足足费了我两个整天的宝贵假期时间。这种为了<strong>正常</strong>访问网络而付出的代价，是对人类才智的巨大浪费。</p>
+<hr>
+<p><em>创建时间：2025-10-04 13:04</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vps/" rel="tag"># vps</a>
+              <a href="/tags/clash/" rel="tag"># clash</a>
+              <a href="/tags/openwrt/" rel="tag"># openwrt</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/01/20251001-VPN_Hysteria2/" rel="prev" title="L2TP VPN服务器与Hysteria2代理整合实践">
+      <i class="fa fa-chevron-left"></i> L2TP VPN服务器与Hysteria2代理整合实践
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/07/20251007_huawei_data/" rel="next" title="一款提取华为运动健康数据的手机APP">
+      一款提取华为运动健康数据的手机APP <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#硬件环境"><span class="nav-number">2.</span> <span class="nav-text">硬件环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">3.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-固件选择与准备"><span class="nav-number">3.1.</span> <span class="nav-text">1. 固件选择与准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-依赖包安装"><span class="nav-number">3.2.</span> <span class="nav-text">2. 依赖包安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenClash配置详解"><span class="nav-number">4.</span> <span class="nav-text">OpenClash配置详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-核心配置结构"><span class="nav-number">4.1.</span> <span class="nav-text">1. 核心配置结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-代理节点配置"><span class="nav-number">4.2.</span> <span class="nav-text">2. 代理节点配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#VLESS-Reality-推荐"><span class="nav-number">4.2.1.</span> <span class="nav-text">VLESS + Reality (推荐)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hysteria2-高性能"><span class="nav-number">4.2.2.</span> <span class="nav-text">Hysteria2 (高性能)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VMESS-兼容性好"><span class="nav-number">4.2.3.</span> <span class="nav-text">VMESS (兼容性好)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-代理组策略"><span class="nav-number">4.3.</span> <span class="nav-text">3. 代理组策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-规则体系"><span class="nav-number">4.4.</span> <span class="nav-text">4. 规则体系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能优化策略"><span class="nav-number">5.</span> <span class="nav-text">性能优化策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-内存优化"><span class="nav-number">5.1.</span> <span class="nav-text">1. 内存优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-DNS优化"><span class="nav-number">5.2.</span> <span class="nav-text">2. DNS优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-连接优化"><span class="nav-number">5.3.</span> <span class="nav-text">3. 连接优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#故障排除"><span class="nav-number">6.</span> <span class="nav-text">故障排除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-常见问题"><span class="nav-number">6.1.</span> <span class="nav-text">1. 常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题1：OpenClash启动失败"><span class="nav-number">6.1.1.</span> <span class="nav-text">问题1：OpenClash启动失败</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题2：DNS解析异常"><span class="nav-number">6.1.2.</span> <span class="nav-text">问题2：DNS解析异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题3：连接速度慢"><span class="nav-number">6.1.3.</span> <span class="nav-text">问题3：连接速度慢</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-性能监控"><span class="nav-number">6.2.</span> <span class="nav-text">2. 性能监控</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看运行状态"><span class="nav-number">6.2.1.</span> <span class="nav-text">查看运行状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日志分析"><span class="nav-number">6.2.2.</span> <span class="nav-text">日志分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全配置"><span class="nav-number">7.</span> <span class="nav-text">安全配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#维护与更新"><span class="nav-number">8.</span> <span class="nav-text">维护与更新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-定期维护"><span class="nav-number">8.1.</span> <span class="nav-text">1. 定期维护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-配置备份"><span class="nav-number">8.2.</span> <span class="nav-text">2. 配置备份</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能测试"><span class="nav-number">9.</span> <span class="nav-text">性能测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-延迟测试"><span class="nav-number">9.1.</span> <span class="nav-text">1. 延迟测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-吞吐量测试"><span class="nav-number">9.2.</span> <span class="nav-text">2. 吞吐量测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

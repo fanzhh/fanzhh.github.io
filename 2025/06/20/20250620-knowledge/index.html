@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在Mac mini M4（配置M4芯片&#x2F;16GB内存&#x2F;2TB存储）上开发本地化智能文档问答系统。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Mac mini M4上搭建智能文档问答助手">
+<meta property="og:url" content="http://blog.fanzhh.pw/2025/06/20/20250620-knowledge/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="在Mac mini M4（配置M4芯片&#x2F;16GB内存&#x2F;2TB存储）上开发本地化智能文档问答系统。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.devlabs.cc/20250620_1.jpeg">
+<meta property="article:published_time" content="2025-06-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-04T22:35:40.258Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="ollama">
+<meta property="article:tag" content="知识库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.devlabs.cc/20250620_1.jpeg">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2025/06/20/20250620-knowledge/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>在Mac mini M4上搭建智能文档问答助手 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2025/06/20/20250620-knowledge/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在Mac mini M4上搭建智能文档问答助手
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-06-20 00:00:00" itemprop="dateCreated datePublished" datetime="2025-06-20T00:00:00+08:00">2025-06-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-02-05 06:35:40" itemprop="dateModified" datetime="2026-02-05T06:35:40+08:00">2026-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.devlabs.cc/20250620_1.jpeg" alt=""><br>在Mac mini M4（配置M4芯片/16GB内存/2TB存储）上开发本地化智能文档问答系统。</p>
+<a id="more"></a>
+<h2 id="1-项目背景"><a href="#1-项目背景" class="headerlink" title="1. 项目背景"></a>1. 项目背景</h2><h3 id="1-1-我的Mac-mini-M4配置"><a href="#1-1-我的Mac-mini-M4配置" class="headerlink" title="1.1 我的Mac mini M4配置"></a>1.1 我的Mac mini M4配置</h3><p>如前所述，几个月前我买了丐版Mac，配置如下：</p>
+<ul>
+<li><strong>处理器</strong>: Apple M4</li>
+<li><strong>内存</strong>: 16GB统一内存</li>
+<li><strong>存储</strong>: 256GB内置SSD + 2TB外置硬盘</li>
+</ul>
+<h3 id="1-2-本地AI模型部署"><a href="#1-2-本地AI模型部署" class="headerlink" title="1.2 本地AI模型部署"></a>1.2 本地AI模型部署</h3><p>在Mac mini上部署了本地大模型工具ollama：</p>
+<ul>
+<li><strong>ollama版本</strong>: 0.9.0</li>
+<li><strong>安装的模型</strong>: llama3:latest、qwen3:4b、deepseek-r1:8b、gemma3:4b</li>
+</ul>
+<h3 id="1-3-项目动机"><a href="#1-3-项目动机" class="headerlink" title="1.3 项目动机"></a>1.3 项目动机</h3><p>工作中积累了几千个文档。如何最大程度地发挥这些文档的作用，这是个问题。于是决定自己动手打造一个智能文档助手：</p>
+<ul>
+<li><strong>自动文档处理</strong>: 批量消化大量文档的小能手</li>
+<li><strong>智能信息提取</strong>: 能提炼关键信息的智能助手</li>
+<li><strong>即时问答</strong>: 随问随答的文档专家</li>
+<li><strong>数据安全</strong>: 完全本地运行，数据安全有保障</li>
+</ul>
+<h2 id="2-技术选型"><a href="#2-技术选型" class="headerlink" title="2. 技术选型"></a>2. 技术选型</h2><h3 id="2-1-后端技术栈"><a href="#2-1-后端技术栈" class="headerlink" title="2.1 后端技术栈"></a>2.1 后端技术栈</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我的技术组合拳</span></span><br><span class="line">- FastAPI  <span class="comment"># 轻量又高效的现代Web框架</span></span><br><span class="line">- SQLAlchemy  <span class="comment"># Python界的ORM扛把子</span></span><br><span class="line">- PostgreSQL  <span class="comment"># 老牌关系型数据库，支持数组字段</span></span><br><span class="line">- Uvicorn  <span class="comment"># 让FastAPI飞起来的ASGI服务器</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-2-文档处理工具"><a href="#2-2-文档处理工具" class="headerlink" title="2.2 文档处理工具"></a>2.2 文档处理工具</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文档处理三剑客</span></span><br><span class="line">- python-docx  <span class="comment"># 专治各种docx文件</span></span><br><span class="line">- mammoth  <span class="comment"># 文档转换小能手（最初尝试用markdown转换工具，但成功率太低弃用了）</span></span><br><span class="line">- python-magic  <span class="comment"># 文件类型检测专家</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-3-AI模型搭配"><a href="#2-3-AI模型搭配" class="headerlink" title="2.3 AI模型搭配"></a>2.3 AI模型搭配</h3><p>双模型组合拳，确保系统稳定可靠：</p>
+<ul>
+<li><strong>云端模型</strong>: 阿里云的Qwen-Plus（回答质量明显优于本地模型）</li>
+<li><strong>本地模型</strong>: Ollama（断网时的备胎方案）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LLMClient</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, model_type=<span class="string">"openai"</span>)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> model_type == <span class="string">"ollama"</span>:</span><br><span class="line">            self.ollama_client = OllamaClient(model_name=<span class="string">"llama3:latest"</span>)  <span class="comment"># 本地模型，可在命令行输入</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.client = OpenAI(api_key=api_key)  <span class="comment"># 云端模型（实测效果完胜本地模型）</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-核心功能揭秘"><a href="#3-核心功能揭秘" class="headerlink" title="3. 核心功能揭秘"></a>3. 核心功能揭秘</h2><h3 id="3-1-文档处理流水线"><a href="#3-1-文档处理流水线" class="headerlink" title="3.1 文档处理流水线"></a>3.1 文档处理流水线</h3><h4 id="批量处理docx文档"><a href="#批量处理docx文档" class="headerlink" title="批量处理docx文档"></a>批量处理docx文档</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">process_single_document</span><span class="params">(file_path: str)</span>:</span></span><br><span class="line">    <span class="comment"># 专注处理docx文件（测试4906个文件，成功导入2578个）</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> file_path.lower().endswith(<span class="string">'.docx'</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 智能去重检查（避免重复处理，提高效率）</span></span><br><span class="line">    file_hash = calc_file_hash(file_path)</span><br><span class="line">    <span class="keyword">if</span> db.query(Document).filter_by(file_hash=file_hash).first():</span><br><span class="line">        print(<span class="string">f"文件已经处理过啦: <span class="subst">&#123;file_path&#125;</span>"</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h4 id="完整文本提取术"><a href="#完整文本提取术" class="headerlink" title="完整文本提取术"></a>完整文本提取术</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 提取docx里的所有文本内容（处理各种复杂格式）</span></span><br><span class="line">docx_doc = DocxDocument(file_path)</span><br><span class="line"><span class="keyword">if</span> docx_doc <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    print(<span class="string">f"解析失败: <span class="subst">&#123;file_path&#125;</span>"</span>)  <span class="comment"># 记录失败日志便于排查</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 收割段落文本</span></span><br><span class="line">all_text = [para.text.strip() <span class="keyword">for</span> para <span class="keyword">in</span> docx_doc.paragraphs <span class="keyword">if</span> para.text.strip()]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 提取表格内容</span></span><br><span class="line"><span class="keyword">for</span> table <span class="keyword">in</span> docx_doc.tables:</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> table.rows:</span><br><span class="line">        row_texts = [cell.text.strip() <span class="keyword">for</span> cell <span class="keyword">in</span> row.cells <span class="keyword">if</span> cell.text.strip()]</span><br><span class="line">        <span class="keyword">if</span> row_texts:</span><br><span class="line">            all_text.append(<span class="string">" | "</span>.join(row_texts))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 获取页眉页脚</span></span><br><span class="line"><span class="keyword">for</span> section <span class="keyword">in</span> docx_doc.sections:</span><br><span class="line">    <span class="keyword">if</span> section.header:</span><br><span class="line">        <span class="keyword">for</span> para <span class="keyword">in</span> section.header.paragraphs:</span><br><span class="line">            <span class="keyword">if</span> para.text.strip():</span><br><span class="line">                all_text.append(para.text.strip())</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-智能内容分析"><a href="#3-2-智能内容分析" class="headerlink" title="3.2 智能内容分析"></a>3.2 智能内容分析</h3><h4 id="关键词提取优化"><a href="#关键词提取优化" class="headerlink" title="关键词提取优化"></a>关键词提取优化</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">extract_keywords</span><span class="params">(self, content: str)</span> -&gt; List[str]:</span></span><br><span class="line">    prompt = <span class="string">f"""请从以下问题中提取关键词，要求：</span></span><br><span class="line"><span class="string">1. 提取问题中的核心概念、实体名称、时间、地点等关键信息</span></span><br><span class="line"><span class="string">2. 重点关注：企业名称、风险类型、监管措施、时间范围、具体数据等</span></span><br><span class="line"><span class="string">3. 每个关键词用空格分隔，只返回关键词</span></span><br><span class="line"><span class="string">4. 不要添加问题中没有的词</span></span><br><span class="line"><span class="string">5. 关键词要具体，避免过于宽泛的词</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">问题：<span class="subst">&#123;content&#125;</span></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">关键词："""</span></span><br></pre></td></tr></table></figure>
+<h4 id="智能问答系统"><a href="#智能问答系统" class="headerlink" title="智能问答系统"></a>智能问答系统</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@router.post("/qa", summary="知识库问答")</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">knowledge_qa</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    question: str = Body<span class="params">(...)</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    model_type: str = Query<span class="params">(<span class="string">"ollama"</span>, description=<span class="string">"大模型类型(openai/ollama)"</span>)</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    model_name: str = Query<span class="params">(<span class="string">"llama3:latest"</span>, description=<span class="string">"模型名称"</span>)</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    db: Session = Depends<span class="params">(get_db)</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span>:</span></span><br><span class="line">    llm = LLMClient(model_type=model_type, model_name=model_name)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 1. 智能关键词提取</span></span><br><span class="line">    keywords = llm.extract_keywords(question)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 2. 精确匹配 + 模糊匹配双重策略</span></span><br><span class="line">    query = db.query(DocumentContent).filter(</span><br><span class="line">        DocumentContent.keywords.op(<span class="string">'&amp;&amp;'</span>)(cast(keywords, ARRAY(String)))</span><br><span class="line">    )</span><br><span class="line">    docs = query.order_by(DocumentContent.id.desc()).limit(<span class="number">10</span>).all()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 3. 构建丰富上下文</span></span><br><span class="line">    context_parts = []</span><br><span class="line">    <span class="keyword">for</span> i, doc <span class="keyword">in</span> enumerate(docs, <span class="number">1</span>):</span><br><span class="line">        doc_info = <span class="string">f"文档<span class="subst">&#123;i&#125;</span>：\n"</span></span><br><span class="line">        <span class="keyword">if</span> doc.summary:</span><br><span class="line">            doc_info += <span class="string">f"摘要：<span class="subst">&#123;doc.summary&#125;</span>\n"</span></span><br><span class="line">        doc_info += <span class="string">f"关键词：<span class="subst">&#123;<span class="string">', '</span>.join(doc.keywords) <span class="keyword">if</span> doc.keywords <span class="keyword">else</span> <span class="string">'无'</span>&#125;</span>\n"</span></span><br><span class="line">        doc_info += <span class="string">f"内容片段：<span class="subst">&#123;doc.content[:<span class="number">3000</span>]&#125;</span>...\n"</span></span><br><span class="line">        context_parts.append(doc_info)</span><br><span class="line"></span><br><span class="line">	context = <span class="string">"\n"</span>.join(context_parts) <span class="keyword">if</span> context_parts <span class="keyword">else</span> <span class="string">"未找到相关文档内容"</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 4. 生成专业回答</span></span><br><span class="line">    prompt = <span class="string">f"""你是一个专业的知识库助手。请根据以下知识库内容，准确回答用户的问题。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">知识库内容：</span></span><br><span class="line"><span class="string"><span class="subst">&#123;context&#125;</span></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">用户问题：<span class="subst">&#123;question&#125;</span></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">回答要求：</span></span><br><span class="line"><span class="string">1. 基于知识库内容回答，如果知识库中没有相关信息，请明确说明</span></span><br><span class="line"><span class="string">2. 回答要具体、准确，包含具体的企业名称、数据、时间等信息</span></span><br><span class="line"><span class="string">3. 如果问题涉及多个方面，请分点回答</span></span><br><span class="line"><span class="string">4. 保持专业性和客观性</span></span><br><span class="line"><span class="string">5. 如果知识库内容不足以完整回答问题，请说明已知信息和未知信息</span></span><br><span class="line"><span class="string">6. 优先使用文档中的具体数据和事实，避免泛泛而谈</span></span><br><span class="line"><span class="string">7. 回答的最后附上答案的来源，即文档名称</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">请回答："""</span></span><br><span class="line">    </span><br><span class="line">    answer = llm.generate_answer(prompt)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">"question"</span>: question, <span class="string">"keywords"</span>: keywords, <span class="string">"answer"</span>: answer, <span class="string">"model_used"</span>: <span class="string">f"<span class="subst">&#123;model_type&#125;</span>:<span class="subst">&#123;model_name&#125;</span>"</span>&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-技术挑战与解决方案"><a href="#4-技术挑战与解决方案" class="headerlink" title="4. 技术挑战与解决方案"></a>4. 技术挑战与解决方案</h2><h3 id="4-1-文件格式兼容性问题"><a href="#4-1-文件格式兼容性问题" class="headerlink" title="4.1 文件格式兼容性问题"></a>4.1 文件格式兼容性问题</h3><p>经过大量测试发现：</p>
+<ul>
+<li><strong>docx文件</strong>: 4906个文件中成功导入2578个，成功率约52.5%</li>
+<li><strong>Excel文件</strong>: 暂时未处理（计划未来支持）</li>
+<li><strong>旧版doc文件</strong>: 无法解析</li>
+<li><strong>WPS文件</strong>: 无法解析</li>
+</ul>
+<h3 id="4-2-模型效果对比"><a href="#4-2-模型效果对比" class="headerlink" title="4.2 模型效果对比"></a>4.2 模型效果对比</h3><p>经过测试发现：</p>
+<ul>
+<li><strong>云端模型(Qwen-Plus)</strong>: 回答质量明显优于本地模型，理解准确度高</li>
+<li><strong>本地模型(Llama3)</strong>: 云端模型需要联网且有费用问题，本地模型完全免费</li>
+</ul>
+<h3 id="4-3-数据库优化"><a href="#4-3-数据库优化" class="headerlink" title="4.3 数据库优化"></a>4.3 数据库优化</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 使用PostgreSQL数组字段进行高效的关键词匹配</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> document_contents (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">SERIAL</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">    document_id <span class="built_in">INTEGER</span> <span class="keyword">REFERENCES</span> documents(<span class="keyword">id</span>),</span><br><span class="line">    <span class="keyword">content</span> <span class="built_in">TEXT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    keywords <span class="built_in">VARCHAR</span>[] <span class="keyword">NOT</span> <span class="literal">NULL</span>,  <span class="comment">-- 数组字段，支持高效查询</span></span><br><span class="line">    summary <span class="built_in">TEXT</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 高效的数组重叠查询</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> document_contents </span><br><span class="line"><span class="keyword">WHERE</span> keywords &amp;&amp; <span class="built_in">ARRAY</span>[<span class="string">'监管'</span>, <span class="string">'风险较大企业'</span>, <span class="string">'企业名称'</span>];</span><br></pre></td></tr></table></figure>
+<h2 id="5-实际应用效果"><a href="#5-实际应用效果" class="headerlink" title="5. 实际应用效果"></a>5. 实际应用效果</h2><h3 id="5-1-性能表现"><a href="#5-1-性能表现" class="headerlink" title="5.1 性能表现"></a>5.1 性能表现</h3><ul>
+<li><strong>文档处理速度</strong>: 使用本地模型处理文档，2578个文件用了大约24小时</li>
+<li><strong>问答响应时间</strong>: 云端模型1-3秒，本地模型3-8秒</li>
+</ul>
+<h3 id="5-2-使用体验"><a href="#5-2-使用体验" class="headerlink" title="5.2 使用体验"></a>5.2 使用体验</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用本地Ollama模型</span></span><br><span class="line">curl -X POST <span class="string">"http://127.0.0.1:8000/api/v1/document/qa?model_type=ollama&amp;model_name=gemma3:4b"</span> \</span><br><span class="line">     -H <span class="string">"Content-Type: application/json"</span> \</span><br><span class="line">     -d <span class="string">'&#123;"question": "近年来行业协会做了哪些工作？请以序号简短列出。"&#125;'</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">"question"</span>:<span class="string">"近年来行业协会做了哪些工作？请以序号简短列出。"</span>,<span class="string">"keywords"</span>:[<span class="string">"行业协会"</span>,<span class="string">"工作"</span>],<span class="string">"answer"</span>:<span class="string">"根据提供的文档内容，以下是行业协会在近年来可能做出的工作，以及它们所依据的证据：\n\n1.  **组织⬛⬛⬛⬛⬛实训：** 行业协会组织了“⬛⬛⬛、⬛⬛⬛、⬛⬛⬛”等企业参加了“⬛⬛⬛⬛⬛⬛实训活动”。(文档9)\n2.  **组织⬛⬛⬛参加培训：** 行业协会组织了⬛⬛⬛参加了“⬛⬛⬛⬛培训”。(文档9)\n3.  **协助企业⬛⬛⬛：** 行业协会协助⬛⬛⬛⬛⬛。(文档10)\n4.  **组织⬛⬛：** 行业协会参与了“⬛⬛⬛⬛⬛⬛”等⬛⬛工作。(文档9, 10)\n\n**答案来源：** 文档9, 文档10"</span>,<span class="string">"model_used"</span>:<span class="string">"ollama:gemma3:4b"</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 使用云端模型</span></span><br><span class="line">curl -X POST "http://127.0.0.1:8000/api/v1/document/qa?model_type=openai" \</span><br><span class="line">     -H "Content-Type: application/json" \</span><br><span class="line">     -d '&#123;"question": "近年来行业协会做了哪些工作？请以序号简短列出。"&#125;'</span><br><span class="line"></span><br><span class="line">&#123;"question":"近年来行业协会做了哪些工作？请以序号简短列出。","keywords":["行业协会","工作","时间范围"],"answer":"近年来行业协会在药品生产领域做了以下工作：\n\n1. **组织⬛⬛⬛⬛实训活动**：2024年4月8日至2024年4月14日期间，行业协会组织⬛⬛⬛⬛实训活动，以提升从业人员的专业技能。（来源：文档9）\n\n2. **开展针对性培训**：2024年，行业协会根据⬛⬛⬛⬛履职能力考核中发现的共性问题和薄弱环节，制定了培训计划，并已确定3个培训主题，旨在提高从业人员的履职能力。（来源：文档7）\n\n以上是基于知识库内容能够明确列出的工作。其他具体工作细节未在知识库中提及，因此无法补充更多信息。","model_used":"openai:qwen-plus"&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="6-未来计划"><a href="#6-未来计划" class="headerlink" title="6. 未来计划"></a>6. 未来计划</h2><h3 id="6-1-文件格式支持"><a href="#6-1-文件格式支持" class="headerlink" title="6.1 文件格式支持"></a>6.1 文件格式支持</h3><ul>
+<li>✅ <strong>已支持</strong>: docx（部分）</li>
+<li>⏳ <strong>计划支持</strong>: Excel表格解析</li>
+<li>❓ <strong>待解决</strong>: 旧版doc和WPS文件</li>
+</ul>
+<h3 id="6-2-模型优化"><a href="#6-2-模型优化" class="headerlink" title="6.2 模型优化"></a>6.2 模型优化</h3><ul>
+<li>继续调教本地模型提示词，提高回答质量</li>
+<li>尝试更大的本地模型（如果有显存的话）</li>
+<li>优化云端模型调用成本，实现智能切换</li>
+</ul>
+<h3 id="6-3-功能增强"><a href="#6-3-功能增强" class="headerlink" title="6.3 功能增强"></a>6.3 功能增强</h3><ul>
+<li>支持向量数据库，提高语义搜索精度</li>
+<li>添加用户权限管理</li>
+<li>实现多语言支持</li>
+</ul>
+<h2 id="7-总结与感悟"><a href="#7-总结与感悟" class="headerlink" title="7. 总结与感悟"></a>7. 总结与感悟</h2><p>在Mac mini M4上搭建的这个文档问答小助手，虽然还有些不完美，但已经能解决大部分实际需求了。最大的感悟是：</p>
+<h3 id="7-1-技术收获"><a href="#7-1-技术收获" class="headerlink" title="7.1 技术收获"></a>7.1 技术收获</h3><ol>
+<li><strong>文档解析比想象中复杂</strong>：各种格式的兼容性问题层出不穷</li>
+<li><strong>云端模型效果确实好很多</strong>：但需要平衡成本和使用体验</li>
+<li><strong>本地模型作为备胎还算合格</strong>：在断网情况下依然能提供基本服务</li>
+</ol>
+<h3 id="7-2-项目价值"><a href="#7-2-项目价值" class="headerlink" title="7.2 项目价值"></a>7.2 项目价值</h3><ul>
+<li><strong>提高工作效率</strong>：从手动检索N小时缩短到AI问答N秒</li>
+<li><strong>数据安全保障</strong>：可以本地运行，敏感数据不外泄</li>
+<li><strong>技术学习价值</strong>：深入了解了AI应用开发的全流程</li>
+</ul>
+<p>期待未来能解决所有格式兼容问题，让这个小助手真正成为文档处理的全能选手！同时，也希望这个项目能为其他开发者提供一些参考和启发。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/ollama/" rel="tag"># ollama</a>
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag"># 知识库</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/15/20250415_macmini/" rel="prev" title="Apple Mac mini M4：我的全能家庭服务器实践">
+      <i class="fa fa-chevron-left"></i> Apple Mac mini M4：我的全能家庭服务器实践
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/07/06/20250706_tiny_qa/" rel="next" title="Tiny QA：基于 Ollama 的本地智能知识库问答系统">
+      Tiny QA：基于 Ollama 的本地智能知识库问答系统 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-项目背景"><span class="nav-number">1.</span> <span class="nav-text">1. 项目背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-我的Mac-mini-M4配置"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 我的Mac mini M4配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-本地AI模型部署"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 本地AI模型部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-项目动机"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 项目动机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-技术选型"><span class="nav-number">2.</span> <span class="nav-text">2. 技术选型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-后端技术栈"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 后端技术栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-文档处理工具"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 文档处理工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-AI模型搭配"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 AI模型搭配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-核心功能揭秘"><span class="nav-number">3.</span> <span class="nav-text">3. 核心功能揭秘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-文档处理流水线"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 文档处理流水线</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#批量处理docx文档"><span class="nav-number">3.1.1.</span> <span class="nav-text">批量处理docx文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完整文本提取术"><span class="nav-number">3.1.2.</span> <span class="nav-text">完整文本提取术</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-智能内容分析"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 智能内容分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键词提取优化"><span class="nav-number">3.2.1.</span> <span class="nav-text">关键词提取优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#智能问答系统"><span class="nav-number">3.2.2.</span> <span class="nav-text">智能问答系统</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-技术挑战与解决方案"><span class="nav-number">4.</span> <span class="nav-text">4. 技术挑战与解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-文件格式兼容性问题"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 文件格式兼容性问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-模型效果对比"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 模型效果对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-数据库优化"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 数据库优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-实际应用效果"><span class="nav-number">5.</span> <span class="nav-text">5. 实际应用效果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-性能表现"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 性能表现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-使用体验"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 使用体验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-未来计划"><span class="nav-number">6.</span> <span class="nav-text">6. 未来计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-文件格式支持"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 文件格式支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-模型优化"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 模型优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-功能增强"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 功能增强</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-总结与感悟"><span class="nav-number">7.</span> <span class="nav-text">7. 总结与感悟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-技术收获"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 技术收获</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-项目价值"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 项目价值</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

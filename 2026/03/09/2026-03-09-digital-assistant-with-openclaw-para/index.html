@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在低配VPS上搭建个人数字知识助理，结合PARA方法论管理知识，让AI帮你管理学习、工作和生活中的所有信息。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 OpenClaw + PARA 搭建个人数字知识助理">
+<meta property="og:url" content="http://blog.fanzhh.pw/2026/03/09/2026-03-09-digital-assistant-with-openclaw-para/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="在低配VPS上搭建个人数字知识助理，结合PARA方法论管理知识，让AI帮你管理学习、工作和生活中的所有信息。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.devlabs.cc/posts/digital-assistant-cover.png">
+<meta property="article:published_time" content="2026-03-08T23:30:00.000Z">
+<meta property="article:modified_time" content="2026-06-02T13:43:09.281Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="OpenClaw">
+<meta property="article:tag" content="数字助理">
+<meta property="article:tag" content="PARA方法">
+<meta property="article:tag" content="知识管理">
+<meta property="article:tag" content="知识库">
+<meta property="article:tag" content="个人AI助手">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.devlabs.cc/posts/digital-assistant-cover.png">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2026/03/09/2026-03-09-digital-assistant-with-openclaw-para/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>用 OpenClaw + PARA 搭建个人数字知识助理 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2026/03/09/2026-03-09-digital-assistant-with-openclaw-para/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用 OpenClaw + PARA 搭建个人数字知识助理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2026-03-09 07:30:00" itemprop="dateCreated datePublished" datetime="2026-03-09T07:30:00+08:00">2026-03-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-06-02 21:43:09" itemprop="dateModified" datetime="2026-06-02T21:43:09+08:00">2026-06-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">技术教程</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">在低配VPS上搭建个人数字知识助理，结合PARA方法论管理知识，让AI帮你管理学习、工作和生活中的所有信息。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+            <img src="https://images.devlabs.cc/posts/digital-assistant-cover.png" itemprop="contentUrl">
+        </div>
+        <h1 id="用-OpenClaw-PARA-搭建个人数字知识助理"><a href="#用-OpenClaw-PARA-搭建个人数字知识助理" class="headerlink" title="用 OpenClaw + PARA 搭建个人数字知识助理"></a>用 OpenClaw + PARA 搭建个人数字知识助理</h1><p>最近想给自己搭一个”数字助理”，主要解决两个问题：</p>
+<ol>
+<li>学习、工作、生活中的资料越来越多，找起来麻烦</li>
+<li>AI 这么火，想让 AI 帮我整理、检索、提醒</li>
+</ol>
+<p>折腾了一阵子，用 OpenClaw + PARA 搞定了。写下来记录一下，也许对其他人有用。</p>
+<hr>
+<h2 id="一、为什么需要数字知识助理？"><a href="#一、为什么需要数字知识助理？" class="headerlink" title="一、为什么需要数字知识助理？"></a>一、为什么需要数字知识助理？</h2><p>说白了就是两个问题：</p>
+<ol>
+<li><strong>东西太多，找不着</strong>：论文资料、实习文档、面试准备、课程笔记……散落在各个地方，要用的时候想不起来放哪了</li>
+<li><strong>AI 这么火，能不能帮我干活</strong>：不光存资料，还希望 AI 能帮我整理、总结、提醒</li>
+</ol>
+<p>以前试过不少笔记软件，但总觉得差点意思：</p>
+<ul>
+<li>Notion 功能强但国内访问慢</li>
+<li>印象笔记搜索不太智能</li>
+<li>Obsidian 本地存但没 AI 能力</li>
+</ul>
+<p>干脆自己搭一个。</p>
+<a id="more"></a>
+<hr>
+<h2 id="二、整体架构"><a href="#二、整体架构" class="headerlink" title="二、整体架构"></a>二、整体架构</h2><p>先看一眼全貌：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────┐</span><br><span class="line">│           使用入口（微信&#x2F;网页）            │</span><br><span class="line">└─────────────────┬───────────────────────┘</span><br><span class="line">                  ↓</span><br><span class="line">┌─────────────────────────────────────────┐</span><br><span class="line">│         OpenClaw（数字助理核心）          │</span><br><span class="line">│   • 理解你的问题                         │</span><br><span class="line">│   • 去 PARA 知识库里找相关内容            │</span><br><span class="line">│   • 调用大模型生成回答                    │</span><br><span class="line">└─────────────────┬───────────────────────┘</span><br><span class="line">                  ↓</span><br><span class="line">┌───────────────┬───────────────┬─────────┐</span><br><span class="line">│  OSS 云存储   │   向量数据库   │ 大模型   │</span><br><span class="line">│  存原始文件   │  存语义索引   │ DeepSeek │</span><br><span class="line">└───────────────┴───────────────┴─────────┘</span><br></pre></td></tr></table></figure>
+<p><strong>几个关键点</strong>：</p>
+<ul>
+<li><strong>OpenClaw</strong>：开源的 AI Agent 框架，能接微信、飞书</li>
+<li><strong>PARA</strong>：知识库的组织方法，后面细说</li>
+<li><strong>低配 VPS 就能跑</strong>：2G 内存 + 30G 硬盘</li>
+</ul>
+<hr>
+<h2 id="三、PARA-知识管理方法"><a href="#三、PARA-知识管理方法" class="headerlink" title="三、PARA 知识管理方法"></a>三、PARA 知识管理方法</h2><h3 id="3-1-PARA-是什么？"><a href="#3-1-PARA-是什么？" class="headerlink" title="3.1 PARA 是什么？"></a>3.1 PARA 是什么？</h3><p>Tiago Forte 提出的方法，把信息分成四类：</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>英文</th>
+<th>是什么</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P</strong></td>
+<td>Projects</td>
+<td>正在做的项目，有截止日期</td>
+<td>毕业论文、求职准备</td>
+</tr>
+<tr>
+<td><strong>A</strong></td>
+<td>Areas</td>
+<td>长期关注的事，没截止日期</td>
+<td>健康、财务、职业发展</td>
+</tr>
+<tr>
+<td><strong>R</strong></td>
+<td>Resources</td>
+<td>以后可能用到的资料</td>
+<td>课程笔记、教程</td>
+</tr>
+<tr>
+<td><strong>A</strong></td>
+<td>Archives</td>
+<td>完成的事，归档</td>
+<td>本科课程、过往项目</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-2-目录结构"><a href="#3-2-目录结构" class="headerlink" title="3.2 目录结构"></a>3.2 目录结构</h3><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">知识库/</span><br><span class="line">├── <span class="number">01</span>_Projects/              <span class="meta"># 当前项目（最重要）</span></span><br><span class="line">│   ├── 毕业论文/</span><br><span class="line">│   │   ├── 文献资料/</span><br><span class="line">│   │   ├── 实验数据/</span><br><span class="line">│   │   └── 论文草稿/</span><br><span class="line">│   ├── 实习工作/</span><br><span class="line">│   │   ├── 工作文档/</span><br><span class="line">│   │   └── 会议记录/</span><br><span class="line">│   └── 职业规划/</span><br><span class="line">│       ├── 简历作品集/</span><br><span class="line">│       └── 面试准备/</span><br><span class="line">│</span><br><span class="line">├── <span class="number">02</span>_Areas/                 <span class="meta"># 持续关注</span></span><br><span class="line">│   ├── 学业/</span><br><span class="line">│   ├── 专业技能/</span><br><span class="line">│   ├── 人际关系/</span><br><span class="line">│   └── 健康/</span><br><span class="line">│</span><br><span class="line">├── <span class="number">03</span>_Resources/             <span class="meta"># 知识素材</span></span><br><span class="line">│   ├── 课程笔记/</span><br><span class="line">│   ├── 书摘/</span><br><span class="line">│   └── 工具教程/</span><br><span class="line">│</span><br><span class="line">├── <span class="number">04</span>_Archives/              <span class="meta"># 归档</span></span><br><span class="line">│   └── 本科阶段/</span><br><span class="line">│</span><br><span class="line">└── <span class="number">00</span>_Inbox/                 <span class="meta"># 临时收集</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-3-AI-检索优先级"><a href="#3-3-AI-检索优先级" class="headerlink" title="3.3 AI 检索优先级"></a>3.3 AI 检索优先级</h3><p>提问的时候，AI 按这个顺序找：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 先搜 Projects（当前任务最相关）</span><br><span class="line"><span class="number">2.</span> 再搜 Areas（长期关注）</span><br><span class="line"><span class="number">3.</span> 补充搜 Resources（参考资料）</span><br><span class="line"><span class="number">4.</span> Archives 一般不搜</span><br></pre></td></tr></table></figure>
+<p>这样设计的好处：问”我的论文资料在哪”，AI 会优先从毕业论文项目里找，而不是翻一堆旧课笔记。</p>
+<hr>
+<h2 id="四、硬件准备"><a href="#四、硬件准备" class="headerlink" title="四、硬件准备"></a>四、硬件准备</h2><h3 id="4-1-VPS-配置"><a href="#4-1-VPS-配置" class="headerlink" title="4.1 VPS 配置"></a>4.1 VPS 配置</h3><p>我买的是入门款：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>配置</th>
+<th>费用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>1 核</td>
+<td>-</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>2G</td>
+<td>-</td>
+</tr>
+<tr>
+<td>硬盘</td>
+<td>30G SSD</td>
+<td>-</td>
+</tr>
+<tr>
+<td>带宽</td>
+<td>3M</td>
+<td>-</td>
+</tr>
+<tr>
+<td>系统</td>
+<td>Ubuntu 22.04</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>月费</strong></td>
+<td>-</td>
+<td><strong>¥30-50</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-2-内存分配"><a href="#4-2-内存分配" class="headerlink" title="4.2 内存分配"></a>4.2 内存分配</h3><p>2G 内存看着少，规划一下够用：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>占用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>系统基础</td>
+<td>300MB</td>
+</tr>
+<tr>
+<td>OpenClaw</td>
+<td>500MB</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>100MB</td>
+</tr>
+<tr>
+<td>Nginx</td>
+<td>50MB</td>
+</tr>
+<tr>
+<td>预留</td>
+<td>150MB</td>
+</tr>
+<tr>
+<td><strong>剩余</strong></td>
+<td>~900MB</td>
+</tr>
+</tbody>
+</table>
+<p>关键点：<strong>大模型用 API，不在本地跑</strong>。本地只做调度和检索。</p>
+<hr>
+<h2 id="五、VPS-环境搭建"><a href="#五、VPS-环境搭建" class="headerlink" title="五、VPS 环境搭建"></a>五、VPS 环境搭建</h2><h3 id="5-1-基础配置"><a href="#5-1-基础配置" class="headerlink" title="5.1 基础配置"></a>5.1 基础配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新系统</span></span><br><span class="line">sudo apt update &amp;&amp; sudo apt upgrade -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 装基础工具</span></span><br><span class="line">sudo apt install -y git curl wget vim htop tmux</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设时区</span></span><br><span class="line">sudo timedatectl <span class="built_in">set</span>-timezone Asia/Shanghai</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建目录</span></span><br><span class="line">mkdir -p ~/openclaw/&#123;config,data,logs&#125;</span><br><span class="line">mkdir -p ~/knowledge</span><br></pre></td></tr></table></figure>
+<h3 id="5-2-装-Docker"><a href="#5-2-装-Docker" class="headerlink" title="5.2 装 Docker"></a>5.2 装 Docker</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一键装 Docker</span></span><br><span class="line">curl -fsSL https://get.docker.com | sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前用户加到 docker 组</span></span><br><span class="line">sudo usermod -aG docker <span class="variable">$USER</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">sudo systemctl start docker</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line">docker --version</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="六、部署-OpenClaw"><a href="#六、部署-OpenClaw" class="headerlink" title="六、部署 OpenClaw"></a>六、部署 OpenClaw</h2><h3 id="6-1-拉取代码"><a href="#6-1-拉取代码" class="headerlink" title="6.1 拉取代码"></a>6.1 拉取代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/openclaw/openclaw.git</span><br><span class="line"><span class="built_in">cd</span> openclaw</span><br></pre></td></tr></table></figure>
+<h3 id="6-2-配置文件"><a href="#6-2-配置文件" class="headerlink" title="6.2 配置文件"></a>6.2 配置文件</h3><p>创建 <code>~/openclaw/config/config.yaml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">app:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">"Knowledge Assistant"</span></span><br><span class="line"><span class="attr">  env:</span> <span class="string">production</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 大模型 - 用 DeepSeek API</span></span><br><span class="line"><span class="attr">llm:</span></span><br><span class="line"><span class="attr">  provider:</span> <span class="string">deepseek</span></span><br><span class="line"><span class="attr">  api_key:</span> <span class="string">$&#123;DEEPSEEK_API_KEY&#125;</span></span><br><span class="line"><span class="attr">  model:</span> <span class="string">deepseek-chat</span></span><br><span class="line"><span class="attr">  base_url:</span> <span class="attr">https://api.deepseek.com/v1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 向量数据库 - 用 Qdrant Cloud（免费）</span></span><br><span class="line"><span class="attr">vector_db:</span></span><br><span class="line"><span class="attr">  provider:</span> <span class="string">qdrant</span></span><br><span class="line"><span class="attr">  url:</span> <span class="string">$&#123;QDRANT_URL&#125;</span></span><br><span class="line"><span class="attr">  api_key:</span> <span class="string">$&#123;QDRANT_API_KEY&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对象存储 - 阿里云 OSS</span></span><br><span class="line"><span class="attr">storage:</span></span><br><span class="line"><span class="attr">  provider:</span> <span class="string">aliyun_oss</span></span><br><span class="line"><span class="attr">  bucket:</span> <span class="string">$&#123;OSS_BUCKET&#125;</span></span><br><span class="line"><span class="attr">  access_key:</span> <span class="string">$&#123;OSS_ACCESS_KEY&#125;</span></span><br><span class="line"><span class="attr">  secret_key:</span> <span class="string">$&#123;OSS_SECRET_KEY&#125;</span></span><br><span class="line"><span class="attr">  endpoint:</span> <span class="string">$&#123;OSS_ENDPOINT&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># PARA 配置</span></span><br><span class="line"><span class="attr">knowledge:</span></span><br><span class="line"><span class="attr">  para_structure:</span></span><br><span class="line"><span class="attr">    projects:</span> <span class="string">"01_Projects"</span></span><br><span class="line"><span class="attr">    areas:</span> <span class="string">"02_Areas"</span></span><br><span class="line"><span class="attr">    resources:</span> <span class="string">"03_Resources"</span></span><br><span class="line"><span class="attr">    archives:</span> <span class="string">"04_Archives"</span></span><br><span class="line"><span class="attr">  search_priority:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">projects</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">areas</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">resources</span></span><br></pre></td></tr></table></figure>
+<h3 id="6-3-环境变量"><a href="#6-3-环境变量" class="headerlink" title="6.3 环境变量"></a>6.3 环境变量</h3><p>创建 <code>~/openclaw/.env</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># DeepSeek API（便宜好用）</span></span><br><span class="line">DEEPSEEK_API_KEY=sk-xxxxxx</span><br><span class="line"></span><br><span class="line"><span class="comment"># Qdrant Cloud（免费 1G）</span></span><br><span class="line">QDRANT_URL=https://xxx.qdrant.io</span><br><span class="line">QDRANT_API_KEY=xxxxxx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 阿里云 OSS</span></span><br><span class="line">OSS_BUCKET=your-bucket</span><br><span class="line">OSS_ACCESS_KEY=xxxxxx</span><br><span class="line">OSS_SECRET_KEY=xxxxxx</span><br><span class="line">OSS_ENDPOINT=oss-cn-hangzhou.aliyuncs.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 企业微信（可选）</span></span><br><span class="line">WECOM_CORP_ID=xxxxxx</span><br><span class="line">WECOM_AGENT_ID=xxxxxx</span><br><span class="line">WECOM_SECRET=xxxxxx</span><br></pre></td></tr></table></figure>
+<h3 id="6-4-Docker-Compose"><a href="#6-4-Docker-Compose" class="headerlink" title="6.4 Docker Compose"></a>6.4 Docker Compose</h3><p>创建 <code>~/openclaw/docker-compose.yml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.8'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  openclaw:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">openclaw/openclaw:latest</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">openclaw</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">unless-stopped</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8000:8000"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line"><span class="attr">    env_file:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">.env</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./config:/app/config</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./data:/app/data</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./logs:/app/logs</span></span><br><span class="line"><span class="attr">    mem_limit:</span> <span class="number">800</span><span class="string">m</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  redis:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">redis:7-alpine</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">openclaw-redis</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">unless-stopped</span></span><br><span class="line"><span class="attr">    mem_limit:</span> <span class="number">100</span><span class="string">m</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  nginx:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">nginx:alpine</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">openclaw-nginx</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">unless-stopped</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"80:80"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"443:443"</span></span><br><span class="line"><span class="attr">    mem_limit:</span> <span class="number">50</span><span class="string">m</span></span><br></pre></td></tr></table></figure>
+<h3 id="6-5-启动"><a href="#6-5-启动" class="headerlink" title="6.5 启动"></a>6.5 启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/openclaw</span><br><span class="line">docker compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看日志</span></span><br><span class="line">docker compose logs -f openclaw</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="七、接入微信"><a href="#七、接入微信" class="headerlink" title="七、接入微信"></a>七、接入微信</h2><p>OpenClaw 原生支持企业微信，个人微信可以通过”微信插件”关联。</p>
+<h3 id="7-1-创建企业微信"><a href="#7-1-创建企业微信" class="headerlink" title="7.1 创建企业微信"></a>7.1 创建企业微信</h3><ol>
+<li>去 <a href="https://work.weixin.qq.com" target="_blank" rel="noopener">https://work.weixin.qq.com</a> 注册</li>
+<li>选”个人”类型，免费</li>
+<li>创建一个自建应用</li>
+</ol>
+<h3 id="7-2-获取凭证"><a href="#7-2-获取凭证" class="headerlink" title="7.2 获取凭证"></a>7.2 获取凭证</h3><p>在应用详情页记下：</p>
+<ul>
+<li>Corp ID</li>
+<li>Agent ID</li>
+<li>Secret</li>
+</ul>
+<p>然后配置回调 URL：<code>https://你的域名/wecom/callback</code></p>
+<h3 id="7-3-关联个人微信"><a href="#7-3-关联个人微信" class="headerlink" title="7.3 关联个人微信"></a>7.3 关联个人微信</h3><p>在企业微信后台：</p>
+<ol>
+<li>“我的企业” → “微信插件”</li>
+<li>用个人微信扫码关注</li>
+<li>之后在个人微信里就能直接跟 AI 聊天了</li>
+</ol>
+<hr>
+<h2 id="八、存储方案"><a href="#八、存储方案" class="headerlink" title="八、存储方案"></a>八、存储方案</h2><h3 id="8-1-为什么需要两套存储？"><a href="#8-1-为什么需要两套存储？" class="headerlink" title="8.1 为什么需要两套存储？"></a>8.1 为什么需要两套存储？</h3><table>
+<thead>
+<tr>
+<th>存什么</th>
+<th>放哪</th>
+<th>为什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原始文件</td>
+<td>OSS</td>
+<td>容量大、不占本地盘</td>
+</tr>
+<tr>
+<td>语义索引</td>
+<td>向量库</td>
+<td>让 AI 能”理解”内容</td>
+</tr>
+</tbody>
+</table>
+<p>简单说：</p>
+<ul>
+<li><strong>OSS</strong> = 文件的”仓库”，存原文</li>
+<li><strong>向量库</strong> = 文件的”索引”，存 AI 能理解的特征</li>
+</ul>
+<h3 id="8-2-OSS-配置"><a href="#8-2-OSS-配置" class="headerlink" title="8.2 OSS 配置"></a>8.2 OSS 配置</h3><p>阿里云 OSS 或 Cloudflare R2 都行，R2 有免费 10G。</p>
+<p>建议用 RaiDrive 把 OSS 挂载成本地盘，这样往里拖文件就自动上传了。（这个之前写过，不展开了）</p>
+<h3 id="8-3-向量库选择"><a href="#8-3-向量库选择" class="headerlink" title="8.3 向量库选择"></a>8.3 向量库选择</h3><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>费用</th>
+<th>推荐</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qdrant Cloud</td>
+<td>免费 1G</td>
+<td>👈 首选</td>
+</tr>
+<tr>
+<td>本地 Qdrant</td>
+<td>免费</td>
+<td>占内存</td>
+</tr>
+</tbody>
+</table>
+<p>选 Qdrant Cloud 就行，免费额度够个人用很久。</p>
+<hr>
+<h2 id="九、知识库接入-OpenClaw"><a href="#九、知识库接入-OpenClaw" class="headerlink" title="九、知识库接入 OpenClaw"></a>九、知识库接入 OpenClaw</h2><h3 id="9-1-创建检索工具"><a href="#9-1-创建检索工具" class="headerlink" title="9.1 创建检索工具"></a>9.1 创建检索工具</h3><p>在 OpenClaw 里创建 <code>tools/knowledge_search.py</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> qdrant_client <span class="keyword">import</span> QdrantClient</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KnowledgeSearch</span>:</span></span><br><span class="line">    <span class="comment"># PARA 检索优先级</span></span><br><span class="line">    PRIORITY = [<span class="string">"projects"</span>, <span class="string">"areas"</span>, <span class="string">"resources"</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.client = QdrantClient(</span><br><span class="line">            url=os.getenv(<span class="string">"QDRANT_URL"</span>),</span><br><span class="line">            api_key=os.getenv(<span class="string">"QDRANT_API_KEY"</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">search</span><span class="params">(self, query, limit=<span class="number">5</span>)</span>:</span></span><br><span class="line">        results = []</span><br><span class="line">        <span class="keyword">for</span> category <span class="keyword">in</span> self.PRIORITY:</span><br><span class="line">            hits = self.client.search(</span><br><span class="line">                collection_name=<span class="string">f"para_<span class="subst">&#123;category&#125;</span>"</span>,</span><br><span class="line">                query_vector=self.embed(query),</span><br><span class="line">                limit=limit</span><br><span class="line">            )</span><br><span class="line">            results.extend(hits)</span><br><span class="line">            <span class="keyword">if</span> len(results) &gt;= limit:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+<h3 id="9-2-系统提示词"><a href="#9-2-系统提示词" class="headerlink" title="9.2 系统提示词"></a>9.2 系统提示词</h3><p>配置 OpenClaw 的 system prompt：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">你是个人知识管理助手，帮助用户管理基于 PARA 方法的知识库。</span><br><span class="line"></span><br><span class="line">知识库结构：</span><br><span class="line"><span class="bullet">- </span>Projects：当前项目（毕业论文、实习、职业规划）</span><br><span class="line"><span class="bullet">- </span>Areas：长期关注（学业、健康、财务）</span><br><span class="line"><span class="bullet">- </span>Resources：参考资料</span><br><span class="line"><span class="bullet">- </span>Archives：归档内容</span><br><span class="line"></span><br><span class="line">检索时优先从 Projects 找，其次是 Areas。</span><br><span class="line"></span><br><span class="line">你的能力：</span><br><span class="line"><span class="bullet">- </span>帮用户查找、整理知识</span><br><span class="line"><span class="bullet">- </span>协助项目管理</span><br><span class="line"><span class="bullet">- </span>提供学习建议</span><br><span class="line"><span class="bullet">- </span>记录重要信息</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="十、使用场景"><a href="#十、使用场景" class="headerlink" title="十、使用场景"></a>十、使用场景</h2><p>搭好之后能干什么？</p>
+<h3 id="10-1-论文相关"><a href="#10-1-论文相关" class="headerlink" title="10.1 论文相关"></a>10.1 论文相关</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">用户：我之前看过一篇关于深度学习的论文，讲 Transformer 的，帮我找一下</span><br><span class="line">AI：在<span class="string">"毕业论文/文献资料"</span>里找到了 <span class="number">3</span> 篇相关文献：</span><br><span class="line">    <span class="number">1.</span> Attention Is All You Need (<span class="number">2017</span>)</span><br><span class="line">    <span class="number">2.</span> BERT: Pre-training of Deep Bidirectional Transformers</span><br><span class="line">    <span class="number">3.</span> ...</span><br></pre></td></tr></table></figure>
+<h3 id="10-2-实习工作"><a href="#10-2-实习工作" class="headerlink" title="10.2 实习工作"></a>10.2 实习工作</h3><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">用户：上周例会讨论的进度安排是什么来着？</span><br><span class="line">AI：根据<span class="string">"实习工作/会议记录/03-02例会纪要"</span>：</span><br><span class="line">    - 你负责的部分：数据清洗模块</span><br><span class="line">    - 截止日期：<span class="number">3</span> 月 <span class="number">15</span> 日</span><br><span class="line">    - 下次汇报：<span class="number">3</span> 月 <span class="number">9</span> 日</span><br></pre></td></tr></table></figure>
+<h3 id="10-3-面试准备"><a href="#10-3-面试准备" class="headerlink" title="10.3 面试准备"></a>10.3 面试准备</h3><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户：帮我整理一下常见的机器学习面试题</span><br><span class="line">AI：从<span class="string">"职业规划/面试准备"</span>里找到了你之前收集的 <span class="number">20</span> 道题目，</span><br><span class="line">    主要分为：基础理论、算法实现、项目经验三类。</span><br><span class="line">    要我按类别给你讲一遍吗？</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="十一、成本估算"><a href="#十一、成本估算" class="headerlink" title="十一、成本估算"></a>十一、成本估算</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>费用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VPS（2G 内存）</td>
+<td>¥30-50/月</td>
+</tr>
+<tr>
+<td>DeepSeek API</td>
+<td>¥10-30/月</td>
+</tr>
+<tr>
+<td>Qdrant Cloud</td>
+<td>免费</td>
+</tr>
+<tr>
+<td>阿里云 OSS（10G）</td>
+<td>¥5/月</td>
+</tr>
+<tr>
+<td>域名（可选）</td>
+<td>¥10/年</td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td><strong>¥50-90/月</strong></td>
+</tr>
+</tbody>
+</table>
+<p>比订阅 Notion AI（$10/月）贵一点，但好处是完全自主可控，数据在自己手里。</p>
+<hr>
+<h2 id="十二、总结"><a href="#十二、总结" class="headerlink" title="十二、总结"></a>十二、总结</h2><p>搭这个数字助理，主要想解决两个问题：</p>
+<ol>
+<li>资料太多太乱，找不着</li>
+<li>让 AI 帮着整理和检索</li>
+</ol>
+<p>技术栈：</p>
+<ul>
+<li><strong>OpenClaw</strong>：AI Agent 框架</li>
+<li><strong>PARA</strong>：知识库组织方法</li>
+<li><strong>OSS + 向量库</strong>：存储方案</li>
+<li><strong>DeepSeek API</strong>：大模型</li>
+</ul>
+<p>整体不算太复杂，有点技术基础的话，一个周末能搞定。</p>
+<p><strong>后续想做的事</strong>：</p>
+<ul>
+<li>加上语音交互（微信发语音也能识别）</li>
+<li>接入更多工具（日历、提醒）</li>
+<li>多用户支持（给家里其他人也开账号）</li>
+</ul>
+<hr>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><ul>
+<li><a href="https://openclaw.ai" target="_blank" rel="noopener">OpenClaw 官网</a></li>
+<li><a href="https://fortelabs.com/blog/para-method/" target="_blank" rel="noopener">PARA 方法介绍</a></li>
+<li><a href="https://cloud.qdrant.io" target="_blank" rel="noopener">Qdrant Cloud</a></li>
+<li><a href="https://platform.deepseek.com" target="_blank" rel="noopener">DeepSeek API</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag"># 知识库</a>
+              <a href="/tags/OpenClaw/" rel="tag"># OpenClaw</a>
+              <a href="/tags/%E6%95%B0%E5%AD%97%E5%8A%A9%E7%90%86/" rel="tag"># 数字助理</a>
+              <a href="/tags/PARA/" rel="tag"># PARA</a>
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/" rel="tag"># 知识管理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/02/16/20260216_huaweihealth/" rel="prev" title="华为健康数据提取助手-v0.1.1">
+      <i class="fa fa-chevron-left"></i> 华为健康数据提取助手-v0.1.1
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/06/05/2026-06-05-headscale-tailscale-bridge/" rel="next" title="VPS 既是 Headscale 节点又是 Tailscale 节点：实现双网互通">
+      VPS 既是 Headscale 节点又是 Tailscale 节点：实现双网互通 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#用-OpenClaw-PARA-搭建个人数字知识助理"><span class="nav-number">1.</span> <span class="nav-text">用 OpenClaw + PARA 搭建个人数字知识助理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、为什么需要数字知识助理？"><span class="nav-number">1.1.</span> <span class="nav-text">一、为什么需要数字知识助理？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、整体架构"><span class="nav-number">1.2.</span> <span class="nav-text">二、整体架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、PARA-知识管理方法"><span class="nav-number">1.3.</span> <span class="nav-text">三、PARA 知识管理方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-PARA-是什么？"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 PARA 是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-目录结构"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-AI-检索优先级"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 AI 检索优先级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、硬件准备"><span class="nav-number">1.4.</span> <span class="nav-text">四、硬件准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-VPS-配置"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 VPS 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-内存分配"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 内存分配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、VPS-环境搭建"><span class="nav-number">1.5.</span> <span class="nav-text">五、VPS 环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-基础配置"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 基础配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-装-Docker"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 装 Docker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、部署-OpenClaw"><span class="nav-number">1.6.</span> <span class="nav-text">六、部署 OpenClaw</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-拉取代码"><span class="nav-number">1.6.1.</span> <span class="nav-text">6.1 拉取代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-配置文件"><span class="nav-number">1.6.2.</span> <span class="nav-text">6.2 配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-环境变量"><span class="nav-number">1.6.3.</span> <span class="nav-text">6.3 环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-Docker-Compose"><span class="nav-number">1.6.4.</span> <span class="nav-text">6.4 Docker Compose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-5-启动"><span class="nav-number">1.6.5.</span> <span class="nav-text">6.5 启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、接入微信"><span class="nav-number">1.7.</span> <span class="nav-text">七、接入微信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-创建企业微信"><span class="nav-number">1.7.1.</span> <span class="nav-text">7.1 创建企业微信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-获取凭证"><span class="nav-number">1.7.2.</span> <span class="nav-text">7.2 获取凭证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-关联个人微信"><span class="nav-number">1.7.3.</span> <span class="nav-text">7.3 关联个人微信</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、存储方案"><span class="nav-number">1.8.</span> <span class="nav-text">八、存储方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-为什么需要两套存储？"><span class="nav-number">1.8.1.</span> <span class="nav-text">8.1 为什么需要两套存储？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-OSS-配置"><span class="nav-number">1.8.2.</span> <span class="nav-text">8.2 OSS 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-向量库选择"><span class="nav-number">1.8.3.</span> <span class="nav-text">8.3 向量库选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#九、知识库接入-OpenClaw"><span class="nav-number">1.9.</span> <span class="nav-text">九、知识库接入 OpenClaw</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1-创建检索工具"><span class="nav-number">1.9.1.</span> <span class="nav-text">9.1 创建检索工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-系统提示词"><span class="nav-number">1.9.2.</span> <span class="nav-text">9.2 系统提示词</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十、使用场景"><span class="nav-number">1.10.</span> <span class="nav-text">十、使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-论文相关"><span class="nav-number">1.10.1.</span> <span class="nav-text">10.1 论文相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-实习工作"><span class="nav-number">1.10.2.</span> <span class="nav-text">10.2 实习工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-3-面试准备"><span class="nav-number">1.10.3.</span> <span class="nav-text">10.3 面试准备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十一、成本估算"><span class="nav-number">1.11.</span> <span class="nav-text">十一、成本估算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十二、总结"><span class="nav-number">1.12.</span> <span class="nav-text">十二、总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关链接"><span class="nav-number">1.13.</span> <span class="nav-text">相关链接</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

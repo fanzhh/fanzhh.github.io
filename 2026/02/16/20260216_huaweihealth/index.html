@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一款提取安卓手机上华为健康运动数据的应用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="华为健康数据提取助手-v0.1.1">
+<meta property="og:url" content="http://blog.fanzhh.pw/2026/02/16/20260216_huaweihealth/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="一款提取安卓手机上华为健康运动数据的应用。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.devlabs.cc/Gemini_Generated_Image_p81u41p81u41p81u.png">
+<meta property="article:published_time" content="2026-02-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-16T13:31:26.225Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="APK">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.devlabs.cc/Gemini_Generated_Image_p81u41p81u41p81u.png">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2026/02/16/20260216_huaweihealth/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>华为健康数据提取助手-v0.1.1 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2026/02/16/20260216_huaweihealth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          华为健康数据提取助手-v0.1.1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2026-02-16 00:00:00 / Modified: 21:31:26" itemprop="dateCreated datePublished" datetime="2026-02-16T00:00:00+08:00">2026-02-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.devlabs.cc/Gemini_Generated_Image_p81u41p81u41p81u.png" alt="华为健康数据提取助手封面"></p>
+<p>一款提取安卓手机上华为健康运动数据的应用。<br><a id="more"></a></p>
+<h2 id="这是什么？"><a href="#这是什么？" class="headerlink" title="这是什么？"></a>这是什么？</h2><p>写这个小工具的出发点很简单——我自己在用华为手表记录运动数据，每次想把这些数据导出来交给 AI 分析的时候都特别麻烦。华为健康 APP 里数据挺全的，但官方并没有提供方便的导出功能。</p>
+<p>所以这个工具就做了一件事：帮你把华为健康里的数据取出来，然后直接发到你的邮箱里。白天运动结束后，晚上运动数据已经在邮箱里了。</p>
+<h2 id="它能做什么"><a href="#它能做什么" class="headerlink" title="它能做什么"></a>它能做什么</h2><p><strong>自动提取数据</strong></p>
+<p>启动后，它会依次完成这些操作：</p>
+<ul>
+<li>打开华为健康 APP</li>
+<li>进入”运动记录”，把当天的跑步、骑行、步行这些运动的详细数据抓下来</li>
+<li>返回首页，进入”我的”页面</li>
+<li>找到”我的数据”，提取步数、睡眠、血压、心率这些指标</li>
+<li>把所有内容打包成一份报告</li>
+<li>通过邮件发给你</li>
+</ul>
+<p><strong>定时运行（推荐）</strong></p>
+<p>你可以设置一个固定时间（比如每天晚上 10 点，运动结束后），让它自动跑一遍这个流程。设置好后就不用管了，每天准时收邮件就行。</p>
+<p><strong>邮件接收</strong></p>
+<p>支持 QQ 邮箱、163 邮箱、Gmail 这些常见的邮箱。配置一次之后，数据报告就会以附件形式发到你的收件箱，方便交给 AI 分析。</p>
+<h2 id="v0-1-1-更新了啥"><a href="#v0-1-1-更新了啥" class="headerlink" title="v0.1.1 更新了啥"></a>v0.1.1 更新了啥</h2><h3 id="换了数据发送方式：从坚果云改成邮件"><a href="#换了数据发送方式：从坚果云改成邮件" class="headerlink" title="换了数据发送方式：从坚果云改成邮件"></a>换了数据发送方式：从坚果云改成邮件</h3><p>上个版本用的是坚果云的 WebDAV 功能来存数据。但实际用下来发现几个问题：</p>
+<ul>
+<li>配置起来太麻烦了，要填一堆参数，配了半天还是连不上</li>
+<li>上传经常失败，稳定性不太好</li>
+<li>数据存到网盘后，还得专门去下载查看</li>
+</ul>
+<p>所以这次干脆改成了邮件发送。好处很明显：</p>
+<ul>
+<li>配置简单，填个 SMTP 服务器地址、端口号、邮箱账号密码就能用</li>
+<li>邮件到达率比 WebDAV 上传高多了</li>
+<li>数据直接进邮箱，手机电脑上都能随时看</li>
+</ul>
+<h3 id="新增：运动记录详细提取"><a href="#新增：运动记录详细提取" class="headerlink" title="新增：运动记录详细提取"></a>新增：运动记录详细提取</h3><p>之前版本只能拿到”我的数据”里的基础指标，比如今天走了多少步、睡了多久。但更关心具体的运动表现——这次跑了多远、配速多少、心率区间如何。</p>
+<p>所以这次专门加了运动记录的提取：</p>
+<ul>
+<li>自动进入”运动记录”页面</li>
+<li>找到当天的运动条目（比如”户外跑步”）</li>
+<li>点进去，把详情页的数据全部抓下来</li>
+<li>包括运动类型、距离、时长、配速、消耗卡路里、步频、心率区间这些</li>
+</ul>
+<h3 id="修复：定时任务偶尔不触发的问题"><a href="#修复：定时任务偶尔不触发的问题" class="headerlink" title="修复：定时任务偶尔不触发的问题"></a>修复：定时任务偶尔不触发的问题</h3><p>设置了定时任务，但有时候到了时间没反应。排查了一下，主要是权限问题：</p>
+<ul>
+<li>Android 12 之后对精确闹钟权限管得更严了</li>
+<li>后台服务的通知权限没申请完整</li>
+<li>电池优化把后台服务给杀了</li>
+</ul>
+<p>这次把这些权限相关的问题都处理了一遍，定时任务应该稳定多了。</p>
+<h3 id="其他小改进"><a href="#其他小改进" class="headerlink" title="其他小改进"></a>其他小改进</h3><p><strong>智能首页检测</strong></p>
+<p>如果华为健康本来就在后台运行，可能停留在任意页面。现在工具会先判断当前在哪，如果不在首页就自动按返回键退回到首页，然后再开始操作，流程更稳了。</p>
+<p><strong>修复滚动问题</strong></p>
+<p>在”我的”页面找”我的数据”入口的时候，之前用的是水平滑动，结果列表滚不动。现在改成了垂直下滑，能正确找到入口了。</p>
+<p><strong>新图标</strong></p>
+<p>换了个卡通风格的跑步小人图标，橙色背景配白色小人，看着活泼一些。</p>
+<p><strong>版本号调整</strong></p>
+<p>从 1.0 改成 0.1.1，更符合实际开发阶段。</p>
+<h2 id="怎么用"><a href="#怎么用" class="headerlink" title="怎么用"></a>怎么用</h2><h3 id="第一步：安装和基础配置"><a href="#第一步：安装和基础配置" class="headerlink" title="第一步：安装和基础配置"></a>第一步：安装和基础配置</h3><ol>
+<li>下载 APK 安装包（下载链接在下面）</li>
+<li>安装后去系统设置里开权限：设置 → 无障碍 → 已下载的服务 → 找到”健康数据提取助手” → 开启</li>
+<li>打开 APP，进”设置”页面，把邮箱信息填好：<ul>
+<li>SMTP 服务器地址（比如 QQ 邮箱是 smtp.qq.com）</li>
+<li>端口号（通常是 465 或 587）</li>
+<li>你的邮箱地址</li>
+<li>邮箱授权码（不是登录密码，要去邮箱设置里单独开 SMTP 服务获取）</li>
+<li>收件人邮箱（可以填自己的）</li>
+</ul>
+</li>
+<li>点”测试邮件连接”，看看能不能正常发邮件</li>
+</ol>
+<h3 id="第二步：手动跑一遍试试"><a href="#第二步：手动跑一遍试试" class="headerlink" title="第二步：手动跑一遍试试"></a>第二步：手动跑一遍试试</h3><p>回到主界面，点”开始自动化”。这时候会弹出一个前台服务通知，然后开始自动操作华为健康 APP。你可以看着日志输出，等它跑完。</p>
+<p>跑完之后检查你的邮箱，应该能收到一封带附件的邮件，附件里就是刚才提取的数据报告。</p>
+<h3 id="第三步：设置定时任务（推荐）"><a href="#第三步：设置定时任务（推荐）" class="headerlink" title="第三步：设置定时任务（推荐）"></a>第三步：设置定时任务（推荐）</h3><p>如果你希望每天自动跑，就去”设置”里选”设置定时任务”，挑一个时间（比如晚上 10 点，运动结束后）。然后记得去系统设置里给这个 APP 加电池白名单，不然系统可能会杀后台。</p>
+<h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><ul>
+<li>下载链接：<a href="https://www.jianguoyun.com/p/Df75drUQk9zgDRjtjpQGIAA" target="_blank" rel="noopener">https://www.jianguoyun.com/p/Df75drUQk9zgDRjtjpQGIAA</a></li>
+<li>文件类型：APK 安装包</li>
+<li>系统要求：Android 5.0 及以上</li>
+</ul>
+<h2 id="使用注意"><a href="#使用注意" class="headerlink" title="使用注意"></a>使用注意</h2><ol>
+<li>手机上必须先装好华为运动健康 APP（我目前用的是 16.1.1.310 版本）</li>
+<li>无障碍服务权限必须开着，否则没法自动操作</li>
+<li>定时任务需要电池白名单，记得去系统设置里配置</li>
+<li>邮箱授权码不是登录密码，要去邮箱服务商那里单独开启 SMTP 服务才能拿到</li>
+</ol>
+<hr>
+<p>版本：v0.1.1 (build 2)<br>更新日期：2026-02-16</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/APK/" rel="tag"># APK</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/02/04/2026-02-04-safari_reading_list_automation/" rel="prev" title="Safari阅读列表自动化：从书签到EPUB的完整工作流">
+      <i class="fa fa-chevron-left"></i> Safari阅读列表自动化：从书签到EPUB的完整工作流
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/03/09/2026-03-09-digital-assistant-with-openclaw-para/" rel="next" title="用 OpenClaw + PARA 搭建个人数字知识助理">
+      用 OpenClaw + PARA 搭建个人数字知识助理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#这是什么？"><span class="nav-number">1.</span> <span class="nav-text">这是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#它能做什么"><span class="nav-number">2.</span> <span class="nav-text">它能做什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v0-1-1-更新了啥"><span class="nav-number">3.</span> <span class="nav-text">v0.1.1 更新了啥</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#换了数据发送方式：从坚果云改成邮件"><span class="nav-number">3.1.</span> <span class="nav-text">换了数据发送方式：从坚果云改成邮件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增：运动记录详细提取"><span class="nav-number">3.2.</span> <span class="nav-text">新增：运动记录详细提取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修复：定时任务偶尔不触发的问题"><span class="nav-number">3.3.</span> <span class="nav-text">修复：定时任务偶尔不触发的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他小改进"><span class="nav-number">3.4.</span> <span class="nav-text">其他小改进</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么用"><span class="nav-number">4.</span> <span class="nav-text">怎么用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：安装和基础配置"><span class="nav-number">4.1.</span> <span class="nav-text">第一步：安装和基础配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步：手动跑一遍试试"><span class="nav-number">4.2.</span> <span class="nav-text">第二步：手动跑一遍试试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步：设置定时任务（推荐）"><span class="nav-number">4.3.</span> <span class="nav-text">第三步：设置定时任务（推荐）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载地址"><span class="nav-number">5.</span> <span class="nav-text">下载地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用注意"><span class="nav-number">6.</span> <span class="nav-text">使用注意</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

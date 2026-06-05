@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Tiny QA 是一个完全本地化的智能文档问答系统，基于 Ollama 本地大语言模型构建。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tiny QA：基于 Ollama 的本地智能知识库问答系统">
+<meta property="og:url" content="http://blog.fanzhh.pw/2025/07/06/20250706_tiny_qa/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="Tiny QA 是一个完全本地化的智能文档问答系统，基于 Ollama 本地大语言模型构建。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.devlabs.cc/20250706.png">
+<meta property="article:published_time" content="2025-07-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-04T22:35:40.108Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="知识库">
+<meta property="article:tag" content="Ollama">
+<meta property="article:tag" content="大模型">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.devlabs.cc/20250706.png">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2025/07/06/20250706_tiny_qa/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Tiny QA：基于 Ollama 的本地智能知识库问答系统 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2025/07/06/20250706_tiny_qa/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Tiny QA：基于 Ollama 的本地智能知识库问答系统
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-07-06 00:00:00" itemprop="dateCreated datePublished" datetime="2025-07-06T00:00:00+08:00">2025-07-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-02-05 06:35:40" itemprop="dateModified" datetime="2026-02-05T06:35:40+08:00">2026-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.devlabs.cc/20250706.png" alt=""></p>
+<p>Tiny QA 是一个完全本地化的智能文档问答系统，基于 Ollama 本地大语言模型构建。<br><a id="more"></a></p>
+<h2 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h2><p>Tiny QA 是一个完全本地化的智能文档问答系统，基于 Ollama 本地大语言模型构建。它能够处理 PDF、Word、Excel、TXT、Markdown 等多种格式的文档，通过向量化技术实现语义搜索，并基于相关文档内容生成准确的回答。</p>
+<h3 id="核心特性"><a href="#核心特性" class="headerlink" title="核心特性"></a>核心特性</h3><ul>
+<li>🔒 <strong>完全本地化</strong>：基于 Ollama 本地模型，数据不出本地</li>
+<li>📚 <strong>多格式支持</strong>：PDF、Word、Excel、TXT、Markdown 等5种格式</li>
+<li>🤖 <strong>智能问答</strong>：基于文档内容的语义理解和回答</li>
+<li>⚡ <strong>快速部署</strong>：支持跨平台，一键启动</li>
+<li>🎨 <strong>友好界面</strong>：现代化的 Web 界面，操作简单</li>
+</ul>
+<h2 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h2><p>在开始使用 Tiny QA 之前，您需要先安装以下三个核心工具：</p>
+<h3 id="1-Git-版本控制工具"><a href="#1-Git-版本控制工具" class="headerlink" title="1. Git 版本控制工具"></a>1. Git 版本控制工具</h3><p>Git 是一个分布式版本控制系统，用于下载和管理项目代码。</p>
+<h4 id="安装方法："><a href="#安装方法：" class="headerlink" title="安装方法："></a>安装方法：</h4><p><strong>Windows:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载并安装 Git for Windows</span></span><br><span class="line"><span class="comment"># 访问: https://git-scm.com/download/win</span></span><br><span class="line"><span class="comment"># 或使用 winget</span></span><br><span class="line">winget install Git.Git</span><br></pre></td></tr></table></figure></p>
+<p><strong>macOS:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 Homebrew 安装</span></span><br><span class="line">brew install git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或使用官方安装包</span></span><br><span class="line"><span class="comment"># 访问: https://git-scm.com/download/mac</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Linux (Ubuntu/Debian):</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install git</span><br></pre></td></tr></table></figure></p>
+<p><strong>Linux (CentOS/RHEL):</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install git</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">sudo dnf install git</span><br></pre></td></tr></table></figure></p>
+<h4 id="验证安装："><a href="#验证安装：" class="headerlink" title="验证安装："></a>验证安装：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+<h3 id="2-Python-编程语言"><a href="#2-Python-编程语言" class="headerlink" title="2. Python 编程语言"></a>2. Python 编程语言</h3><p>Python 是 Tiny QA 的主要开发语言，用于运行 Web 服务和 AI 处理逻辑。</p>
+<h4 id="版本要求："><a href="#版本要求：" class="headerlink" title="版本要求："></a>版本要求：</h4><ul>
+<li><strong>Python 3.8+</strong>（推荐 Python 3.9 或 3.11）</li>
+<li>不支持 Python 2.x</li>
+</ul>
+<h4 id="安装方法：-1"><a href="#安装方法：-1" class="headerlink" title="安装方法："></a>安装方法：</h4><p><strong>Windows:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载并安装 Python</span></span><br><span class="line"><span class="comment"># 访问: https://www.python.org/downloads/</span></span><br><span class="line"><span class="comment"># 或使用 winget</span></span><br><span class="line">winget install Python.Python.3.11</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装</span></span><br><span class="line">python --version</span><br><span class="line">pip --version</span><br></pre></td></tr></table></figure></p>
+<p><strong>macOS:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 Homebrew 安装</span></span><br><span class="line">brew install python@3.11</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或使用官方安装包</span></span><br><span class="line"><span class="comment"># 访问: https://www.python.org/downloads/macos/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装</span></span><br><span class="line">python3 --version</span><br><span class="line">pip3 --version</span><br></pre></td></tr></table></figure></p>
+<p><strong>Linux (Ubuntu/Debian):</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install python3 python3-pip python3-venv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装</span></span><br><span class="line">python3 --version</span><br><span class="line">pip3 --version</span><br></pre></td></tr></table></figure></p>
+<p><strong>Linux (CentOS/RHEL):</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install python3 python3-pip</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">sudo dnf install python3 python3-pip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装</span></span><br><span class="line">python3 --version</span><br><span class="line">pip3 --version</span><br></pre></td></tr></table></figure></p>
+<h4 id="配置-pip-镜像源（可选，国内用户推荐）："><a href="#配置-pip-镜像源（可选，国内用户推荐）：" class="headerlink" title="配置 pip 镜像源（可选，国内用户推荐）："></a>配置 pip 镜像源（可选，国内用户推荐）：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用清华大学镜像源</span></span><br><span class="line">pip config <span class="built_in">set</span> global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或使用阿里云镜像源</span></span><br><span class="line">pip config <span class="built_in">set</span> global.index-url https://mirrors.aliyun.com/pypi/simple/</span><br></pre></td></tr></table></figure>
+<h3 id="3-Ollama-本地大语言模型"><a href="#3-Ollama-本地大语言模型" class="headerlink" title="3. Ollama 本地大语言模型"></a>3. Ollama 本地大语言模型</h3><p>Ollama 是一个强大的本地大语言模型运行框架，支持多种开源模型。</p>
+<h4 id="简介："><a href="#简介：" class="headerlink" title="简介："></a>简介：</h4><ul>
+<li>🚀 <strong>本地运行</strong>：模型完全在本地运行，保护隐私</li>
+<li>🎯 <strong>多模型支持</strong>：支持 Llama、Qwen、DeepSeek 等主流模型</li>
+<li>💾 <strong>资源友好</strong>：支持从 1GB 到 70GB 的各种模型</li>
+<li>🔧 <strong>易于使用</strong>：简单的命令行界面和 API</li>
+</ul>
+<h4 id="安装方法：-2"><a href="#安装方法：-2" class="headerlink" title="安装方法："></a>安装方法：</h4><p><strong>Windows:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载并安装 Ollama</span></span><br><span class="line"><span class="comment"># 访问: https://ollama.ai/download</span></span><br><span class="line"><span class="comment"># 或使用 winget</span></span><br><span class="line">winget install Ollama.Ollama</span><br></pre></td></tr></table></figure></p>
+<p><strong>macOS:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 Homebrew 安装</span></span><br><span class="line">brew install ollama</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或使用官方安装脚本</span></span><br><span class="line">curl -fsSL https://ollama.ai/install.sh | sh</span><br></pre></td></tr></table></figure></p>
+<p><strong>Linux:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用官方安装脚本</span></span><br><span class="line">curl -fsSL https://ollama.ai/install.sh | sh</span><br></pre></td></tr></table></figure></p>
+<h4 id="验证安装：-1"><a href="#验证安装：-1" class="headerlink" title="验证安装："></a>验证安装：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama --version</span><br></pre></td></tr></table></figure>
+<h4 id="启动-Ollama-服务："><a href="#启动-Ollama-服务：" class="headerlink" title="启动 Ollama 服务："></a>启动 Ollama 服务：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama serve</span><br></pre></td></tr></table></figure>
+<h4 id="下载模型（可选）："><a href="#下载模型（可选）：" class="headerlink" title="下载模型（可选）："></a>下载模型（可选）：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载推荐的对话模型</span></span><br><span class="line">ollama pull deepseek-r1:1.5b</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或下载其他模型</span></span><br><span class="line">ollama pull qwen3:4b</span><br><span class="line">ollama pull llama3:latest</span><br></pre></td></tr></table></figure>
+<h2 id="快速安装"><a href="#快速安装" class="headerlink" title="快速安装"></a>快速安装</h2><h3 id="本地安装"><a href="#本地安装" class="headerlink" title="本地安装"></a>本地安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 克隆项目</span></span><br><span class="line">git <span class="built_in">clone</span> https://gitee.com/hu9001/tiny-qa.git</span><br><span class="line"><span class="built_in">cd</span> tiny-qa</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 创建 Python 虚拟环境</span></span><br><span class="line">python -m venv env</span><br><span class="line"><span class="built_in">source</span> env/bin/activate  <span class="comment"># Linux/macOS</span></span><br><span class="line"><span class="comment"># env\Scripts\activate   # Windows</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 安装 Python 依赖</span></span><br><span class="line">pip install -r requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 启动服务</span></span><br><span class="line">ollama serve &amp;</span><br><span class="line">python app.py</span><br></pre></td></tr></table></figure>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="1-首次配置"><a href="#1-首次配置" class="headerlink" title="1. 首次配置"></a>1. 首次配置</h3><ol>
+<li>访问 <a href="http://localhost:5002" target="_blank" rel="noopener">http://localhost:5002</a></li>
+<li>在设置页面配置文档目录路径</li>
+<li>扫描并处理文档</li>
+<li>开始智能问答</li>
+</ol>
+<h3 id="2-智能问答"><a href="#2-智能问答" class="headerlink" title="2. 智能问答"></a>2. 智能问答</h3><ul>
+<li>在问答页面输入自然语言问题</li>
+<li>系统基于相关文档生成准确回答</li>
+<li>可查看回答的文档来源</li>
+</ul>
+<h3 id="3-文档管理"><a href="#3-文档管理" class="headerlink" title="3. 文档管理"></a>3. 文档管理</h3><ul>
+<li>支持批量处理大量文档</li>
+<li>实时监控处理进度</li>
+<li>可重新处理单个或所有文档</li>
+</ul>
+<h3 id="4-支持的文档格式"><a href="#4-支持的文档格式" class="headerlink" title="4. 支持的文档格式"></a>4. 支持的文档格式</h3><table>
+<thead>
+<tr>
+<th>格式</th>
+<th>扩展名</th>
+<th>说明</th>
+<th>处理器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PDF 文档</td>
+<td>.pdf</td>
+<td>技术手册、研究报告</td>
+<td>PDFProcessor</td>
+</tr>
+<tr>
+<td>Word 文档</td>
+<td>.docx</td>
+<td>合同文件、技术文档</td>
+<td>WordProcessor</td>
+</tr>
+<tr>
+<td>Excel 表格</td>
+<td>.xlsx</td>
+<td>数据报表、统计信息</td>
+<td>ExcelProcessor</td>
+</tr>
+<tr>
+<td>文本文件</td>
+<td>.txt</td>
+<td>配置文件、日志文件</td>
+<td>TextProcessor</td>
+</tr>
+<tr>
+<td>Markdown</td>
+<td>.md</td>
+<td>技术文档、学习笔记</td>
+<td>MarkdownProcessor</td>
+</tr>
+</tbody>
+</table>
+<h2 id="技术架构"><a href="#技术架构" class="headerlink" title="技术架构"></a>技术架构</h2><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">文档处理 → 向量搜索 → AI 问答</span><br><span class="line">   ↓         ↓         ↓</span><br><span class="line"><span class="keyword">PDF</span>/<span class="keyword">Word</span>/Excel → 语义向量 → Ollama模型</span><br><span class="line">TXT/Markdown → 相似度搜索 → 智能回答</span><br></pre></td></tr></table></figure>
+<h2 id="支持的模型"><a href="#支持的模型" class="headerlink" title="支持的模型"></a>支持的模型</h2><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>大小</th>
+<th>语言</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>deepseek-r1:1.5b</td>
+<td>1.1GB</td>
+<td>中英文</td>
+<td>快速问答</td>
+</tr>
+<tr>
+<td>qwen3:4b</td>
+<td>2.6GB</td>
+<td>中文友好</td>
+<td>中文文档</td>
+</tr>
+<tr>
+<td>llama3:latest</td>
+<td>4.7GB</td>
+<td>多语言</td>
+<td>高质量回答</td>
+</tr>
+</tbody>
+</table>
+<h2 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h2><h3 id="最低配置"><a href="#最低配置" class="headerlink" title="最低配置"></a>最低配置</h3><ul>
+<li><strong>操作系统</strong>：Windows 10+、macOS 10.15+、Ubuntu 18.04+</li>
+<li><strong>内存</strong>：至少 8GB RAM</li>
+<li><strong>存储</strong>：至少 5GB 可用空间</li>
+<li><strong>网络</strong>：首次使用需要下载模型</li>
+</ul>
+<h3 id="推荐配置"><a href="#推荐配置" class="headerlink" title="推荐配置"></a>推荐配置</h3><ul>
+<li><strong>操作系统</strong>：Windows 11、macOS 12+、Ubuntu 20.04+</li>
+<li><strong>内存</strong>：16GB RAM 或更多</li>
+<li><strong>存储</strong>：20GB 可用空间（用于存储多个模型）</li>
+<li><strong>CPU</strong>：支持 AVX2 指令集的现代处理器</li>
+<li><strong>GPU</strong>：可选，支持 CUDA 的 NVIDIA 显卡可加速推理</li>
+</ul>
+<h3 id="网络要求"><a href="#网络要求" class="headerlink" title="网络要求"></a>网络要求</h3><ul>
+<li><strong>首次安装</strong>：需要稳定的网络连接下载模型</li>
+<li><strong>日常使用</strong>：完全离线运行，无需网络连接</li>
+</ul>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p><strong>Q: 首次启动很慢？</strong><br>A: 系统需要下载 AI 模型，首次启动会较慢。建议提前下载模型：<code>ollama pull deepseek-r1:1.5b</code></p>
+<p><strong>Q: 数据安全吗？</strong><br>A: 完全本地化部署，数据不会上传到任何服务器。</p>
+<p><strong>Q: 支持哪些语言？</strong><br>A: 支持中文、英文等多种语言，取决于选择的模型。</p>
+<p><strong>Q: Git 安装失败怎么办？</strong><br>A: 确保网络连接正常，或访问 <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">https://git-scm.com/downloads</a> 手动下载安装包。</p>
+<p><strong>Q: Python 版本不兼容？</strong><br>A: 确保安装 Python 3.8+ 版本，推荐使用 Python 3.9 或 3.11。</p>
+<p><strong>Q: pip 安装包很慢？</strong><br>A: 配置国内镜像源：<code>pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/</code></p>
+<p><strong>Q: Ollama 服务启动失败？</strong><br>A: 检查端口 11434 是否被占用，或重启 Ollama 服务：<code>ollama serve</code></p>
+<p><strong>Q: 模型下载很慢？</strong><br>A: 可以使用国内镜像源，或选择较小的模型如 <code>deepseek-r1:1.5b</code>（约1GB）。</p>
+<p><strong>Q: 内存不足怎么办？</strong><br>A: 选择较小的模型，或增加系统内存。推荐至少 8GB RAM。</p>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><ul>
+<li><strong>Gitee</strong>: <a href="https://gitee.com/hu9001/tiny-qa" target="_blank" rel="noopener">https://gitee.com/hu9001/tiny-qa</a></li>
+<li><strong>文档</strong>: <a href="https://gitee.com/hu9001/tiny-qa/docs" target="_blank" rel="noopener">https://gitee.com/hu9001/tiny-qa/docs</a></li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Tiny QA 为个人和企业提供了一个安全、高效的本地知识管理解决方案。通过结合现代 AI 技术和向量搜索，它能够快速处理大量文档并提供智能问答服务，是构建个人知识库的理想工具。</p>
+<p>如果您对本地化 AI 应用感兴趣，Tiny QA 是一个很好的起点。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag"># 知识库</a>
+              <a href="/tags/Ollama/" rel="tag"># Ollama</a>
+              <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" rel="tag"># 大模型</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/06/20/20250620-knowledge/" rel="prev" title="在Mac mini M4上搭建智能文档问答助手">
+      <i class="fa fa-chevron-left"></i> 在Mac mini M4上搭建智能文档问答助手
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/08/15/20250809_MCP_Sample/" rel="next" title="构建智能数据查询引擎：MCP项目架构解析">
+      构建智能数据查询引擎：MCP项目架构解析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目简介"><span class="nav-number">1.</span> <span class="nav-text">项目简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#核心特性"><span class="nav-number">1.1.</span> <span class="nav-text">核心特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装前提"><span class="nav-number">2.</span> <span class="nav-text">安装前提</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Git-版本控制工具"><span class="nav-number">2.1.</span> <span class="nav-text">1. Git 版本控制工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装方法："><span class="nav-number">2.1.1.</span> <span class="nav-text">安装方法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证安装："><span class="nav-number">2.1.2.</span> <span class="nav-text">验证安装：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Python-编程语言"><span class="nav-number">2.2.</span> <span class="nav-text">2. Python 编程语言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#版本要求："><span class="nav-number">2.2.1.</span> <span class="nav-text">版本要求：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装方法：-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">安装方法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置-pip-镜像源（可选，国内用户推荐）："><span class="nav-number">2.2.3.</span> <span class="nav-text">配置 pip 镜像源（可选，国内用户推荐）：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Ollama-本地大语言模型"><span class="nav-number">2.3.</span> <span class="nav-text">3. Ollama 本地大语言模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介："><span class="nav-number">2.3.1.</span> <span class="nav-text">简介：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装方法：-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">安装方法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证安装：-1"><span class="nav-number">2.3.3.</span> <span class="nav-text">验证安装：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动-Ollama-服务："><span class="nav-number">2.3.4.</span> <span class="nav-text">启动 Ollama 服务：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载模型（可选）："><span class="nav-number">2.3.5.</span> <span class="nav-text">下载模型（可选）：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速安装"><span class="nav-number">3.</span> <span class="nav-text">快速安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#本地安装"><span class="nav-number">3.1.</span> <span class="nav-text">本地安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">4.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-首次配置"><span class="nav-number">4.1.</span> <span class="nav-text">1. 首次配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-智能问答"><span class="nav-number">4.2.</span> <span class="nav-text">2. 智能问答</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-文档管理"><span class="nav-number">4.3.</span> <span class="nav-text">3. 文档管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-支持的文档格式"><span class="nav-number">4.4.</span> <span class="nav-text">4. 支持的文档格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术架构"><span class="nav-number">5.</span> <span class="nav-text">技术架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持的模型"><span class="nav-number">6.</span> <span class="nav-text">支持的模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统要求"><span class="nav-number">7.</span> <span class="nav-text">系统要求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最低配置"><span class="nav-number">7.1.</span> <span class="nav-text">最低配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推荐配置"><span class="nav-number">7.2.</span> <span class="nav-text">推荐配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络要求"><span class="nav-number">7.3.</span> <span class="nav-text">网络要求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题"><span class="nav-number">8.</span> <span class="nav-text">常见问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目地址"><span class="nav-number">9.</span> <span class="nav-text">项目地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

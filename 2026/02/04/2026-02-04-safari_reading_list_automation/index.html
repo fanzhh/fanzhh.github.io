@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="我有一个习惯：看到值得阅读的文章，就随手加到Safari阅读列表。但问题是，几乎没时间去仔细看它们，日积月累，阅读列表里已经堆了70篇文章，像一个不断膨胀的”待阅读”黑洞，每次打开都充满愧疚感。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Safari阅读列表自动化：从书签到EPUB的完整工作流">
+<meta property="og:url" content="http://blog.fanzhh.pw/2026/02/04/2026-02-04-safari_reading_list_automation/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="我有一个习惯：看到值得阅读的文章，就随手加到Safari阅读列表。但问题是，几乎没时间去仔细看它们，日积月累，阅读列表里已经堆了70篇文章，像一个不断膨胀的”待阅读”黑洞，每次打开都充满愧疚感。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.devlabs.cc/safari_automation_cover_v6.png">
+<meta property="article:published_time" content="2026-02-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-05T00:15:11.139Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="safari">
+<meta property="article:tag" content="automation">
+<meta property="article:tag" content="epub">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.devlabs.cc/safari_automation_cover_v6.png">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2026/02/04/2026-02-04-safari_reading_list_automation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Safari阅读列表自动化：从书签到EPUB的完整工作流 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2026/02/04/2026-02-04-safari_reading_list_automation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Safari阅读列表自动化：从书签到EPUB的完整工作流
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2026-02-04 00:00:00" itemprop="dateCreated datePublished" datetime="2026-02-04T00:00:00+08:00">2026-02-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-02-05 08:15:11" itemprop="dateModified" datetime="2026-02-05T08:15:11+08:00">2026-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.devlabs.cc/safari_automation_cover_v6.png" alt="Safari阅读列表自动化"></p>
+<p>我有一个习惯：看到值得阅读的文章，就随手加到Safari阅读列表。但问题是，几乎没时间去仔细看它们，日积月累，阅读列表里已经堆了70篇文章，像一个不断膨胀的”待阅读”黑洞，每次打开都充满愧疚感。</p>
+<a id="more"></a>
+<p>最近我终于决定做点什么。目标是：把这些文章导出成EPUB电子书，放到汉王电纸书上，这样至少有零碎时间时可以看看。原本以为是个简单任务，没想到一路走下来，踩了不少坑，但也因此摸索出了一套完整的自动化方案。</p>
+<h2 id="问题：从”稍后阅读”到”永不阅读”"><a href="#问题：从”稍后阅读”到”永不阅读”" class="headerlink" title="问题：从”稍后阅读”到”永不阅读”"></a>问题：从”稍后阅读”到”永不阅读”</h2><p>Safari的阅读列表功能本身很方便：看到好文章，快捷键一按就加入了。但问题也在这里——太方便了，方便到我们只会添加，不会阅读。我的70篇文章就是这样来的：有Obsidian使用指南、AI/ML技术文章、开发工具文档、微信公众号文章，甚至还有PDF文档。</p>
+<p>最初的想法很简单：导出成EPUB，放到电纸书里。但真正动手时发现几个问题：</p>
+<ol>
+<li><strong>Safari没有原生导出功能</strong>：阅读列表只能手动复制链接</li>
+<li><strong>直接生成的EPUB只有链接</strong>：没有实际内容，还是要联网才能看</li>
+<li><strong>中文内容乱码</strong>：网页编码问题导致中文显示异常</li>
+<li><strong>邮件附件文件名错误</strong>：显示为”mime-attachment”而不是正确文件名</li>
+</ol>
+<p>这些问题一个接一个，像多米诺骨牌一样倒下来。但解决每个问题的过程，也让整个方案逐渐变得完整和可靠。</p>
+<h2 id="方案：一步步构建自动化工作流"><a href="#方案：一步步构建自动化工作流" class="headerlink" title="方案：一步步构建自动化工作流"></a>方案：一步步构建自动化工作流</h2><h3 id="第一步：直接读取Safari书签"><a href="#第一步：直接读取Safari书签" class="headerlink" title="第一步：直接读取Safari书签"></a>第一步：直接读取Safari书签</h3><p>起初我想手动复制链接，但查了资料后，发现Safari的书签存储在<code>~/Library/Safari/Bookmarks.plist</code>这个文件里。这是一个二进制的plist文件，但可以用Python的<code>plistlib</code>库读取。</p>
+<p>更好的是，GitHub上有个现成的工具<code>safarireadinglist</code>，专门用来读取Safari的阅读列表。安装后，几行代码就能导出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> safarireadinglist <span class="keyword">import</span> export</span><br><span class="line"></span><br><span class="line">items = export.export_reading_list()</span><br><span class="line"><span class="comment"># 成功导出70个阅读列表项</span></span><br></pre></td></tr></table></figure>
+<p>但这里有个坑：macOS的TCC（透明度与同意）系统会阻止Terminal访问用户的Library文件夹。解决方案是：在”系统设置 → 隐私与安全性 → 完全磁盘访问”里，添加Terminal应用，然后<strong>完全退出Terminal</strong>（Command+Q）再重新打开。</p>
+<p>这个权限问题卡了我很久，AppleScript也被禁止发送按键，最后只能直接修改plist文件。</p>
+<h3 id="第二步：抓取网页完整内容"><a href="#第二步：抓取网页完整内容" class="headerlink" title="第二步：抓取网页完整内容"></a>第二步：抓取网页完整内容</h3><p>导出链接只是第一步，真正难的是抓取每个网页的完整内容。我用了三个工具的组合：</p>
+<ul>
+<li><strong>requests</strong>：发送HTTP请求</li>
+<li><strong>readability-lxml</strong>：提取文章主要内容（去掉广告、导航栏等）</li>
+<li><strong>html2text</strong>：将HTML转换为Markdown</li>
+</ul>
+<p>这里最大的坑是中文编码。有些网页声明是UTF-8，实际不是；有些根本不声明编码。我的解决方案是强制UTF-8，失败则用<code>apparent_encoding</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">response.encoding = <span class="string">'utf-8'</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response.text  <span class="comment"># 测试是否能解码</span></span><br><span class="line"><span class="keyword">except</span> UnicodeDecodeError:</span><br><span class="line">    response.encoding = response.apparent_encoding</span><br><span class="line"></span><br><span class="line"><span class="comment"># 确保返回UTF-8编码的字符串</span></span><br><span class="line">title = str(title).encode(<span class="string">'utf-8'</span>, errors=<span class="string">'ignore'</span>).decode(<span class="string">'utf-8'</span>)</span><br><span class="line">content = str(content).encode(<span class="string">'utf-8'</span>, errors=<span class="string">'ignore'</span>).decode(<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+<p>另外，为避免被封IP，每次请求间隔1秒。70篇文章，大概2-3分钟。</p>
+<h3 id="第三步：生成EPUB电子书"><a href="#第三步：生成EPUB电子书" class="headerlink" title="第三步：生成EPUB电子书"></a>第三步：生成EPUB电子书</h3><p>有了Markdown内容，用Pandoc转换成EPUB就简单了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc input.md -o output.epub --toc --toc-depth=2 --epub-chapter-level=2</span><br></pre></td></tr></table></figure>
+<p>最终生成的EPUB有9.8MB，包含70篇文章的完整内容。65篇成功抓取，5篇失败（主要是GitHub、Google Drive等需要登录的页面）。</p>
+<h3 id="第四步：自动发送到邮箱"><a href="#第四步：自动发送到邮箱" class="headerlink" title="第四步：自动发送到邮箱"></a>第四步：自动发送到邮箱</h3><p>最后一步是自动发送邮件，这样我在办公室也能接收，或者转发给其他设备。我用了一个自己写的<code>mail-skill</code>，支持读取配置文件、发送附件。</p>
+<p>这里又遇到一个坑：中文文件名在邮件客户端显示为”mime-attachment”。解决方案是使用RFC 2047编码，或者干脆用英文文件名（比如<code>Safari_Reading_List_70_articles.epub</code>），兼容性更好。</p>
+<h2 id="结果：一套完整的自动化方案"><a href="#结果：一套完整的自动化方案" class="headerlink" title="结果：一套完整的自动化方案"></a>结果：一套完整的自动化方案</h2><p>最终，我把整个流程封装成了一个Python脚本<code>Safari-to-EPUB</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 safari-to-epub-full.py</span><br></pre></td></tr></table></figure>
+<p>运行后会自动：</p>
+<ol>
+<li>从Safari导出阅读列表（70篇文章）</li>
+<li>抓取每个网页的完整内容（2-3分钟）</li>
+<li>生成9.8MB的EPUB电子书</li>
+<li>发送到我的邮箱</li>
+</ol>
+<p>整个过程全自动，我只需要坐等邮件，然后把EPUB传到汉王电纸书上。</p>
+<h2 id="意外收获：清空阅读列表的解脱感"><a href="#意外收获：清空阅读列表的解脱感" class="headerlink" title="意外收获：清空阅读列表的解脱感"></a>意外收获：清空阅读列表的解脱感</h2><p>完成这一切后，我做了一件事：清空Safari阅读列表。</p>
+<p>看着那70篇文章的列表变成0，有一种说不出的解脱感。它们不再是压在心头的”待阅读”负担，而是变成了实实在在的、可以随时翻阅的EPUB电子书。</p>
+<p>更重要的是，这套自动化方案可以定期运行（比如每周一次），让阅读列表保持”轻盈”的状态。看到好文章，依然可以随手加入，不用担心再次堆积成山。</p>
+<h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><p>如果你也想实现类似功能，这里是一些关键点：</p>
+<p><strong>依赖工具</strong>：</p>
+<ul>
+<li><code>safarireadinglist</code> - 读取Safari书签</li>
+<li><code>requests</code> - HTTP请求</li>
+<li><code>readability-lxml</code> - 内容提取</li>
+<li><code>html2text</code> - HTML转Markdown</li>
+<li><code>pandoc</code> - 文档转换</li>
+<li><code>mail-skill</code> - 邮件发送</li>
+</ul>
+<p><strong>权限设置</strong>：<br>Terminal需要完全磁盘访问权限才能读取<code>~/Library/Safari/Bookmarks.plist</code></p>
+<p><strong>编码处理</strong>：<br>所有内容强制UTF-8编码，确保中文正常显示</p>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li>需要登录的页面（GitHub、Google Drive）无法抓取</li>
+<li>某些JavaScript渲染的页面可能抓取失败</li>
+<li>建议间隔1秒，避免被封IP</li>
+</ul>
+<h2 id="后续改进"><a href="#后续改进" class="headerlink" title="后续改进"></a>后续改进</h2><p>目前这个方案只能在macOS上运行，因为它依赖Safari的plist文件。如果想跨平台，可以考虑：</p>
+<ol>
+<li>支持浏览器导出的HTML书签文件</li>
+<li>使用Pocket、Instapaper等在线服务的API</li>
+<li>开发浏览器扩展，实时同步阅读列表</li>
+</ol>
+<p>但就目前而言，这个方案已经很好地解决了我的问题。Safari阅读列表不再是黑洞，而是可以定期”收割”的内容源。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>回过头看，这个项目的起因很偶然，但解决过程中学到的技术（网页抓取、编码处理、自动化流程）都挺有价值的。更重要的是，它让我重新审视了自己的”稍后阅读”习惯——与其让文章在阅读列表里沉睡，不如主动把它们转化成可以随时阅读的形式。</p>
+<p>毕竟，知识只有被阅读和思考，才有价值。</p>
+<hr>
+<p><em>记录于 2026-02-04 08:00</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/safari/" rel="tag"># safari</a>
+              <a href="/tags/automation/" rel="tag"># automation</a>
+              <a href="/tags/epub/" rel="tag"># epub</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/12/17/2025-12-17-local-rerank/" rel="prev" title="本地Rerank服务实现方案">
+      <i class="fa fa-chevron-left"></i> 本地Rerank服务实现方案
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/02/16/20260216_huaweihealth/" rel="next" title="华为健康数据提取助手-v0.1.1">
+      华为健康数据提取助手-v0.1.1 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题：从”稍后阅读”到”永不阅读”"><span class="nav-number">1.</span> <span class="nav-text">问题：从”稍后阅读”到”永不阅读”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案：一步步构建自动化工作流"><span class="nav-number">2.</span> <span class="nav-text">方案：一步步构建自动化工作流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：直接读取Safari书签"><span class="nav-number">2.1.</span> <span class="nav-text">第一步：直接读取Safari书签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步：抓取网页完整内容"><span class="nav-number">2.2.</span> <span class="nav-text">第二步：抓取网页完整内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步：生成EPUB电子书"><span class="nav-number">2.3.</span> <span class="nav-text">第三步：生成EPUB电子书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四步：自动发送到邮箱"><span class="nav-number">2.4.</span> <span class="nav-text">第四步：自动发送到邮箱</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果：一套完整的自动化方案"><span class="nav-number">3.</span> <span class="nav-text">结果：一套完整的自动化方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#意外收获：清空阅读列表的解脱感"><span class="nav-number">4.</span> <span class="nav-text">意外收获：清空阅读列表的解脱感</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术细节"><span class="nav-number">5.</span> <span class="nav-text">技术细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后续改进"><span class="nav-number">6.</span> <span class="nav-text">后续改进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">7.</span> <span class="nav-text">结语</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

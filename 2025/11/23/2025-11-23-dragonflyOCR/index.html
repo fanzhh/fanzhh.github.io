@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="如果有一个文字提取工具，它不仅能批量处理文件，还专门针对扫描版PDF的识别进行了优化，那该多好？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一款支持批量文件处理的OCR工具">
+<meta property="og:url" content="http://blog.fanzhh.pw/2025/11/23/2025-11-23-dragonflyOCR/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="如果有一个文字提取工具，它不仅能批量处理文件，还专门针对扫描版PDF的识别进行了优化，那该多好？">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.devlabs.cc/%E6%88%AA%E5%B1%8F2025-11-23%2006.42.30.png">
+<meta property="article:published_time" content="2025-11-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-22T22:52:51.900Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="ocr">
+<meta property="article:tag" content="paddleocr">
+<meta property="article:tag" content="flask">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.devlabs.cc/%E6%88%AA%E5%B1%8F2025-11-23%2006.42.30.png">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2025/11/23/2025-11-23-dragonflyOCR/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>一款支持批量文件处理的OCR工具 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2025/11/23/2025-11-23-dragonflyOCR/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一款支持批量文件处理的OCR工具
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-11-23 00:00:00 / Modified: 06:52:51" itemprop="dateCreated datePublished" datetime="2025-11-23T00:00:00+08:00">2025-11-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.devlabs.cc/%E6%88%AA%E5%B1%8F2025-11-23%2006.42.30.png" alt="蜻蜓OCR"></p>
+<p>如果有一个文字提取工具，它不仅能批量处理文件，还专门针对扫描版PDF的识别进行了优化，那该多好？<br><a id="more"></a></p>
+<p>你是否也曾遇到过这样的场景：面对一堆扫描版的PDF文档或图片，想要提取其中的文字，却发现“复制/粘贴”大法完全失效？你可能尝试过各种工具，但它们要么一次只能处理一个文件，要么在遇到格式稍复杂的扫描件时，识别结果便惨不忍睹，甚至直接宣告失败。</p>
+<p>我自己就有过类似的经历，即便是像 Stirling-PDF 这样强大的本地化工具，在处理某些扫描质量不高或排版独特的PDF时，也难免力不从心，返回空白或乱码的结果。这些不大不小的“痛点”，日积月累，极大地消耗着我们的时间和耐心。</p>
+<p>如果有一个工具，它不仅能批量处理文件，还专门针对扫描版PDF的识别进行了优化，那该多好？</p>
+<p>这就是“蜻蜓OCR”这个项目诞生的初衷。</p>
+<h4 id="核心思路：精准解决核心痛点"><a href="#核心思路：精准解决核心痛点" class="headerlink" title="核心思路：精准解决核心痛点"></a><strong>核心思路：精准解决核心痛点</strong></h4><p>“蜻蜓OCR”的设计思路非常清晰：不做大而全的功能堆砌，而是专注解决OCR领域最常见、最棘手的两个问题：</p>
+<ol>
+<li><strong>批量处理的效率问题</strong>：将用户从“一个一个上传、下载”的重复劳动中解放出来。</li>
+<li><strong>扫描件的识别准确率问题</strong>：攻克普通工具难以处理的“图片型”PDF和扫描文档。</li>
+</ol>
+<p>基于此，它构建了一套简洁而高效的解决方案，并提供了极为友好的交互体验。</p>
+<h4 id="实现与实施：优雅的技术组合"><a href="#实现与实施：优雅的技术组合" class="headerlink" title="实现与实施：优雅的技术组合"></a><strong>实现与实施：优雅的技术组合</strong></h4><p>这个网站看似简单，背后却是一套精心设计的技术架构。</p>
+<ul>
+<li><p><strong>后端核心：Python + Flask + PaddleOCR</strong><br>整个服务的“心脏”由Python和轻量级的Web框架Flask驱动。而实现文字识别的秘密武器，则是来自百度的开源OCR引擎——<strong>PaddleOCR</strong>。这是一个以高准确率著称的深度学习模型，尤其在中文识别场景下表现优异，这也是它能成功处理复杂扫描件的关键。</p>
+</li>
+<li><p><strong>智能PDF处理策略</strong><br>与某些工具“一刀切”的处理方式不同，“蜻蜓OCR”在拿到一个PDF文件时，会先做一个智能判断：</p>
+<ul>
+<li><strong>文本型PDF</strong>：如果PDF本身就包含可抽取的文本层，它会用 <code>PyPDF2</code> 或 <code>pdfplumber</code> 这样的库进行高速、无损的文本提取。</li>
+<li><strong>扫描型PDF</strong>：如果判断为图片型PDF，它会调用 <code>pdf2image</code> 这样的库，先将PDF的每一页精准地转换成图片，再交由PaddleOCR引擎进行识别。</li>
+</ul>
+<p>这种“先诊断，后处理”的策略，兼顾了处理速度与识别的准确性。</p>
+</li>
+<li><p><strong>异步任务与实时反馈</strong><br>为了避免文件上传和处理时页面卡死，后端采用了一个<strong>任务队列（Queue）</strong>和<strong>后台工作线程（threading）</strong>的模式。当你上传文件后，任务被迅速放入队列，然后由后台的“工人”一个个处理。与此同时，前端通过<strong>定时轮询（Polling）</strong>的方式，不断向后端询问任务进度，并将获取到的总体进度、当前处理的文件名、甚至是PDF的处理页数等信息，实时地展现在进度条上，让漫长的等待过程变得透明且安心。</p>
+</li>
+</ul>
+<h4 id="最终方案：一次完整的工作流"><a href="#最终方案：一次完整的工作流" class="headerlink" title="最终方案：一次完整的工作流"></a><strong>最终方案：一次完整的工作流</strong></h4><p>现在，让我们串起整个使用流程，感受它的优雅之处：</p>
+<ol>
+<li><strong>拖拽上传</strong>：你只需将多个图片或PDF文件拖拽到页面指定区域。</li>
+<li><strong>开始任务</strong>：点击“开始批量识别”，文件被上传，后端立即创建一个专属任务。</li>
+<li><strong>实时跟踪</strong>：页面上出现一个清晰的进度条，它会告诉你“总体进度完成了多少百分比”、“总共处理了几个文件”，以及“当前正在识别哪个文件”，让你对整个过程了如指掌。</li>
+<li><strong>获取结果</strong>：任务完成后，所有文件的识别结果会清晰地呈现在下方。你可以：<ul>
+<li><strong>一键复制</strong>单个文件的全部文本。</li>
+<li><strong>单独保存</strong>某个文件的识别结果为<code>.txt</code>文件。</li>
+<li><strong>打包下载</strong>所有结果为一个<code>.zip</code>压缩包。</li>
+</ul>
+</li>
+</ol>
+<p>如果你也曾被繁琐的文字提取工作所困扰，那么，“蜻蜓OCR”绝对值得一试。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ocr/" rel="tag"># ocr</a>
+              <a href="/tags/paddleocr/" rel="tag"># paddleocr</a>
+              <a href="/tags/flask/" rel="tag"># flask</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/11/20/2025-11-20-Ocr_chinese_pdf_files_with_Tesseract/" rel="prev" title="用Tesseract批量提取中文PDF文件文本">
+      <i class="fa fa-chevron-left"></i> 用Tesseract批量提取中文PDF文件文本
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/12/17/2025-12-17-local-rerank/" rel="next" title="本地Rerank服务实现方案">
+      本地Rerank服务实现方案 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#核心思路：精准解决核心痛点"><span class="nav-number">1.</span> <span class="nav-text">核心思路：精准解决核心痛点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现与实施：优雅的技术组合"><span class="nav-number">2.</span> <span class="nav-text">实现与实施：优雅的技术组合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最终方案：一次完整的工作流"><span class="nav-number">3.</span> <span class="nav-text">最终方案：一次完整的工作流</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

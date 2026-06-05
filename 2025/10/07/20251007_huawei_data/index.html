@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="我是obsidian笔记软件的深度用户，几乎用它管理自己的一切，包括健康情况。我希望每日记健康笔记，交给大模型评估并给我建议。可是输入睡眠、血压、运动等数据实在是麻烦。凑巧我戴华为智能手表，手机上也安装有华为运动健康APP，我要的一切，APP都有。但研究了一番后，实在没找到导出数据的法子。于是放假这几天，开发了这款安卓小工具。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一款提取华为运动健康数据的手机APP">
+<meta property="og:url" content="http://blog.fanzhh.pw/2025/10/07/20251007_huawei_data/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="我是obsidian笔记软件的深度用户，几乎用它管理自己的一切，包括健康情况。我希望每日记健康笔记，交给大模型评估并给我建议。可是输入睡眠、血压、运动等数据实在是麻烦。凑巧我戴华为智能手表，手机上也安装有华为运动健康APP，我要的一切，APP都有。但研究了一番后，实在没找到导出数据的法子。于是放假这几天，开发了这款安卓小工具。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-07T11:04:31.331Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="ai">
+<meta property="article:tag" content="android">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2025/10/07/20251007_huawei_data/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>一款提取华为运动健康数据的手机APP | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2025/10/07/20251007_huawei_data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一款提取华为运动健康数据的手机APP
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-10-07 00:00:00 / Modified: 19:04:31" itemprop="dateCreated datePublished" datetime="2025-10-07T00:00:00+08:00">2025-10-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>我是obsidian笔记软件的深度用户，几乎用它管理自己的一切，包括健康情况。我希望每日记健康笔记，交给大模型评估并给我建议。可是输入睡眠、血压、运动等数据实在是麻烦。凑巧我戴华为智能手表，手机上也安装有华为运动健康APP，我要的一切，APP都有。但研究了一番后，实在没找到导出数据的法子。于是放假这几天，开发了这款安卓小工具。</p>
+<a id="more"></a>
+<h3 id="它能做什么？"><a href="#它能做什么？" class="headerlink" title="它能做什么？"></a>它能做什么？</h3><p>简单来说，这款App的使命就是：</p>
+<p><strong>每日在指定时间，自动打开华为运动健康 -&gt; 模拟人工点击和滚动 -&gt; 提取关键健康数据（步数、距离、心脏健康、睡眠、血压） -&gt; 保存为文本文件 -&gt; 上传到你自己的WebDAV云盘。</strong></p>
+<p>如果你的手机允许的话，整个过程完全自动化，你只需要进行一次初始设置，之后便可“无人值守”，让它在后台默默为你服务。</p>
+<h3 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h3><ul>
+<li><strong>自动化</strong>：通过安卓的无障碍服务，App能模拟人类的点击、滑动等操作，自动完成一系列复杂的提取流程。</li>
+<li><strong>定时任务</strong>：设定一个每天运行的时间（例如，清晨8点），App会在手机休眠时自动唤醒设备、点亮屏幕并开始工作。</li>
+<li><strong>WebDAV支持</strong>：数据直接上传到你自己的云盘（如群晖、Nextcloud、坚果云等），确保你的健康数据私密且安全。</li>
+</ul>
+<h3 id="最重要的事：正确设置手机"><a href="#最重要的事：正确设置手机" class="headerlink" title="最重要的事：正确设置手机"></a>最重要的事：正确设置手机</h3><p>由于安卓系统（如小米MIUI、OPPO ColorOS等）拥有非常严格的后台省电策略，为了让App能在后台被定时唤醒并正常工作，<strong>必须</strong>进行以下一次性设置，授予App“后台豁免权”。</p>
+<p><strong>防止被杀后台“三步设置法”：</strong></p>
+<ol>
+<li><strong>电池优化 -&gt; 不受限制</strong><ul>
+<li>在手机的【设置】-&gt;【应用管理】-&gt; 找到【健康数据提取助手】-&gt;【电量使用情况】，将模式修改为 <strong>“允许后台运行”</strong> 或 <strong>“不受限制”</strong>。</li>
+</ul>
+</li>
+<li><strong>开启“自启动”权限</strong><ul>
+<li>在手机的【手机管家】或【权限管理】中，找到【自启动管理】，确保【健康数据提取助手】的开关是<strong>开启</strong>状态。</li>
+</ul>
+</li>
+<li><strong>在“最近任务”中锁定应用</strong><ul>
+<li>打开我们的App，然后切换到手机的“最近任务”界面（通常是按屏幕底部的方块导航键，或从底部上滑并悬停），找到App的卡片，按住下拉或点击菜单，选择 <strong>“锁定”</strong>。卡片上出现一个<strong>小锁头图标</strong>即表示成功。</li>
+</ul>
+</li>
+</ol>
+<p><strong>完成这三步，App才能真正实现“无人值守”的自动化！</strong></p>
+<h3 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h3><ol>
+<li>安装App。</li>
+<li>打开App，点击底部的 <strong>“设置”</strong> 按钮。</li>
+<li>在设置页面，首先配置你的 <strong>WebDAV</strong> 地址、用户名和密码。</li>
+<li>然后，点击 <strong>“无障碍设置”</strong>，在系统页面中找到并开启“健康数据提取助手”的服务。</li>
+<li>最后，点击 <strong>“定时设置”</strong>，选择一个你希望每天执行任务的时间。</li>
+<li>返回主页，可以先点击 <strong>“开始自动化”</strong> 手动触发一次，检查整个流程是否通畅。</li>
+<li>一切顺利！从现在开始，App就会成为你忠实的健康数据助理。</li>
+</ol>
+<h3 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h3><ul>
+<li>本应用为个人开发作品，仅供学习和技术交流使用。</li>
+<li>您在使用本应用时，自行承担所有风险。</li>
+<li>自动化操作依赖于“华为运动健康”App的界面结构（我的版本16.0.8.300），若其版本更新导致界面变化，可能导致本应用功能失效。</li>
+<li>开发者不对因使用本应用而导致的任何直接或间接损失负责，包括但不限于数据泄露、隐私问题或“华为运动健康”账号异常等。</li>
+<li>请在充分了解并同意上述条款后，再下载和使用本应用。</li>
+</ul>
+<h3 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h3><ul>
+<li>作者的邮箱: <a href="mailto:fanzhh@gmail.com">fanzhh@gmail.com</a></li>
+<li>APK文件<a href="https://www.jianguoyun.com/p/Df75drUQk9zgDRjtjpQGIAA" target="_blank" rel="noopener">下载地址</a>。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ai/" rel="tag"># ai</a>
+              <a href="/tags/android/" rel="tag"># android</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/04/2025-10-04-OpenWrt-OpenClash/" rel="prev" title="OpenWrt路由器部署OpenClash手记">
+      <i class="fa fa-chevron-left"></i> OpenWrt路由器部署OpenClash手记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/11/01/20251101_singbox/" rel="next" title="sing-box：让 OpenWrt 路由器实现智能代理的终极方案">
+      sing-box：让 OpenWrt 路由器实现智能代理的终极方案 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#它能做什么？"><span class="nav-number">1.</span> <span class="nav-text">它能做什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核心功能"><span class="nav-number">2.</span> <span class="nav-text">核心功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最重要的事：正确设置手机"><span class="nav-number">3.</span> <span class="nav-text">最重要的事：正确设置手机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速上手"><span class="nav-number">4.</span> <span class="nav-text">快速上手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#声明"><span class="nav-number">5.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于"><span class="nav-number">6.</span> <span class="nav-text">关于</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

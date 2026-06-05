@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Software Engineering - The Soft Parts是一本关于软件工程的免费书籍，作者@addyosmani，专注于探讨软件工程中的”软性”方面。这本书里介绍的软件工程师需要具备的软技能，例如沟通、协作、领导能力等，以及关于团队合作、项目管理、需求分析、用户体验设计等方面的指导和实践经验，对于软件工程之外其他领域的普通人和团队也有极好的借鉴意义。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件工程师的软实力">
+<meta property="og:url" content="http://blog.fanzhh.pw/2023/07/01/20230701_software_engineering_the_soft_parts/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="Software Engineering - The Soft Parts是一本关于软件工程的免费书籍，作者@addyosmani，专注于探讨软件工程中的”软性”方面。这本书里介绍的软件工程师需要具备的软技能，例如沟通、协作、领导能力等，以及关于团队合作、项目管理、需求分析、用户体验设计等方面的指导和实践经验，对于软件工程之外其他领域的普通人和团队也有极好的借鉴意义。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.devlabs.cc/20230701110522.jpg">
+<meta property="article:published_time" content="2023-06-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-04T22:35:40.272Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="读书">
+<meta property="article:tag" content="哲学">
+<meta property="article:tag" content="编程">
+<meta property="article:tag" content="时间管理">
+<meta property="article:tag" content="软件工程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.devlabs.cc/20230701110522.jpg">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2023/07/01/20230701_software_engineering_the_soft_parts/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>软件工程师的软实力 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2023/07/01/20230701_software_engineering_the_soft_parts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件工程师的软实力
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-07-01T00:00:00+08:00">2023-07-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-02-05 06:35:40" itemprop="dateModified" datetime="2026-02-05T06:35:40+08:00">2026-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.devlabs.cc/20230701110522.jpg" alt=""><br><a href="https://addyosmani.com/blog/software-engineering-soft-parts/" target="_blank" rel="noopener">Software Engineering - The Soft Parts</a>是一本关于软件工程的免费书籍，作者<a href="https://twitter.com/addyosmani" target="_blank" rel="noopener">@addyosmani</a>，专注于探讨软件工程中的”软性”方面。这本书里介绍的软件工程师需要具备的软技能，例如沟通、协作、领导能力等，以及关于团队合作、项目管理、需求分析、用户体验设计等方面的指导和实践经验，对于软件工程之外其他领域的普通人和团队也有极好的借鉴意义。<br><a id="more"></a></p>
+<h2 id="学习新事物"><a href="#学习新事物" class="headerlink" title="学习新事物"></a>学习新事物</h2><h3 id="第一性原理"><a href="#第一性原理" class="headerlink" title="第一性原理"></a>第一性原理</h3><p>在能够的时候尽量应用第一性原理。第一性原理是指通过从最基本的事实和基础原理出发，以逻辑推理和分析的方式进行思考和决策的方法。它涉及到将问题归结为最基本的元素或概念，并建立在这些元素或概念上构建推理链条和解决方案。使用第一性原理的方法，可以避免依赖传统的经验、常识或惯例，从而打开创造性思维和解决问题的新途径。</p>
+<h3 id="拆解问题"><a href="#拆解问题" class="headerlink" title="拆解问题"></a>拆解问题</h3><p>学会将问题拆解成较小的部分是生活中最重要的技能之一。通过将问题分解为更小的子问题，可以更清楚地理解每个子问题的本质和要求，并逐步解决它们。这种分解过程有助于提供清晰的指导和方向，使我们能够更系统地处理问题，并逐步逼近最终的解决方案。将问题拆解成较小的部分还可以带来以下好处：</p>
+<ul>
+<li>提高工作效率：小的任务更易于管理和完成，可以更快地推进工作进展。</li>
+<li>减少压力和焦虑：庞大的问题可能令人望而却步，而将其分解为小任务可以减轻心理负担，并让我们感到更有成就感。</li>
+<li>精确规划和资源分配：通过对问题进行细分，我们可以更加准确地规划工作流程和合理分配资源，从而更好地利用时间和能力。</li>
+</ul>
+<h3 id="熟练掌握的作用（Mastery）"><a href="#熟练掌握的作用（Mastery）" class="headerlink" title="熟练掌握的作用（Mastery）"></a>熟练掌握的作用（Mastery）</h3><p>对某项技能的数量掌握可以提高价值/时间比。技术掌握意味着价值交付与工作小时之间的高比率。熟练掌握还可以使你专注于最重要的事情。工作中通常会有很多任务可以填满你的时间，让你“感觉”自己很忙，但只有专注于重要的事情才产生价值，经常问自己以下三个问题：</p>
+<ul>
+<li>我的目标是什么？</li>
+<li>我关注的任务是否与这些目标吻合？</li>
+<li>是否有不同或更好的方法来完成任务？</li>
+</ul>
+<h3 id="批判性思考和形成合理的论证"><a href="#批判性思考和形成合理的论证" class="headerlink" title="批判性思考和形成合理的论证"></a>批判性思考和形成合理的论证</h3><p>批判性思考（Critical Thinking）是指通过有目的、自觉和系统地分析、评估和推理来解决问题和做出决策的思维过程。它涉及到对信息进行深入思考，而不仅仅接受表面上的表述或传统惯例。通过批判性思维，我们能够独立思考、挑战现有的观点和假设，并以理性和逻辑为基础做出明智的选择。批判性思考帮助你关注最根本的问题。一些基于批判性思考提出的问题有：</p>
+<ul>
+<li>正确/根本的的问题是什么？</li>
+<li>解决问题正确的方式是什么？</li>
+<li>问题产生的根本原因是什么？</li>
+<li>如何拆分关键问题？</li>
+<li>在有多个假设后如何对多个假设进行评估？</li>
+<li>在已有约束条件下如何找到完成任务的捷径而不影响分析的严谨性？</li>
+<li>证据是否充分？</li>
+<li>如何知道何时完成？</li>
+<li>如何向所有利益相关者清晰而逻辑地传达解决方案？</li>
+</ul>
+<p>思考的常见误区是将相关性错认为因果关系。如日出之前公鸡会打鸣儿，但并不是打鸣儿的公鸡导致了日出。相关性只描述了变量之间的统计关系，例如它们可能同时增加或减少。然而，相关性无法证明其中的因果关系，即一个变量的变化是否直接导致了另一个变量的变化。</p>
+<p>一般基于批判性思维解决问题的过程如下：</p>
+<ul>
+<li>清晰准确地描述问题。</li>
+<li>收集和评估信息，验证与问题的关系。</li>
+<li>得出有理有据的结论和方案，并采用相关标准进行测试。</li>
+<li>对其他解决问题的选择持开放性思维，并在必要时进行评估。</li>
+<li>在找到复杂问题的解决方案时保持有效沟通。</li>
+</ul>
+<h3 id="可转移的技能"><a href="#可转移的技能" class="headerlink" title="可转移的技能"></a>可转移的技能</h3><p>通过学习基本原理，你可以获得技能和工具，然后可以忽略基本原理来实现增长。技能包括宏观层面与微观层面：</p>
+<ul>
+<li>宏观层面<ul>
+<li>与具体语言无关</li>
+<li>数据结构</li>
+<li>算法</li>
+<li>框架</li>
+<li>性能优化</li>
+</ul>
+</li>
+<li>微观层面<ul>
+<li>变成语言，如C, Python, Java, …</li>
+<li>框架</li>
+<li>后端</li>
+</ul>
+</li>
+</ul>
+<h3 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h3><p>掌握基本原理使你能编写更高效的代码。</p>
+<h3 id="更好的决策"><a href="#更好的决策" class="headerlink" title="更好的决策"></a>更好的决策</h3><p>对宏观和微观层面有良好的理解可以帮助你做出更好的决策。</p>
+<blockquote>
+<p>“只有当你明白什么时候不应该使用一种工具，你才算掌握了它。” - @kelseyhightower</p>
+</blockquote>
+<h3 id="关注用户，其余的自然会随之而来"><a href="#关注用户，其余的自然会随之而来" class="headerlink" title="关注用户，其余的自然会随之而来"></a>关注用户，其余的自然会随之而来</h3><h4 id="以客户为先"><a href="#以客户为先" class="headerlink" title="以客户为先"></a>以客户为先</h4><p>史蒂夫·乔布斯曾说过，”你必须从客户体验出发，逆向思考技术。不能从技术开始，然后再试图找出如何销售它。” 应该关注我们正在为谁构建产品，他们遇到了什么问题，目前的选择存在哪些不足之处。</p>
+<p>要对用户充满同理心，最好的软件是由那些对用户有同理心的工程师所构建的。要成为正在进行的项目的行业内专家，如果有机会与最终用户直接互动，试着更好地理解他们的需求和痛点。</p>
+<h3 id="持续提升你的技能"><a href="#持续提升你的技能" class="headerlink" title="持续提升你的技能"></a>持续提升你的技能</h3><p>但记住技巧为目的服务。虽然知道使用什么很重要，但你的主要目标是交付一个优秀的最终产品。可以利用新的练手项目来学习新技术，切切不要贸然在已有产品上使用新技术。</p>
+<p>要梳理终身学习理念。保持好奇心，永不停止学习。</p>
+<p>学习的最好办法是输出。写下你所学到的东西。这样做会促使你更好地理解所学的主题。有时候，当你试图向他人解释事物时，你才会意识到自己知识上的不足。没有人阅读你写的内容也没关系。仅仅通过写作，你就能获得很多收获。</p>
+<p>养成学习新知识的习惯。每天花半个小时阅读一章教材，听技术播客、阅读开发博客或学习一门新的编程语言。</p>
+<h3 id="技能的广度和深度"><a href="#技能的广度和深度" class="headerlink" title="技能的广度和深度"></a>技能的广度和深度</h3><p>考虑一下既精通多种技能又深入掌握某一项技能是否适合你。</p>
+<p>做T 形工程师。这些工程师对一项或少数几项技能非常熟悉（T字的竖线部分），但对于构建和运行产品所需的许多其他技能都有基本的了解（T字的横线部分）。</p>
+<h3 id="在实践中学习"><a href="#在实践中学习" class="headerlink" title="在实践中学习"></a>在实践中学习</h3><p>在学习一门新语言时，用它来构建一个实际的东西，以获得第一手经验。通过编写大量相关代码或从现有代码中学习，来积累经验。阅读别人的代码是很好的学习机会。</p>
+<blockquote>
+<p>“软件的主要价值不在于所产生的代码，而在于产生代码的人所积累的知识”。</p>
+</blockquote>
+<h2 id="技术复杂性"><a href="#技术复杂性" class="headerlink" title="技术复杂性"></a>技术复杂性</h2><h3 id="通用代码与特定代码"><a href="#通用代码与特定代码" class="headerlink" title="通用代码与特定代码"></a>通用代码与特定代码</h3><p>代码开始总是为解决眼前面临的的问题编写，但要试着发现可以扩展为更通用的地方。</p>
+<p>两个避免过渡复杂性的原则：</p>
+<ol>
+<li>YAGNI. YAGNI (You Aren’t Gonna Need It) 是一个软件开发原则，意味着在编写代码时不要添加不必要的功能或复杂性。根据 YAGNI 原则，只有当确实需要某个功能时才去实现它，而不是在预测未来可能需要的功能上浪费时间和资源。YAGNI 的核心思想是专注于当前的需求和问题，避免过度设计和冗余代码。通过遵循 YAGNI 原则，开发人员可以更加敏捷和高效地完成任务，减少不必要的工作量和复杂性。</li>
+<li>“Do the simplest thing that could possibly work” 是另一个软件开发原则，强调在解决问题时应采取最简单的可行方法。该原则的核心思想是，在面对问题或需求时，寻找并实施最简单、最直接的解决方案。而不是过度设计或实现复杂且不必要的功能。这个原则有以下几个关键点：简洁性：选择简单的解决方案，避免过度工程化和复杂性；可行性：确保所选择的方案能够满足问题的基本需求，并且能够正常运行；迭代性：通过快速实施最简单的解决方案，可以更快地获取反馈并进行改进。</li>
+</ol>
+<h3 id="深度模块"><a href="#深度模块" class="headerlink" title="深度模块"></a>深度模块</h3><p>编写代码以解决其他开发人员的面临的复杂问题，同时通过清晰的接口暴露功能。这个想法体现在深度模块的概念中：“最好的模块是那些效益最大、成本最低的模块。模块的效益是指其功能，而模块的成本则取决于其接口。”</p>
+<h3 id="在新项目上学习"><a href="#在新项目上学习" class="headerlink" title="在新项目上学习"></a>在新项目上学习</h3><p>实验、创新、快速失败，以更好地解决问题。敏捷方法和快速失败原则可以帮助您以较少的资源尽早验证您的想法。</p>
+<h3 id="定义完成的标准"><a href="#定义完成的标准" class="headerlink" title="定义完成的标准"></a>定义完成的标准</h3><p>定义何为“完成”有助于节省时间，因为它可以帮助您估计所需的工作量，制定开发计划，并避免不必要的修订。</p>
+<h3 id="分阶段推出"><a href="#分阶段推出" class="headerlink" title="分阶段推出"></a>分阶段推出</h3><p>一个大型发布可以分为一系列风险较低且易于理解的分阶段推出。通过迭代开发的分阶段发布可以帮助您更好地管理因显著的大规模变化而带来的风险。</p>
+<h3 id="系统性调试"><a href="#系统性调试" class="headerlink" title="系统性调试"></a>系统性调试</h3><p>调试时，您应该尝试系统而严谨地解决问题，以解决所有测试条件。如果机器告诉你出错之处，它很可能是正确的，不要试图进行小的编辑和不断重新运行，这样能更快地解决问题。</p>
+<p>如果编写了一个抛出异常的解决方案，但没有仔细阅读异常信息，那么可能会浪费时间。通常情况下，错误或异常信息是对实际问题的重要提示。</p>
+<p>（以后我一定仔细读任何出错信息，而不是一遍遍地重复运行，希望奇迹出现。）</p>
+<h2 id="沟通"><a href="#沟通" class="headerlink" title="沟通"></a>沟通</h2><h3 id="设计文档的重要性"><a href="#设计文档的重要性" class="headerlink" title="设计文档的重要性"></a>设计文档的重要性</h3><p>设计文档不应该是事后的补充，而是软件工程过程中的一部分。设计文档的编写和审查在软件工程中起着重要的作用。它们帮助团队成员共享和理解设计决策、约束和目标。设计文档有助于确保每个人都对项目的设计方向和功能需求有清晰的认识，并提供一个框架来指导开发工作。</p>
+<h3 id="文档过程"><a href="#文档过程" class="headerlink" title="文档过程"></a>文档过程</h3><p>协调设计文档的审查，并将其与原始文档进行比较，以验证是否解决了所有相关的约束条件。设计文档的审查是为了确保其中包含了正确的信息、完整的设计方案和满足项目需求的解决方案。在审查过程中，团队成员可以提出问题、提供反馈和建议，并确保设计文档与最初的设计目标一致。</p>
+<h3 id="沟通-1"><a href="#沟通-1" class="headerlink" title="沟通"></a>沟通</h3><p>要谦虚、清晰地沟通，并尊重他人。<strong>善良是不需付出代价，但影响是无价的。</strong> 有人可能会说良好的沟通需要能量和思考。同情心，<em>值得你付出更多</em>。</p>
+<p>作为软件工程师，我们不仅仅是编写代码，还需要与团队成员、业务方和用户进行有效的沟通。良好的沟通可以帮助我们更好地理解需求、共享知识、解决问题和促进合作。</p>
+<h3 id="定制化沟通"><a href="#定制化沟通" class="headerlink" title="定制化沟通"></a>定制化沟通</h3><p>与受众沟通中使用与他们相宜的语言、概念和详细程度。在与不同的受众群体进行沟通时，需要根据他们的背景和需求自定义沟通方式。与商务人士沟通时，要强调所做工作的业务影响，避免使用过于技术化的术语。对于工程管理层，要沟通技术上的影响或挑战。与决策者沟通时，描述可用选项及其影响和风险，而不是详细讲解选项的工作原理。在提供项目状态更新时，要了解已发生的其他事情以及您的更新与项目目标的相关性。</p>
+<h3 id="善良和考虑他人"><a href="#善良和考虑他人" class="headerlink" title="善良和考虑他人"></a>善良和考虑他人</h3><p><strong>善良是一种超能力——请善用它。</strong></p>
+<p>保持冷静、友善和乐于助人的态度比对别人无礼更有益处。善良是具有传染性的。你对别人的善意行为会使他们在未来更愿意提供帮助。</p>
+<p>（想起看到的某个旅行者的推文，他在东欧骑行，看到在一个乡村餐馆柜台上有一行提示语：Be kind, or go away.）</p>
+<h3 id="大力称赞"><a href="#大力称赞" class="headerlink" title="大力称赞"></a>大力称赞</h3><p>积极肯定他人的工作。不要吝啬赞美。通过给予积极的反馈和肯定，可以增强团队成员的动力和信心，促进合作和团队精神。</p>
+<h3 id="拒绝的力量"><a href="#拒绝的力量" class="headerlink" title="拒绝的力量"></a>拒绝的力量</h3><p>说“不”比过度承诺更好。作为一名资深开发人员（或任何高效率的人），懂得说“不”很重要。人们可能会请求你超出你能够负担的时间范围。你可以委婉但坚决地说“不”，将人们引导到其他地方（委派任务），或者让他们与你的经理讨论是否可以分配更多的时间来帮助他们。</p>
+<p>你不可能取悦所有人——在说“是”和“否”时要非常谨慎。</p>
+<h3 id="接受和尊重"><a href="#接受和尊重" class="headerlink" title="接受和尊重"></a>接受和尊重</h3><p>承认自己不知道某些东西，并愿意寻求帮助，甚至向初级开发人员请教。作为一个团队，共同努力，相互学习和成长。没有人是无所不知的，承认自己的不足并寻求帮助是聪明而有益的。</p>
+<h3 id="信息共享"><a href="#信息共享" class="headerlink" title="信息共享"></a>信息共享</h3><p>利用会议和问答环节来提出正确的问题，交流知识并告知团队。会议和问答环节是沟通和共享知识的重要机会。通过提出恰当的问题，团队成员可以更好地理解和探讨问题，从而促进团队的发展和解决问题的能力。</p>
+<h3 id="灵活性"><a href="#灵活性" class="headerlink" title="灵活性"></a>灵活性</h3><p>Strong opinions weakly held。坚定地捍卫你的观点，但也要在有新证据与之相悖时对其进行审查。Strong opinions weakly held（坚定的观点，但保持灵活）是一种指导原则，强调在面对不确定性和新证据时保持开放和灵活。这个原则意味着我们可以有坚定的观点和信念，但同时也要持开放态度，愿意接受新的信息和证据，并根据它们来调整或改变我们的观点。</p>
+<p>我们应该保持思维的灵活性，意味着我们愿意重新评估和审视我们的观点，并根据最新的信息做出调整。这种思维方式有助于避免固执己见和盲目坚持错误的观点。它鼓励我们保持谦虚和学习的态度，认识到我们可能会犯错，并且随时准备接受并适应新的观点和思考方式。Strong opinions weakly held 的核心目标是追求真理和持续成长。通过保持开放和灵活的心态，我们能够更好地适应变化并做出明智的决策。</p>
+<h3 id="记录维护"><a href="#记录维护" class="headerlink" title="记录维护"></a>记录维护</h3><p>在非正式会议后发送友好的电子邮件，有助于重新强调讨论中的关键要点或承诺。在会议或讨论中，我们经常会讨论重要的问题、做出承诺或达成共识。为了确保这些内容不会被遗忘或误解，我们可以在会议结束后发送一封友好的电子邮件，将讨论的要点和承诺进行总结，并向与会人员确认和记录下来。这样可以帮助团队保持一致性，并提供一个便于参考的记录。</p>
+<h3 id="善意行事"><a href="#善意行事" class="headerlink" title="善意行事"></a>善意行事</h3><p>了解何时保持沉默，观察周围所发生的事情。</p>
+<p>在团队合作和决策过程中，善意行事非常重要。我们应该相信团队成员不会故意进行公开的恶意行为。当出现各种问题、意见分歧或决策时，我们应该保持善意，并意识到可能存在我们没有完全了解的信息或他人有不同的优先事项。在这种情况下，我们可以提出问题、陈述观点，但不要对最终决策感到愤怒或沮丧。</p>
+<h2 id="资深度"><a href="#资深度" class="headerlink" title="资深度"></a>资深度</h2><h3 id="资深度与战略思维"><a href="#资深度与战略思维" class="headerlink" title="资深度与战略思维"></a>资深度与战略思维</h3><p>面对不确定性时，不要放弃做出决策或行动。</p>
+<p>资深的领导者是那些拓宽了视野，能够进行战略思考并为团队规划路线图的人。在软件工程中，我们经常面临不确定性和复杂的问题。在这种情况下，不能因为不确定而犹豫不决，而是要勇于做出决策和行动，并带领团队朝着既定的目标前进。</p>
+<h3 id="以身作则"><a href="#以身作则" class="headerlink" title="以身作则"></a>以身作则</h3><p>教会团队自食其力。不总是为他们解决问题，而是温和地引导他们培养解决问题的技能。作为资深人士，应该带领团队成员发展和成长。在解决问题时，不是替他们解决，而是温和地指导他们培养解决问题的能力。</p>
+<p>当别人提出解决方案时，你要运用批判性思维，提出相关问题。这样的行为鼓励团队成员深入思考和挑战他们的想法。你的问题可能会促使他们进一步思考问题的各个方面，从而帮助他们完善和改进自己的解决方案。</p>
+<h2 id="高效团队"><a href="#高效团队" class="headerlink" title="高效团队"></a>高效团队</h2><h3 id="提高效率"><a href="#提高效率" class="headerlink" title="提高效率"></a>提高效率</h3><p>如果你试图完成更多任务，或者展现出在公司中更高级的能力，通过合作和指导他人来提高你的效率。展示这种行为不仅对自己有价值，也对团队其他成员有益。学会将思维方式从“我”转变为“我们”。</p>
+<h3 id="冒名顶替综合症"><a href="#冒名顶替综合症" class="headerlink" title="冒名顶替综合症"></a>冒名顶替综合症</h3><p>接受犯错、不知道答案或寻求指导是克服冒名顶替综合症的关键。即使别人把你视为值得向你请教的对象，你可能仍然感到像个冒牌货。你也许永远无法完全摆脱这种综合症，但它会促使你保持好奇心并学习新事物。</p>
+<h3 id="建立信任"><a href="#建立信任" class="headerlink" title="建立信任"></a>建立信任</h3><p>信任可以使团队成员共同为共同目标而努力，而官僚主义会使之分裂。有效的团队合作只有在团队成员之间的沟通和关系良好的情况下才可能实现。</p>
+<h3 id="理解商业模式"><a href="#理解商业模式" class="headerlink" title="理解商业模式"></a>理解商业模式</h3><p>了解变革的商业影响。很多软件工程师喜欢通过技术挑战来解决问题。但理解商业方面，并能提出成本效益高的解决方案可能更有意义。<strong>记住你的用户/客户也是在努力完成工作、度过一天或一周的人，就像你一样。试着不要让他们的生活变得更困难。</strong></p>
+<h3 id="提高影响力"><a href="#提高影响力" class="headerlink" title="提高影响力"></a>提高影响力</h3><p>对商业和软件之间的关系有敏锐的洞察力，可以提高你的工作影响力。全面了解业务和产品，有助于你积极地为团队和项目做出贡献。如果你了解销售或市场部门的想法，你就能更好地做出正确的决策并产生高影响力的工作。</p>
+<h2 id="导师角色"><a href="#导师角色" class="headerlink" title="导师角色"></a>导师角色</h2><h3 id="指导他人"><a href="#指导他人" class="headerlink" title="指导他人"></a>指导他人</h3><p>通过及时提供信息，建立导师的护栏，让学习者不会误入完全错误的方向，而是通过自己的实践获得技能的精通。导师的目标是引导人们自己发现答案，而不是提供现成的解决方案。要给他们提供寻找答案所需的工具。</p>
+<h3 id="组织内的导师"><a href="#组织内的导师" class="headerlink" title="组织内的导师"></a>组织内的导师</h3><p>确保导师角色是资深工程师职责的一部分，这样当某人转移到另一个团队、职位或组织时，关键领域的知识仍然可以保留。</p>
+<h3 id="学员的角色"><a href="#学员的角色" class="headerlink" title="学员的角色"></a>学员的角色</h3><p>导师可以给你建议，但只有你自己能够主动行动并采取建议，来实现自己的职业发展和成长。</p>
+<h2 id="时间与工作和生活的平衡"><a href="#时间与工作和生活的平衡" class="headerlink" title="时间与工作和生活的平衡"></a>时间与工作和生活的平衡</h2><p>优化你的日历以进行深度工作。深度工作是没有干扰的高度集中的工作，可以在很短的时间内创造很大的价值。每当你从一个任务切换到另一个任务时，你的注意力中仍会残留关于前一个任务的想法。这使得很难专注于真正重要的事情。有时候把特定的地点（比如办公桌、房间或建筑物）与特定类型的任务联系起来，可以有助于深度工作。</p>
+<p>避免碎片的工作时间。当一小时的工作被分成几分钟的块状时间，因为干扰而打断，你会感到压力和沮丧。找出干扰的原因（无论是你自己还是他人），并予以解决。否则，你的一天就不会那么有效率。时间是有限的。不要试图寻找更多的时间，而是试着去消除不必要的任务。例如你不必知道每一个消息。实际上，Twitter、Reddit、Instagram等大部分社交媒体上的信息并不那么重要。相反，尝试切换到新闻摘要视图或者设置查看频率的限制。</p>
+<p>最好能主动避免精疲力竭，学会说不，知道何时停止，并安排工作之间的休息时间。过度工作不是好的职业道德的一部分。成功来自许多因素，而不仅仅是过度工作。没有休息和良好的工作与生活平衡，你或你的团队可能会疲惫不堪。鼓励自己和团队进行休息、假期和度假。记住，<strong>你的健康和家庭是最重要的。</strong></p>
+<p>不断试图超越你的标准是不现实的。知足常乐能树立一个良好的榜样。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag"># 读书</a>
+              <a href="/tags/%E5%93%B2%E5%AD%A6/" rel="tag"># 哲学</a>
+              <a href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag"># 编程</a>
+              <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" rel="tag"># 时间管理</a>
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag"># 软件工程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/06/27/20230626_24%E5%B2%81%E7%9A%84%E5%8D%83%E4%B8%87%E5%AF%8C%E7%BF%81/" rel="prev" title="24岁的千万富翁">
+      <i class="fa fa-chevron-left"></i> 24岁的千万富翁
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/02/20230702_system_design_blueprint/" rel="next" title="系统设计蓝图：终极指南">
+      系统设计蓝图：终极指南 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#学习新事物"><span class="nav-number">1.</span> <span class="nav-text">学习新事物</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一性原理"><span class="nav-number">1.1.</span> <span class="nav-text">第一性原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拆解问题"><span class="nav-number">1.2.</span> <span class="nav-text">拆解问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#熟练掌握的作用（Mastery）"><span class="nav-number">1.3.</span> <span class="nav-text">熟练掌握的作用（Mastery）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批判性思考和形成合理的论证"><span class="nav-number">1.4.</span> <span class="nav-text">批判性思考和形成合理的论证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可转移的技能"><span class="nav-number">1.5.</span> <span class="nav-text">可转移的技能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效率"><span class="nav-number">1.6.</span> <span class="nav-text">效率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更好的决策"><span class="nav-number">1.7.</span> <span class="nav-text">更好的决策</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关注用户，其余的自然会随之而来"><span class="nav-number">1.8.</span> <span class="nav-text">关注用户，其余的自然会随之而来</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#以客户为先"><span class="nav-number">1.8.1.</span> <span class="nav-text">以客户为先</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持续提升你的技能"><span class="nav-number">1.9.</span> <span class="nav-text">持续提升你的技能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技能的广度和深度"><span class="nav-number">1.10.</span> <span class="nav-text">技能的广度和深度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在实践中学习"><span class="nav-number">1.11.</span> <span class="nav-text">在实践中学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术复杂性"><span class="nav-number">2.</span> <span class="nav-text">技术复杂性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通用代码与特定代码"><span class="nav-number">2.1.</span> <span class="nav-text">通用代码与特定代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度模块"><span class="nav-number">2.2.</span> <span class="nav-text">深度模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在新项目上学习"><span class="nav-number">2.3.</span> <span class="nav-text">在新项目上学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义完成的标准"><span class="nav-number">2.4.</span> <span class="nav-text">定义完成的标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分阶段推出"><span class="nav-number">2.5.</span> <span class="nav-text">分阶段推出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统性调试"><span class="nav-number">2.6.</span> <span class="nav-text">系统性调试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#沟通"><span class="nav-number">3.</span> <span class="nav-text">沟通</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设计文档的重要性"><span class="nav-number">3.1.</span> <span class="nav-text">设计文档的重要性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文档过程"><span class="nav-number">3.2.</span> <span class="nav-text">文档过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#沟通-1"><span class="nav-number">3.3.</span> <span class="nav-text">沟通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定制化沟通"><span class="nav-number">3.4.</span> <span class="nav-text">定制化沟通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#善良和考虑他人"><span class="nav-number">3.5.</span> <span class="nav-text">善良和考虑他人</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大力称赞"><span class="nav-number">3.6.</span> <span class="nav-text">大力称赞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拒绝的力量"><span class="nav-number">3.7.</span> <span class="nav-text">拒绝的力量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接受和尊重"><span class="nav-number">3.8.</span> <span class="nav-text">接受和尊重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息共享"><span class="nav-number">3.9.</span> <span class="nav-text">信息共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#灵活性"><span class="nav-number">3.10.</span> <span class="nav-text">灵活性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#记录维护"><span class="nav-number">3.11.</span> <span class="nav-text">记录维护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#善意行事"><span class="nav-number">3.12.</span> <span class="nav-text">善意行事</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资深度"><span class="nav-number">4.</span> <span class="nav-text">资深度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#资深度与战略思维"><span class="nav-number">4.1.</span> <span class="nav-text">资深度与战略思维</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以身作则"><span class="nav-number">4.2.</span> <span class="nav-text">以身作则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高效团队"><span class="nav-number">5.</span> <span class="nav-text">高效团队</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提高效率"><span class="nav-number">5.1.</span> <span class="nav-text">提高效率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冒名顶替综合症"><span class="nav-number">5.2.</span> <span class="nav-text">冒名顶替综合症</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立信任"><span class="nav-number">5.3.</span> <span class="nav-text">建立信任</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理解商业模式"><span class="nav-number">5.4.</span> <span class="nav-text">理解商业模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提高影响力"><span class="nav-number">5.5.</span> <span class="nav-text">提高影响力</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导师角色"><span class="nav-number">6.</span> <span class="nav-text">导师角色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指导他人"><span class="nav-number">6.1.</span> <span class="nav-text">指导他人</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组织内的导师"><span class="nav-number">6.2.</span> <span class="nav-text">组织内的导师</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学员的角色"><span class="nav-number">6.3.</span> <span class="nav-text">学员的角色</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间与工作和生活的平衡"><span class="nav-number">7.</span> <span class="nav-text">时间与工作和生活的平衡</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

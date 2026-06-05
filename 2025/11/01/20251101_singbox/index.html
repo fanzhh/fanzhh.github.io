@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="网络环境日益复杂，优秀的工具往往意味着不低的配置门槛。即使是像 sing-box 这样功能强大、设计优雅的通用代理平台，其 JSON 格式的灵活配置也可能让人望而却步，且不同协议、路由规则的组合极易遗忘。为避免重复“踩坑”，特此记录下 sing-box 的配置过程与关键细节，以作备忘。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sing-box：让 OpenWrt 路由器实现智能代理的终极方案">
+<meta property="og:url" content="http://blog.fanzhh.pw/2025/11/01/20251101_singbox/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="网络环境日益复杂，优秀的工具往往意味着不低的配置门槛。即使是像 sing-box 这样功能强大、设计优雅的通用代理平台，其 JSON 格式的灵活配置也可能让人望而却步，且不同协议、路由规则的组合极易遗忘。为避免重复“踩坑”，特此记录下 sing-box 的配置过程与关键细节，以作备忘。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&amp;h=400&amp;fit=crop">
+<meta property="article:published_time" content="2025-10-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-04T09:59:18.584Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="openwrt">
+<meta property="article:tag" content="wndr4300">
+<meta property="article:tag" content="singbox">
+<meta property="article:tag" content="网络代理">
+<meta property="article:tag" content="教程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&amp;h=400&amp;fit=crop">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2025/11/01/20251101_singbox/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>sing-box：让 OpenWrt 路由器实现智能代理的终极方案 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2025/11/01/20251101_singbox/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sing-box：让 OpenWrt 路由器实现智能代理的终极方案
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-11-01 00:00:00" itemprop="dateCreated datePublished" datetime="2025-11-01T00:00:00+08:00">2025-11-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-11-04 17:59:18" itemprop="dateModified" datetime="2025-11-04T17:59:18+08:00">2025-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&amp;h=400&amp;fit=crop" alt="OpenWrt 路由器配置网络代理"></p>
+<p>网络环境日益复杂，优秀的工具往往意味着不低的配置门槛。即使是像 sing-box 这样功能强大、设计优雅的通用代理平台，其 JSON 格式的灵活配置也可能让人望而却步，且不同协议、路由规则的组合极易遗忘。为避免重复“踩坑”，特此记录下 sing-box 的配置过程与关键细节，以作备忘。</p>
+<a id="more"></a>
+<h2 id="什么是-sing-box？"><a href="#什么是-sing-box？" class="headerlink" title="什么是 sing-box？"></a>什么是 sing-box？</h2><p>sing-box 是一个用 Rust 编写的通用代理平台，由 SagerNet 团队开发。它支持多种代理协议，包括 V2Ray、Trojan、Hysteria2、Shadowsocks 等，可以说是目前功能最全面的代理工具之一。</p>
+<p><strong>为什么选择 sing-box？</strong></p>
+<ul>
+<li>🚀 <strong>性能卓越</strong>：Rust 编写，内存占用小，并发能力强</li>
+<li>🔄 <strong>协议丰富</strong>：支持市面上几乎所有主流代理协议</li>
+<li>🎯 <strong>智能路由</strong>：内置强大的规则引擎，支持域名、IP、地理位置等多种匹配方式</li>
+<li>🔧 <strong>配置灵活</strong>：JSON 格式配置，结构清晰，易于维护</li>
+<li>🛡️ <strong>透明代理</strong>：支持 TProxy 模式，无需客户端配置</li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="硬件要求"><a href="#硬件要求" class="headerlink" title="硬件要求"></a>硬件要求</h3><ul>
+<li><strong>OpenWrt 路由器</strong>：建议 21.02 版本以上</li>
+<li><strong>存储空间</strong>：至少 16MB 可用空间</li>
+<li><strong>内存</strong>：建议 128MB 以上（内存越大，并发连接数越多）</li>
+<li><strong>网络</strong>：稳定的互联网连接</li>
+</ul>
+<h3 id="技术概念简介"><a href="#技术概念简介" class="headerlink" title="技术概念简介"></a>技术概念简介</h3><p><strong>TProxy（透明代理）</strong> 是 Linux 内核提供的一种流量重定向机制。简单来说，它可以在用户毫无察觉的情况下，将网络流量自动转发到代理服务器。这意味着：</p>
+<ul>
+<li>📱 <strong>零配置</strong>：手机、电脑、平板等设备无需任何设置</li>
+<li>🏠 <strong>全屋覆盖</strong>：连接路由器的所有设备都能享受代理服务</li>
+<li>🔄 <strong>智能分流</strong>：国内网站直连，国外网站走代理</li>
+</ul>
+<h2 id="安装-sing-box"><a href="#安装-sing-box" class="headerlink" title="安装 sing-box"></a>安装 sing-box</h2><h3 id="下载安装包"><a href="#下载安装包" class="headerlink" title="下载安装包"></a>下载安装包</h3><p>首先连接到你的 OpenWrt 路由器，通过 SSH 登录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入临时目录</span></span><br><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载最新版本的 sing-box（以 x86_64 架构为例）</span></span><br><span class="line"><span class="comment"># 如果你的路由器是其他架构，请到 GitHub Releases 页面找到对应的版本</span></span><br><span class="line">wget https://github.com/SagerNet/sing-box/releases/download/v1.8.3/sing-box-1.8.3-linux-amd64.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压文件</span></span><br><span class="line">tar -xzf sing-box-*.tar.gz</span><br><span class="line"><span class="built_in">cd</span> sing-box-*/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将可执行文件复制到系统路径</span></span><br><span class="line">cp sing-box /usr/bin/</span><br><span class="line">chmod +x /usr/bin/sing-box</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建配置文件目录</span></span><br><span class="line">mkdir -p /etc/sing-box/rule-sets</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装是否成功</span></span><br><span class="line">sing-box version</span><br></pre></td></tr></table></figure>
+<h3 id="创建服务管理脚本"><a href="#创建服务管理脚本" class="headerlink" title="创建服务管理脚本"></a>创建服务管理脚本</h3><p>为了确保 IP 路由规则持久化，我们创建一个服务管理脚本，负责在启动时添加 IP 规则，在停止时清理：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建服务脚本</span></span><br><span class="line">cat &gt; /etc/init.d/singbox &lt;&lt; <span class="string">'EOF'</span></span><br><span class="line"><span class="comment">#!/bin/sh /etc/rc.common</span></span><br><span class="line"></span><br><span class="line">START=99</span><br><span class="line">STOP=10</span><br><span class="line"></span><br><span class="line">TPROXY_TABLE=100</span><br><span class="line">FWMARK=1</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">load_ip_rules</span></span>() &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"正在加载 Sing-box IP 规则..."</span></span><br><span class="line">    ip rule add fwmark <span class="variable">$FWMARK</span> lookup <span class="variable">$TPROXY_TABLE</span> 2&gt;/dev/null</span><br><span class="line">    ip route add <span class="built_in">local</span> 0.0.0.0/0 dev lo table <span class="variable">$TPROXY_TABLE</span> 2&gt;/dev/null</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Sing-box IP 规则已加载。"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">unload_ip_rules</span></span>() &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"正在卸载 Sing-box IP 规则..."</span></span><br><span class="line">    ip rule del fwmark <span class="variable">$FWMARK</span> lookup <span class="variable">$TPROXY_TABLE</span> 2&gt;/dev/null</span><br><span class="line">    ip route del <span class="built_in">local</span> 0.0.0.0/0 dev lo table <span class="variable">$TPROXY_TABLE</span> 2&gt;/dev/null</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">start</span></span>() &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"正在启动 sing-box..."</span></span><br><span class="line">    <span class="comment"># 启动 sing-box</span></span><br><span class="line">    ENABLE_DEPRECATED_SPECIAL_OUTBOUNDS=<span class="literal">true</span> /usr/bin/sing-box run -c /etc/sing-box/config.json &gt; /var/<span class="built_in">log</span>/singbox.log 2&gt;&amp;1 &amp;</span><br><span class="line">    <span class="built_in">echo</span> $! &gt; /var/run/singbox.pid</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 确保 sing-box 启动后再加载 IP 规则</span></span><br><span class="line">    sleep 5</span><br><span class="line">    load_ip_rules</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">stop</span></span>() &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"正在停止 sing-box..."</span></span><br><span class="line">    [ -f /var/run/singbox.pid ] &amp;&amp; &#123;</span><br><span class="line">        <span class="built_in">kill</span> $(cat /var/run/singbox.pid)</span><br><span class="line">        rm -f /var/run/singbox.pid</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># 停止时清理 IP 规则</span></span><br><span class="line">    unload_ip_rules</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">restart</span></span>() &#123;</span><br><span class="line">    stop</span><br><span class="line">    sleep 2</span><br><span class="line">    start</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置执行权限并启用开机自启动</span></span><br><span class="line">chmod +x /etc/init.d/singbox</span><br><span class="line">/etc/init.d/singbox <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置-sing-box"><a href="#配置-sing-box" class="headerlink" title="配置 sing-box"></a>配置 sing-box</h2><h3 id="创建主配置文件"><a href="#创建主配置文件" class="headerlink" title="创建主配置文件"></a>创建主配置文件</h3><p>sing-box 的核心配置文件是 <code>/etc/sing-box/config.json</code>，这个文件定义了代理的所有行为：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"log"</span>: &#123;</span><br><span class="line">    <span class="attr">"level"</span>: <span class="string">"info"</span>,</span><br><span class="line">    <span class="attr">"timestamp"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"dns"</span>: &#123;</span><br><span class="line">    <span class="attr">"servers"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"tag"</span>: <span class="string">"local"</span>,</span><br><span class="line">        <span class="attr">"address"</span>: <span class="string">"223.5.5.5"</span>,</span><br><span class="line">        <span class="attr">"detour"</span>: <span class="string">"direct"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"tag"</span>: <span class="string">"proxy-dns"</span>,</span><br><span class="line">        <span class="attr">"address"</span>: <span class="string">"tls://8.8.8.8"</span>,</span><br><span class="line">        <span class="attr">"detour"</span>: <span class="string">"proxy"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"tag"</span>: <span class="string">"block"</span>,</span><br><span class="line">        <span class="attr">"address"</span>: <span class="string">"rcode://success"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"rules"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"rule_set"</span>: [<span class="string">"geosite-cn"</span>],</span><br><span class="line">        <span class="attr">"server"</span>: <span class="string">"local"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"rule_set"</span>: [<span class="string">"geosite-gfw"</span>],</span><br><span class="line">        <span class="attr">"server"</span>: <span class="string">"proxy-dns"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"rule_set"</span>: <span class="string">"geosite-category-ads-all"</span>,</span><br><span class="line">        <span class="attr">"server"</span>: <span class="string">"block"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"final"</span>: <span class="string">"local"</span>,</span><br><span class="line">    <span class="attr">"disable_cache"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"strategy"</span>: <span class="string">"prefer_ipv4"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"inbounds"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"tproxy"</span>,</span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"tproxy-in"</span>,</span><br><span class="line">      <span class="attr">"listen"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line">      <span class="attr">"listen_port"</span>: <span class="number">12345</span>,</span><br><span class="line">      <span class="attr">"sniff"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">"sniff_override_destination"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">"network"</span>: <span class="string">"tcp,udp"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"outbounds"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"direct"</span>,</span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"direct"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"hysteria2"</span>,</span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"proxy"</span>,</span><br><span class="line">      <span class="attr">"server"</span>: <span class="string">"your-server.com"</span>,</span><br><span class="line">      <span class="attr">"server_port"</span>: <span class="number">443</span>,</span><br><span class="line">      <span class="attr">"password"</span>: <span class="string">"your-password"</span>,</span><br><span class="line">      <span class="attr">"tls"</span>: &#123;</span><br><span class="line">        <span class="attr">"enabled"</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">"server_name"</span>: <span class="string">"your-server.com"</span>,</span><br><span class="line">        <span class="attr">"insecure"</span>: <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"block"</span>,</span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"block"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"dns"</span>,</span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"dns-out"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"route"</span>: &#123;</span><br><span class="line">    <span class="attr">"rules"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"protocol"</span>: <span class="string">"dns"</span>,</span><br><span class="line">        <span class="attr">"outbound"</span>: <span class="string">"dns-out"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"rule_set"</span>: [<span class="string">"geoip-cn"</span>],</span><br><span class="line">        <span class="attr">"outbound"</span>: <span class="string">"direct"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"rule_set"</span>: [<span class="string">"geosite-cn"</span>],</span><br><span class="line">        <span class="attr">"outbound"</span>: <span class="string">"direct"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"rule_set"</span>: [<span class="string">"geosite-gfw"</span>],</span><br><span class="line">        <span class="attr">"outbound"</span>: <span class="string">"proxy"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"rule_set"</span>: <span class="string">"geosite-category-ads-all"</span>,</span><br><span class="line">        <span class="attr">"outbound"</span>: <span class="string">"block"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"rule_set"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"tag"</span>: <span class="string">"geoip-cn"</span>,</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"remote"</span>,</span><br><span class="line">        <span class="attr">"format"</span>: <span class="string">"binary"</span>,</span><br><span class="line">        <span class="attr">"url"</span>: <span class="string">"https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"tag"</span>: <span class="string">"geosite-cn"</span>,</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"remote"</span>,</span><br><span class="line">        <span class="attr">"format"</span>: <span class="string">"binary"</span>,</span><br><span class="line">        <span class="attr">"url"</span>: <span class="string">"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"tag"</span>: <span class="string">"geosite-gfw"</span>,</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"remote"</span>, </span><br><span class="line">        <span class="attr">"format"</span>: <span class="string">"binary"</span>,</span><br><span class="line">        <span class="attr">"url"</span>: <span class="string">"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-gfw.srs"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"final"</span>: <span class="string">"proxy"</span>,</span><br><span class="line">    <span class="attr">"auto_detect_interface"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>配置文件说明：</strong></p>
+<ul>
+<li><strong>DNS 设置</strong>：国内域名使用 223.5.5.5 解析，国外域名使用 8.8.8.8 解析</li>
+<li><strong>入站设置</strong>：监听 12345 端口，接收 TProxy 转发的流量</li>
+<li><strong>出站设置</strong>：定义了直连、代理、阻止等不同的出口</li>
+<li><strong>路由规则</strong>：根据地理位置和域名列表智能分流</li>
+</ul>
+<h3 id="配置防火墙规则"><a href="#配置防火墙规则" class="headerlink" title="配置防火墙规则"></a>配置防火墙规则</h3><p>为了确保防火墙规则在网络或防火墙服务重启后不会丢失，我们采用 nftables 钩子方案。这是 OpenWrt 中持久化防火墙规则的最佳实践。</p>
+<p>创建一个 <code>.nft</code> 文件，OpenWrt 的 <code>firewall4</code> 服务在每次启动或重载时都会自动读取并加载它。</p>
+<p><strong>创建文件：</strong> <code>/etc/nftables.d/99-singbox.nft</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; <span class="string">"EOF"</span> &gt; /etc/nftables.d/99-singbox.nft</span><br><span class="line"><span class="comment"># TProxy 端口和标记定义</span></span><br><span class="line">define TPROXY_PORT = 12345</span><br><span class="line">define FWMARK = 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 inet (ipv4 和 ipv6) 的 fw4 表中添加规则</span></span><br><span class="line"><span class="comment"># 我们将这些规则插入到 mangle_prerouting 链中</span></span><br><span class="line"></span><br><span class="line">chain mangle_prerouting &#123;</span><br><span class="line">    <span class="comment"># 1. 排除局域网和保留地址 (确保这些地址的流量不被重定向)</span></span><br><span class="line">    ip daddr &#123; 127.0.0.0/8, 192.168.123.0/24, 10.0.0.0/8, 100.64.0.0/10, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.168.0.0/16, 198.18.0.0/15, 224.0.0.0/4, 240.0.0.0/4 &#125; counter <span class="built_in">return</span> comment <span class="string">"Sing-box Bypass LAN/Reserved"</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 2. TProxy 重定向规则：TCP 流量</span></span><br><span class="line">    ip protocol tcp tproxy ip to :<span class="variable">$TPROXY_PORT</span> meta mark <span class="built_in">set</span> <span class="variable">$FWMARK</span> comment <span class="string">"Sing-box TProxy TCP"</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 3. TProxy 重定向规则：UDP 流量</span></span><br><span class="line">    ip protocol udp tproxy ip to :<span class="variable">$TPROXY_PORT</span> meta mark <span class="built_in">set</span> <span class="variable">$FWMARK</span> comment <span class="string">"Sing-box TProxy UDP"</span></span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h3 id="验证路由规则"><a href="#验证路由规则" class="headerlink" title="验证路由规则"></a>验证路由规则</h3><p>启动服务后，检查路由规则是否正确加载：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查 IP 规则</span></span><br><span class="line">ip rule show | grep <span class="string">"fwmark 1"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查路由表</span></span><br><span class="line">ip route show table 100</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查 nftables 规则</span></span><br><span class="line">nft list ruleset | grep -A 10 <span class="string">"mangle_prerouting"</span></span><br></pre></td></tr></table></figure>
+<h2 id="启动和验证"><a href="#启动和验证" class="headerlink" title="启动和验证"></a>启动和验证</h2><h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 应用 nftables 规则</span></span><br><span class="line">/etc/init.d/firewall reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启 sing-box 服务</span></span><br><span class="line">/etc/init.d/singbox restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查服务状态</span></span><br><span class="line">/etc/init.d/singbox status</span><br></pre></td></tr></table></figure>
+<h3 id="验证配置"><a href="#验证配置" class="headerlink" title="验证配置"></a>验证配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查 sing-box 进程是否运行</span></span><br><span class="line">ps | grep sing-box</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查端口是否监听</span></span><br><span class="line">netstat -tlnp | grep 12345</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 nftables 规则</span></span><br><span class="line">nft list ruleset | grep -A 10 <span class="string">"mangle_prerouting"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查路由规则</span></span><br><span class="line">ip rule show | grep <span class="string">"fwmark 1"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试代理功能（应该显示代理服务器的 IP）</span></span><br><span class="line">curl -s https://ipinfo.io/ip</span><br></pre></td></tr></table></figure>
+<h3 id="监控日志"><a href="#监控日志" class="headerlink" title="监控日志"></a>监控日志</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 实时查看 sing-box 日志</span></span><br><span class="line">tail -f /var/<span class="built_in">log</span>/singbox.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 过滤显示代理相关的日志</span></span><br><span class="line">tail -f /var/<span class="built_in">log</span>/singbox.log | grep -E <span class="string">"(tproxy|PROXY|DIRECT)"</span></span><br></pre></td></tr></table></figure>
+<h2 id="常见问题解决"><a href="#常见问题解决" class="headerlink" title="常见问题解决"></a>常见问题解决</h2><h3 id="TProxy-不工作"><a href="#TProxy-不工作" class="headerlink" title="TProxy 不工作"></a>TProxy 不工作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查内核是否支持 IP 转发</span></span><br><span class="line">cat /proc/sys/net/ipv4/ip_forward</span><br><span class="line"><span class="comment"># 应该返回 1，如果不是，执行：</span></span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/net/ipv4/ip_forward</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查 nftables 规则是否正确加载</span></span><br><span class="line">nft list ruleset | grep -A 10 <span class="string">"mangle_prerouting"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查防火墙状态</span></span><br><span class="line">/etc/init.d/firewall status</span><br></pre></td></tr></table></figure>
+<h3 id="DNS-解析失败"><a href="#DNS-解析失败" class="headerlink" title="DNS 解析失败"></a>DNS 解析失败</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 测试 DNS 解析</span></span><br><span class="line">nslookup google.com</span><br><span class="line">nslookup baidu.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查 DNS 配置</span></span><br><span class="line">cat /tmp/resolv.conf.auto</span><br><span class="line"></span><br><span class="line"><span class="comment"># 手动测试 DNS 服务器</span></span><br><span class="line">dig @8.8.8.8 google.com</span><br><span class="line">dig @223.5.5.5 baidu.com</span><br></pre></td></tr></table></figure>
+<h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调整内核参数以提高性能</span></span><br><span class="line">cat &gt;&gt; /etc/sysctl.conf &lt;&lt; <span class="string">'EOF'</span></span><br><span class="line"><span class="comment"># 网络连接优化</span></span><br><span class="line">net.netfilter.nf_conntrack_tcp_timeout_established = 1200</span><br><span class="line">net.netfilter.nf_conntrack_udp_timeout = 60</span><br><span class="line">net.core.rmem_max = 16777216</span><br><span class="line">net.core.wmem_max = 16777216</span><br><span class="line">net.ipv4.tcp_rmem = 4096 87380 16777216</span><br><span class="line">net.ipv4.tcp_wmem = 4096 65536 16777216</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 应用新的内核参数</span></span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+<h2 id="日常维护"><a href="#日常维护" class="headerlink" title="日常维护"></a>日常维护</h2><h3 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重启 sing-box 服务</span></span><br><span class="line">/etc/init.d/singbox restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止服务</span></span><br><span class="line">/etc/init.d/singbox stop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看详细状态</span></span><br><span class="line">/etc/init.d/singbox status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重载防火墙规则</span></span><br><span class="line">/etc/init.d/firewall reload</span><br></pre></td></tr></table></figure>
+<h3 id="更新规则集"><a href="#更新规则集" class="headerlink" title="更新规则集"></a>更新规则集</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载最新的地理位置规则集</span></span><br><span class="line"><span class="built_in">cd</span> /etc/sing-box/rule-sets</span><br><span class="line">wget -O geoip-cn.srs <span class="string">"https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"</span></span><br><span class="line">wget -O geosite-cn.srs <span class="string">"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs"</span></span><br><span class="line">wget -O geosite-gfw.srs <span class="string">"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-gfw.srs"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务以应用新规则</span></span><br><span class="line">/etc/init.d/singbox restart</span><br></pre></td></tr></table></figure>
+<h3 id="备份配置"><a href="#备份配置" class="headerlink" title="备份配置"></a>备份配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份整个配置目录</span></span><br><span class="line">tar -czf sing-box-backup-$(date +%Y%m%d).tar.gz /etc/sing-box/ /etc/nftables.d/99-singbox.nft /etc/init.d/singbox</span><br></pre></td></tr></table></figure>
+<h2 id="进阶配置"><a href="#进阶配置" class="headerlink" title="进阶配置"></a>进阶配置</h2><h3 id="多服务器负载均衡"><a href="#多服务器负载均衡" class="headerlink" title="多服务器负载均衡"></a>多服务器负载均衡</h3><p>如果你有多个代理服务器，可以配置负载均衡：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"outbounds"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"selector"</span>,</span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"proxy"</span>,</span><br><span class="line">      <span class="attr">"outbounds"</span>: [<span class="string">"server1"</span>, <span class="string">"server2"</span>, <span class="string">"server3"</span>],</span><br><span class="line">      <span class="attr">"default"</span>: <span class="string">"server1"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"hysteria2"</span>,</span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"server1"</span>,</span><br><span class="line">      <span class="attr">"server"</span>: <span class="string">"server1.com"</span>,</span><br><span class="line">      <span class="attr">"server_port"</span>: <span class="number">443</span>,</span><br><span class="line">      <span class="attr">"password"</span>: <span class="string">"password1"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"hysteria2"</span>, </span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"server2"</span>,</span><br><span class="line">      <span class="attr">"server"</span>: <span class="string">"server2.com"</span>,</span><br><span class="line">      <span class="attr">"server_port"</span>: <span class="number">443</span>,</span><br><span class="line">      <span class="attr">"password"</span>: <span class="string">"password2"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="自定义规则"><a href="#自定义规则" class="headerlink" title="自定义规则"></a>自定义规则</h3><p>你可以添加自定义的路由规则：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"route"</span>: &#123;</span><br><span class="line">    <span class="attr">"rules"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"domain"</span>: [<span class="string">"example.com"</span>, <span class="string">"test.com"</span>],</span><br><span class="line">        <span class="attr">"outbound"</span>: <span class="string">"proxy"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"ip_is_private"</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">"outbound"</span>: <span class="string">"direct"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="为什么选择-nftables-钩子方案？"><a href="#为什么选择-nftables-钩子方案？" class="headerlink" title="为什么选择 nftables 钩子方案？"></a>为什么选择 nftables 钩子方案？</h2><p>nftables 钩子方案具有以下显著优势：</p>
+<ul>
+<li>✅ <strong>持久性</strong>：规则存储在 <code>/etc/nftables.d/</code> 目录中，防火墙重启时自动加载</li>
+<li>✅ <strong>稳定性</strong>：避免网络重启时规则丢失导致的断网问题</li>
+<li>✅ <strong>简洁性</strong>：规则集中管理，配置更加清晰</li>
+<li>✅ <strong>兼容性</strong>：与 OpenWrt 的 firewall4 服务完美集成</li>
+<li>✅ <strong>可维护性</strong>：便于调试和修改规则</li>
+</ul>
+<h3 id="服务脚本特点"><a href="#服务脚本特点" class="headerlink" title="服务脚本特点"></a>服务脚本特点</h3><ul>
+<li>🔄 <strong>自动管理 IP 规则</strong>：启动时加载，停止时清理，避免规则残留</li>
+<li>⚡ <strong>优化的启动顺序</strong>：确保 sing-box 启动后再加载路由规则</li>
+<li>🛡️ <strong>错误处理</strong>：使用 <code>2&gt;/dev/null</code> 避免重复添加规则时的报错</li>
+<li>📊 <strong>状态反馈</strong>：明确的加载和卸载提示信息</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>sing-box 的 TProxy 配置方案提供了一个功能强大且相对简单的透明代理解决方案。相比传统的 TUN 模式，它具有以下优势：</p>
+<ul>
+<li>✅ <strong>兼容性更好</strong>：不会与 VPN、Docker 等网络服务冲突</li>
+<li>✅ <strong>性能更优</strong>：内核层面转发，性能损失更小</li>
+<li>✅ <strong>配置更简单</strong>：无需复杂的客户端配置</li>
+<li>✅ <strong>维护更容易</strong>：集中管理，便于调试和监控</li>
+</ul>
+<p>通过这个配置，你可以为整个家庭网络提供智能代理服务，让所有设备都能畅游全球互联网。同时，国内网站仍然保持直连，确保访问速度。</p>
+<p><strong>重要提醒</strong>：你的防火墙规则已经持久化，即使运行 <code>/etc/init.d/firewall reload</code>，TProxy 的重定向规则也会被自动重新加载，确保网络连接稳定可靠！</p>
+<hr>
+<p><em>📝 记录时间：2025-11-01 20:41 | 配置环境：OpenWrt 23.05 + sing-box v1.8.3</em></p>
+<blockquote>
+<p><strong>温馨提示</strong>：在使用代理服务时，请确保遵守当地法律法规，合理使用网络资源。本文仅用于技术学习和交流目的。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/openwrt/" rel="tag"># openwrt</a>
+              <a href="/tags/wndr4300/" rel="tag"># wndr4300</a>
+              <a href="/tags/singbox/" rel="tag"># singbox</a>
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86/" rel="tag"># 网络代理</a>
+              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag"># 教程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/07/20251007_huawei_data/" rel="prev" title="一款提取华为运动健康数据的手机APP">
+      <i class="fa fa-chevron-left"></i> 一款提取华为运动健康数据的手机APP
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/11/15/20251115_100_push-ups_and_squats/" rel="next" title="100个俯卧撑与深蹲">
+      100个俯卧撑与深蹲 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-sing-box？"><span class="nav-number">1.</span> <span class="nav-text">什么是 sing-box？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#硬件要求"><span class="nav-number">2.1.</span> <span class="nav-text">硬件要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术概念简介"><span class="nav-number">2.2.</span> <span class="nav-text">技术概念简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-sing-box"><span class="nav-number">3.</span> <span class="nav-text">安装 sing-box</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装包"><span class="nav-number">3.1.</span> <span class="nav-text">下载安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建服务管理脚本"><span class="nav-number">3.2.</span> <span class="nav-text">创建服务管理脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-sing-box"><span class="nav-number">4.</span> <span class="nav-text">配置 sing-box</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建主配置文件"><span class="nav-number">4.1.</span> <span class="nav-text">创建主配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置防火墙规则"><span class="nav-number">4.2.</span> <span class="nav-text">配置防火墙规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证路由规则"><span class="nav-number">4.3.</span> <span class="nav-text">验证路由规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动和验证"><span class="nav-number">5.</span> <span class="nav-text">启动和验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动服务"><span class="nav-number">5.1.</span> <span class="nav-text">启动服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证配置"><span class="nav-number">5.2.</span> <span class="nav-text">验证配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控日志"><span class="nav-number">5.3.</span> <span class="nav-text">监控日志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题解决"><span class="nav-number">6.</span> <span class="nav-text">常见问题解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TProxy-不工作"><span class="nav-number">6.1.</span> <span class="nav-text">TProxy 不工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS-解析失败"><span class="nav-number">6.2.</span> <span class="nav-text">DNS 解析失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能优化"><span class="nav-number">6.3.</span> <span class="nav-text">性能优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日常维护"><span class="nav-number">7.</span> <span class="nav-text">日常维护</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务管理"><span class="nav-number">7.1.</span> <span class="nav-text">服务管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新规则集"><span class="nav-number">7.2.</span> <span class="nav-text">更新规则集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#备份配置"><span class="nav-number">7.3.</span> <span class="nav-text">备份配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶配置"><span class="nav-number">8.</span> <span class="nav-text">进阶配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多服务器负载均衡"><span class="nav-number">8.1.</span> <span class="nav-text">多服务器负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义规则"><span class="nav-number">8.2.</span> <span class="nav-text">自定义规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么选择-nftables-钩子方案？"><span class="nav-number">9.</span> <span class="nav-text">为什么选择 nftables 钩子方案？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务脚本特点"><span class="nav-number">9.1.</span> <span class="nav-text">服务脚本特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

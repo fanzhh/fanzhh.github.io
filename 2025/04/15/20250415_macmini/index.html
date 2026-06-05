@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一台理想的家用服务器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apple Mac mini M4：我的全能家庭服务器实践">
+<meta property="og:url" content="http://blog.fanzhh.pw/2025/04/15/20250415_macmini/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="一台理想的家用服务器。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.devlabs.cc/20250415_macmini.PNG">
+<meta property="og:image" content="https://images.devlabs.cc/20250415_ollama.png">
+<meta property="article:published_time" content="2025-04-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-04T22:35:40.235Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="cloudflare">
+<meta property="article:tag" content="Apple">
+<meta property="article:tag" content="macOS">
+<meta property="article:tag" content="硬件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.devlabs.cc/20250415_macmini.PNG">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2025/04/15/20250415_macmini/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Apple Mac mini M4：我的全能家庭服务器实践 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2025/04/15/20250415_macmini/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Apple Mac mini M4：我的全能家庭服务器实践
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-15 00:00:00" itemprop="dateCreated datePublished" datetime="2025-04-15T00:00:00+08:00">2025-04-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-02-05 06:35:40" itemprop="dateModified" datetime="2026-02-05T06:35:40+08:00">2026-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.devlabs.cc/20250415_macmini.PNG" alt=""></p>
+<p>一台理想的家用服务器。<br><a id="more"></a></p>
+<h4 id="一、为什么选择-Mac-mini-M4？"><a href="#一、为什么选择-Mac-mini-M4？" class="headerlink" title="一、为什么选择 Mac mini M4？"></a><strong>一、为什么选择 Mac mini M4？</strong></h4><p>今年3月，我入手了一台 <strong>Apple Mac mini M4（16GB+256GB）</strong>，经过一个多月的深度使用，它完全颠覆了我对家用服务器的认知——低功耗、零噪音、高性能，配合 <strong>外网穿透</strong> 和 <strong>外置存储方案</strong>，实现了：<br>✅ <strong>下载服务器</strong>（qBittorrent）<br>✅ <strong>家庭影音中心</strong>（Kodi + FTP）<br>✅ <strong>本地大模型</strong>（Ollama + LLM）<br>✅ <strong>开发环境</strong>（Jupyter + SSH）<br>✅ <strong>照片管理</strong>（Immich 私有云）<br>✅ <strong>远程控制</strong>（Web终端）  </p>
+<p>最终落地成本：  </p>
+<ul>
+<li><strong>Mac mini M4</strong>（学生优惠） <strong>¥3749</strong>  </li>
+<li><strong>外置存储方案</strong>（USB4 SSD + 硬盘盒） <strong>¥1620</strong>  </li>
+<li><strong>赛博活菩萨CL内网穿透</strong>（免公网IP） <strong>免费</strong>  </li>
+</ul>
+<hr>
+<h4 id="二、硬件配置与优化"><a href="#二、硬件配置与优化" class="headerlink" title="二、硬件配置与优化"></a><strong>二、硬件配置与优化</strong></h4><h5 id="1-基础款够用吗？"><a href="#1-基础款够用吗？" class="headerlink" title="1. 基础款够用吗？"></a><strong>1. 基础款够用吗？</strong></h5><p>我选择的是 <strong>16GB+256GB</strong> 版本，线下入手价 <strong>¥3749</strong>（用了闺女的学生优惠）。虽然256GB存储偏小，但通过外置SSD完美解决：  </p>
+<ul>
+<li><strong>阿卡西斯 USB4.0 硬盘盒（¥543）</strong> + <strong>海力士 P44 Pro 2TB SSD（¥1077）</strong>  </li>
+<li>在外置硬盘上安装 <strong>macOS</strong>，运行流畅无卡顿，温度可控  </li>
+</ul>
+<blockquote>
+<p>💡 <strong>踩坑提醒</strong>：<br>最初尝试了奥睿科2T硬盘底座（¥1699），但 <strong>塑料外壳+风扇噪音大</strong>，严重影响体验，最终退货。  </p>
+</blockquote>
+<h5 id="2-为什么24小时开机？"><a href="#2-为什么24小时开机？" class="headerlink" title="2. 为什么24小时开机？"></a><strong>2. 为什么24小时开机？</strong></h5><ul>
+<li><strong>待机功耗仅10W</strong>（≈手机充电器）  </li>
+<li><strong>完全无风扇噪音</strong>，适合卧室/书房长期运行  </li>
+</ul>
+<hr>
+<h4 id="三、软件方案与实战应用"><a href="#三、软件方案与实战应用" class="headerlink" title="三、软件方案与实战应用"></a><strong>三、软件方案与实战应用</strong></h4><h5 id="1-外网访问：赛博活菩萨CL内网穿透"><a href="#1-外网访问：赛博活菩萨CL内网穿透" class="headerlink" title="1. 外网访问：赛博活菩萨CL内网穿透"></a><strong>1. 外网访问：赛博活菩萨CL内网穿透</strong></h5><p>无需公网IP，通过 <strong>独立域名 + HTTP/SSH隧道</strong> 实现远程访问，配置简单：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 安装CL客户端  </span><br><span class="line">2. 创建隧道（如 qbittorrent.example.com → localhost:8080）  </span><br><span class="line">3. 外网直接访问子域名</span><br></pre></td></tr></table></figure></p>
+<h5 id="2-下载服务器：qBittorrent-WebUI"><a href="#2-下载服务器：qBittorrent-WebUI" class="headerlink" title="2. 下载服务器：qBittorrent + WebUI"></a><strong>2. 下载服务器：qBittorrent + WebUI</strong></h5><ul>
+<li><code>brew install qbittorrent</code>  </li>
+<li>配置WebUI密码，通过CL映射子域名  </li>
+<li><strong>手机/外网随时添加任务，回家即看</strong>  </li>
+</ul>
+<h5 id="3-家庭影音：Kodi-FTP"><a href="#3-家庭影音：Kodi-FTP" class="headerlink" title="3. 家庭影音：Kodi + FTP"></a><strong>3. 家庭影音：Kodi + FTP</strong></h5><p>小米电视无法直接访问Mac共享文件夹，最终方案：  </p>
+<ul>
+<li>Mac安装 <strong>FileZilla Server</strong>  </li>
+<li>Kodi通过 <strong>FTP协议</strong> 连接，流畅播放4K资源  </li>
+</ul>
+<h5 id="4-本地大模型：Ollama-多模型对比"><a href="#4-本地大模型：Ollama-多模型对比" class="headerlink" title="4. 本地大模型：Ollama + 多模型对比"></a><strong>4. 本地大模型：Ollama + 多模型对比</strong></h5><p>安装5款主流模型：<br><img src="https://images.devlabs.cc/20250415_ollama.png" alt=""></p>
+<p>通过CL暴露WebUI，外网也能调用本地LLM！  </p>
+<h5 id="5-开发与运维"><a href="#5-开发与运维" class="headerlink" title="5. 开发与运维"></a><strong>5. 开发与运维</strong></h5><ul>
+<li><strong>Jupyter Notebook</strong>：交互式编程，隧道映射端口  </li>
+<li><strong>Web终端</strong>：CL配置SSH隧道，但网页版延迟较高，建议直接终端连接  </li>
+</ul>
+<h5 id="6-私有相册：Immich"><a href="#6-私有相册：Immich" class="headerlink" title="6. 私有相册：Immich"></a><strong>6. 私有相册：Immich</strong></h5><ul>
+<li>Mac作为服务端，手机/平板客户端备份  </li>
+<li><strong>替代iCloud/Google Photos</strong>，隐私性极佳  </li>
+</ul>
+<hr>
+<h4 id="四、总结：Mac-mini-M4-的完美定位"><a href="#四、总结：Mac-mini-M4-的完美定位" class="headerlink" title="四、总结：Mac mini M4 的完美定位"></a><strong>四、总结：Mac mini M4 的完美定位</strong></h4><p><strong>✔️ 适合人群</strong>：  </p>
+<ul>
+<li>需要 <strong>低功耗、静音</strong> 家庭服务器的用户  </li>
+<li>希望整合 <strong>下载/NAS/AI/开发</strong> 的极客  </li>
+<li>注重隐私的 <strong>照片备份需求者</strong>  </li>
+</ul>
+<p><strong>❌ 局限性</strong>：  </p>
+<ul>
+<li>存储扩展依赖外置方案  </li>
+<li>部分应用（如电视直连）需迂回实现  </li>
+</ul>
+<p><strong>如果你追求「省心+全能」，Mac mini M4 会是理想选择。</strong> 🚀</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/cloudflare/" rel="tag"># cloudflare</a>
+              <a href="/tags/Apple/" rel="tag"># Apple</a>
+              <a href="/tags/macOS/" rel="tag"># macOS</a>
+              <a href="/tags/%E7%A1%AC%E4%BB%B6/" rel="tag"># 硬件</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/04/25/20240425_nextcloud_onlyoffice/" rel="prev" title="使用Nextcloud+Onlyoffice打造私有云盘">
+      <i class="fa fa-chevron-left"></i> 使用Nextcloud+Onlyoffice打造私有云盘
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/06/20/20250620-knowledge/" rel="next" title="在Mac mini M4上搭建智能文档问答助手">
+      在Mac mini M4上搭建智能文档问答助手 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、为什么选择-Mac-mini-M4？"><span class="nav-number">1.</span> <span class="nav-text">一、为什么选择 Mac mini M4？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、硬件配置与优化"><span class="nav-number">2.</span> <span class="nav-text">二、硬件配置与优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-基础款够用吗？"><span class="nav-number">2.1.</span> <span class="nav-text">1. 基础款够用吗？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-为什么24小时开机？"><span class="nav-number">2.2.</span> <span class="nav-text">2. 为什么24小时开机？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、软件方案与实战应用"><span class="nav-number">3.</span> <span class="nav-text">三、软件方案与实战应用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-外网访问：赛博活菩萨CL内网穿透"><span class="nav-number">3.1.</span> <span class="nav-text">1. 外网访问：赛博活菩萨CL内网穿透</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-下载服务器：qBittorrent-WebUI"><span class="nav-number">3.2.</span> <span class="nav-text">2. 下载服务器：qBittorrent + WebUI</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-家庭影音：Kodi-FTP"><span class="nav-number">3.3.</span> <span class="nav-text">3. 家庭影音：Kodi + FTP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-本地大模型：Ollama-多模型对比"><span class="nav-number">3.4.</span> <span class="nav-text">4. 本地大模型：Ollama + 多模型对比</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-开发与运维"><span class="nav-number">3.5.</span> <span class="nav-text">5. 开发与运维</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-私有相册：Immich"><span class="nav-number">3.6.</span> <span class="nav-text">6. 私有相册：Immich</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、总结：Mac-mini-M4-的完美定位"><span class="nav-number">4.</span> <span class="nav-text">四、总结：Mac mini M4 的完美定位</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

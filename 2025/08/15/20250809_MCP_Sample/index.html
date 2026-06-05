@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在当今数据驱动的世界中，如何高效、安全地访问和利用分散在不同数据库中的信息，是许多技术团队面临的挑战。本文详细解析一个基于MCP（Model Context Protocol）框架构建的项目。MCP是Anthropic于2024年11月推出的一个开放标准、开源的框架，旨在标准化大型语言模型等人工智能系统与外部工具、系统和数据源集成与共享数据的方式。本项目通过巧妙的客户端-服务器架构，结合强大的大型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="构建智能数据查询引擎：MCP项目架构解析">
+<meta property="og:url" content="http://blog.fanzhh.pw/2025/08/15/20250809_MCP_Sample/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="在当今数据驱动的世界中，如何高效、安全地访问和利用分散在不同数据库中的信息，是许多技术团队面临的挑战。本文详细解析一个基于MCP（Model Context Protocol）框架构建的项目。MCP是Anthropic于2024年11月推出的一个开放标准、开源的框架，旨在标准化大型语言模型等人工智能系统与外部工具、系统和数据源集成与共享数据的方式。本项目通过巧妙的客户端-服务器架构，结合强大的大型">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-01T14:06:46.933Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="Anthropic">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2025/08/15/20250809_MCP_Sample/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>构建智能数据查询引擎：MCP项目架构解析 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2025/08/15/20250809_MCP_Sample/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          构建智能数据查询引擎：MCP项目架构解析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-08-15 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-15T00:00:00+08:00">2025-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-10-01 22:06:46" itemprop="dateModified" datetime="2025-10-01T22:06:46+08:00">2025-10-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在当今数据驱动的世界中，如何高效、安全地访问和利用分散在不同数据库中的信息，是许多技术团队面临的挑战。本文详细解析一个基于MCP（Model Context Protocol）框架构建的项目。MCP是Anthropic于2024年11月推出的一个开放标准、开源的框架，旨在标准化大型语言模型等人工智能系统与外部工具、系统和数据源集成与共享数据的方式。本项目通过巧妙的客户端-服务器架构，结合强大的大型语言模型（LLM），为用户提供了一个通过自然语言与复杂数据库交互的智能查询引擎。<br><a id="more"></a></p>
+<h4 id="项目愿景"><a href="#项目愿景" class="headerlink" title="项目愿景"></a><strong>项目愿景</strong></h4><p>MCP项目的核心目标是解决一个普遍存在的问题：业务人员或数据分析师需要从专业的数据库中获取信息，但他们往往不具备编写复杂SQL查询的能力。通过实现Model Context Protocol，本项目将用户的自然语言问题转化为精确的数据库查询，并将结果以清晰、人性化的方式呈现出来，极大地降低了数据访问的门槛。</p>
+<h4 id="技术栈概览"><a href="#技术栈概览" class="headerlink" title="技术栈概览"></a><strong>技术栈概览</strong></h4><p>在深入架构之前，我们先看一下项目所依赖的关键技术：</p>
+<ul>
+<li><strong>后端框架</strong>: <code>mcp</code> (Model Context Protocol) - 本项目基于Anthropic推出的开源标准框架MCP。它规范了AI模型与外部工具交互的方式，使得后端服务的“工具化”和前端的AI集成变得无缝且标准化。</li>
+<li><strong>数据库交互</strong>: <code>asyncpg</code> (用于与PostgreSQL进行异步通信)</li>
+<li><strong>环境配置</strong>: <code>python-dotenv</code> (管理环境变量)</li>
+<li><strong>AI集成</strong>: <code>openai</code> (与大型语言模型API交互)</li>
+<li><strong>数据库</strong>: PostgreSQL</li>
+</ul>
+<p>这种技术选型体现了对异步性能、安全配置和前沿AI能力的重视。</p>
+<h4 id="架构设计：三层分离的艺术"><a href="#架构设计：三层分离的艺术" class="headerlink" title="架构设计：三层分离的艺术"></a><strong>架构设计：三层分离的艺术</strong></h4><p>MCP项目采用了经典且高效的三层分离架构：<strong>配置层</strong>、<strong>数据访问层</strong>和<strong>应用服务层</strong>，并辅以一个<strong>智能客户端</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">    subgraph &quot;用户界面层&quot;</span><br><span class="line">        A[用户自然语言查询]</span><br><span class="line">    end</span><br><span class="line">    </span><br><span class="line">    subgraph &quot;智能客户端层&quot;</span><br><span class="line">        B[&quot;mcp_client.py LLM决策引擎&quot;]</span><br><span class="line">        C[&quot;OpenAI API 大语言模型&quot;]</span><br><span class="line">    end</span><br><span class="line">    </span><br><span class="line">    subgraph &quot;应用服务层&quot;</span><br><span class="line">        D[&quot;mcp_server.py MCP工具服务&quot;]</span><br><span class="line">        E[&quot;@mcp.tool() 工具定义&quot;]</span><br><span class="line">    end</span><br><span class="line">    </span><br><span class="line">    subgraph &quot;数据访问层&quot;</span><br><span class="line">        F[&quot;database.py DatabaseManager&quot;]</span><br><span class="line">        G[&quot;asyncpg连接池&quot;]</span><br><span class="line">    end</span><br><span class="line">    </span><br><span class="line">    subgraph &quot;配置层&quot;</span><br><span class="line">        H[&quot;.env 环境配置&quot;]</span><br><span class="line">        I[&quot;config.py 配置管理&quot;]</span><br><span class="line">    end</span><br><span class="line">    </span><br><span class="line">    subgraph &quot;PostgreSQL&quot;</span><br><span class="line">        J[&quot;demo数据库&quot;]</span><br><span class="line">        K[&quot;demo_company表&quot;]</span><br><span class="line">        L[&quot;demo_checkrecord表&quot;]</span><br><span class="line">        M[&quot;demo_licence表&quot;]</span><br><span class="line">    end</span><br><span class="line">    </span><br><span class="line">    %% 请求流程（向下）</span><br><span class="line">    A --&gt;|自然语言| B</span><br><span class="line">    B --&gt;|工具列表| C</span><br><span class="line">    C --&gt;|调用决策| B</span><br><span class="line">    B --&gt;|MCP协议| D</span><br><span class="line">    D --&gt;|执行工具| E</span><br><span class="line">    E --&gt;|查询请求| F</span><br><span class="line">    F --&gt;|SQL查询| G</span><br><span class="line">    G --&gt;|连接| J</span><br><span class="line">    </span><br><span class="line">    %% 数据返回流程（向上）</span><br><span class="line">    J --&gt;|查询结果| G</span><br><span class="line">    G --&gt;|数据返回| F</span><br><span class="line">    F --&gt;|结构化数据| E</span><br><span class="line">    E --&gt;|工具执行结果| D</span><br><span class="line">    D --&gt;|MCP响应| B</span><br><span class="line">    B --&gt;|自然语言结果| A</span><br><span class="line">    </span><br><span class="line">    %% 配置流程</span><br><span class="line">    H --&gt; I</span><br><span class="line">    I --&gt; F</span><br><span class="line">    </span><br><span class="line">    %% 数据库表关系</span><br><span class="line">    J --&gt; K</span><br><span class="line">    J --&gt; L</span><br><span class="line">    J --&gt; M</span><br><span class="line">    </span><br><span class="line">    style A fill:#e1f5fe</span><br><span class="line">    style B fill:#fff3e0</span><br><span class="line">    style D fill:#f3e5f5</span><br><span class="line">    style F fill:#e8f5e8</span><br><span class="line">    style J fill:#fff8e1</span><br></pre></td></tr></table></figure>
+<p><strong>架构层次详解：</strong></p>
+<p><strong>1. 配置层 (<code>config.py</code>)</strong></p>
+<ul>
+<li><strong>职责</strong>: 环境变量管理、安全配置</li>
+<li><strong>关键文件</strong>: <code>.env</code> + <code>config.py</code></li>
+<li><strong>安全特性</strong>: 敏感信息与代码分离</li>
+</ul>
+<p><strong>2. 数据访问层 (<code>database.py</code>)</strong></p>
+<ul>
+<li><strong>核心组件</strong>: <code>DatabaseManager</code> + 异步连接池</li>
+<li><strong>功能</strong>: SQL抽象、数据序列化、连接管理</li>
+<li><strong>性能</strong>: asyncpg异步处理并发请求</li>
+</ul>
+<p><strong>3. 应用服务层 (<code>mcp_server.py</code>)</strong></p>
+<ul>
+<li><strong>框架</strong>: Model Context Protocol (MCP)</li>
+<li><strong>工具定义</strong>: <a href="mailto:`@mcp.tool">`@mcp.tool</a>()`装饰器</li>
+<li><strong>业务封装</strong>: 复杂查询逻辑透明化</li>
+</ul>
+<p><strong>4. 智能客户端 (<code>mcp_client.py</code>)</strong></p>
+<ul>
+<li><strong>AI集成</strong>: LLM动态函数调用</li>
+<li><strong>决策流程</strong>: 自然语言→工具选择→参数生成</li>
+<li><strong>用户体验</strong>: 结果人性化展示</li>
+</ul>
+<p><em>(这是一个根据代码结构推断的架构示意图)</em></p>
+<p><strong>1. 配置层 (<code>config.py</code>)</strong></p>
+<p>一个健壮的应用始于灵活的配置。MCP项目将所有敏感和环境相关的配置（如数据库地址、用户名、密码）都存储在<code>.env</code>文件中，并通过<code>config.py</code>进行加载。</p>
+<ul>
+<li><strong>安全性</strong>: 将凭证与代码分离，避免了敏感信息泄露。</li>
+<li><strong>灵活性</strong>: 在不同环境（开发、测试、生产）中部署时，只需更改<code>.env</code>文件，无需修改任何代码。</li>
+<li><strong>集中管理</strong>: 所有配置项集中在一个文件中，方便维护。</li>
+</ul>
+<p><strong>2. 数据访问层 (<code>database.py</code>)</strong></p>
+<p>这是连接应用逻辑与物理数据库的桥梁。该层完全封装了数据库的连接、查询和数据转换的复杂性。</p>
+<ul>
+<li><strong>连接管理</strong>: 使用<code>asyncpg</code>创建异步连接池，高效地处理并发请求，确保了服务器的高性能。</li>
+<li><strong>抽象查询</strong>: <code>DatabaseManager</code>类提供了一系列抽象化的查询方法，例如<code>query_six_table</code>。应用服务层只需调用这些方法，传入表名和过滤条件，而无需关心底层的SQL拼接和执行细节。</li>
+<li><strong>数据序列化</strong>: 包含一个精巧的转换函数<code>convert_data_for_json</code>，它可以自动将数据库返回的特殊类型（如<code>datetime</code>, <code>Decimal</code>）转换为JSON兼容的格式，解决了数据在不同层之间传递时的常见问题。</li>
+<li><strong>数据库<code>demo</code></strong>: 在该项目中，核心业务数据存储在一个名为<code>demo</code>的PostgreSQL数据库中。其中包含了多个关键表，例如：<ul>
+<li><code>demo_company</code>: 存储企业的基本信息。</li>
+<li><code>demo_checkrecord</code>: 记录了历史检查数据。</li>
+<li><code>demo_licence</code>: 管理许可证信息。<br><em>(为保护隐私，此处仅列举部分示例表)</em></li>
+</ul>
+</li>
+</ul>
+<p><strong>3. 应用服务层 (<code>mcp_server.py</code>)</strong></p>
+<p>这是整个系统的“大脑”，负责处理客户端请求，并定义可供调用的“工具”（Tools）。</p>
+<ul>
+<li><strong>Model Context Protocol (MCP) 框架</strong>: 服务器利用<code>mcp</code>框架，通过简单的装饰器（如<a href="mailto:`@mcp.tool">`@mcp.tool</a>()`）就能将一个异步函数发布为一个可通过API调用的工具。这极大地简化了API的开发。</li>
+<li><strong>工具化接口</strong>: 每个查询功能都被封装成一个独立的“工具”，例如<code>query_company</code>或<code>query_checkrecord</code>。每个工具都有明确的输入参数和输出结构，这为后续与LLM的集成奠定了基础。</li>
+<li><strong>业务逻辑封装</strong>: 复杂的查询逻辑被封装在工具函数内部。例如，当按公司名称查询检查记录时，服务器会先在<code>demo_company</code>表中查找公司ID，再用ID去<code>demo_checkrecord</code>表中进行精确查询，并将公司名关联到最终结果中。这种封装对客户端是完全透明的。</li>
+</ul>
+<p><strong>4. 智能客户端 (<code>mcp_client.py</code>)</strong></p>
+<p>客户端是用户与MCP系统交互的门户，也是AI能力的核心体现。</p>
+<ul>
+<li><strong>LLM集成</strong>: 客户端的核心是一个工作流：它首先从服务器获取所有可用的工具列表及其定义。</li>
+<li><strong>动态函数调用</strong>: 当用户输入一个问题（例如“查询xx公司2023年以来的检查记录”）时，客户端会将问题和工具列表一起发送给大型语言模型（LLM）。</li>
+<li><strong>智能决策</strong>: LLM会像一个聪明的“调度员”，根据用户的问题意图，从工具列表中选择最合适的一个或多个工具，并生成调用所需的参数（例如，它会将“xx公司”识别为<code>company_name</code>参数，将“2023年来以来”解析为<code>check_date1</code>参数）。</li>
+<li><strong>结果润色</strong>: 在获取到服务器返回的原始JSON数据后，客户端会再次调用LLM，要求它将结构化的数据“翻译”成一段通顺、易于理解的中文报告，从而完成从自然语言输入到自然语言输出的闭环。</li>
+</ul>
+<h4 id="工作流程：一次查询的奇妙-journey"><a href="#工作流程：一次查询的奇妙-journey" class="headerlink" title="工作流程：一次查询的奇妙 journey"></a><strong>工作流程：一次查询的奇妙 journey</strong></h4><ol>
+<li>用户在<code>mcp_client.py</code>的命令行界面输入问题：“查询一下ABC制药公司的许可证信息”。</li>
+<li>客户端将问题和从服务器获取的工具定义（如<code>query_licence</code>工具）发送给LLM。</li>
+<li>LLM分析后决定调用<code>query_licence</code>工具，并生成参数<code>{&quot;company_name&quot;: &quot;ABC制药公司&quot;}</code>。</li>
+<li>客户端通过MCP协议调用服务器上的<code>query_licence</code>工具。</li>
+<li><code>mcp_server.py</code>接收请求，执行该工具函数。函数内部调用<code>database.py</code>中的方法，向<code>demo</code>数据库执行查询。</li>
+<li>服务器将查询结果（一个包含许可证信息的JSON对象）返回给客户端。</li>
+<li>客户端收到JSON数据后，再次请求LLM，将数据和原始问题一并发送，要求其生成一份总结报告。</li>
+<li>LLM返回一段人性化的文本，例如：“为您找到了ABC制药公司的许可证信息如下：…”，并由客户端最终呈现给用户。</li>
+</ol>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a><strong>结论</strong></h4><p>本项目不仅仅是一个数据库查询工具，它更是一个遵循MCP（Model Context Protocol）开放标准，将模块化后端服务、人工智能和用户体验无缝结合的优秀范例。通过采用MCP这样的标准化框架，项目实现了高度的可维护性和互操作性。未来，无论是增加新的数据源，还是集成更强大的AI模型，都可以在现有基础上轻松完成。它向我们展示了如何利用现代技术栈，构建出既强大又易于使用的智能数据应用。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/MCP/" rel="tag"># MCP</a>
+              <a href="/tags/LLM/" rel="tag"># LLM</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/Database/" rel="tag"># Database</a>
+              <a href="/tags/Anthropic/" rel="tag"># Anthropic</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/07/06/20250706_tiny_qa/" rel="prev" title="Tiny QA：基于 Ollama 的本地智能知识库问答系统">
+      <i class="fa fa-chevron-left"></i> Tiny QA：基于 Ollama 的本地智能知识库问答系统
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/01/20251001-VPN_Hysteria2/" rel="next" title="L2TP VPN服务器与Hysteria2代理整合实践">
+      L2TP VPN服务器与Hysteria2代理整合实践 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#项目愿景"><span class="nav-number">1.</span> <span class="nav-text">项目愿景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#技术栈概览"><span class="nav-number">2.</span> <span class="nav-text">技术栈概览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#架构设计：三层分离的艺术"><span class="nav-number">3.</span> <span class="nav-text">架构设计：三层分离的艺术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工作流程：一次查询的奇妙-journey"><span class="nav-number">4.</span> <span class="nav-text">工作流程：一次查询的奇妙 journey</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结论"><span class="nav-number">5.</span> <span class="nav-text">结论</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

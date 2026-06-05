@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本文展示如何用Python编写一个自动化工具，批量提取PDF中的文字内容。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Tesseract批量提取中文PDF文件文本">
+<meta property="og:url" content="http://blog.fanzhh.pw/2025/11/20/2025-11-20-Ocr_chinese_pdf_files_with_Tesseract/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="本文展示如何用Python编写一个自动化工具，批量提取PDF中的文字内容。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-20T00:47:54.096Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="tesseract-ocr">
+<meta property="article:tag" content="ocr">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2025/11/20/2025-11-20-Ocr_chinese_pdf_files_with_Tesseract/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>用Tesseract批量提取中文PDF文件文本 | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2025/11/20/2025-11-20-Ocr_chinese_pdf_files_with_Tesseract/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用Tesseract批量提取中文PDF文件文本
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-11-20 00:00:00 / Modified: 08:47:54" itemprop="dateCreated datePublished" datetime="2025-11-20T00:00:00+08:00">2025-11-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文展示如何用Python编写一个自动化工具，批量提取PDF中的文字内容。<br><a id="more"></a></p>
+<p>这里从一个实际的Python脚本出发，详细讲解OCR（光学字符识别）技术的原理和应用，适合编程小白和技术爱好者阅读。</p>
+<h2 id="什么是OCR技术？"><a href="#什么是OCR技术？" class="headerlink" title="什么是OCR技术？"></a>什么是OCR技术？</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>OCR（Optical Character Recognition，光学字符识别）是指电子设备（如扫描仪或数码相机）检查纸上打印的字符，通过检测暗、亮的模式确定其形状，然后用字符识别方法将形状翻译成计算机文字的过程。</p>
+<h3 id="OCR的工作原理"><a href="#OCR的工作原理" class="headerlink" title="OCR的工作原理"></a>OCR的工作原理</h3><ol>
+<li><strong>图像预处理</strong>：对输入图像进行降噪、二值化、倾斜校正等处理</li>
+<li><strong>文字定位</strong>：找到图像中文字所在的位置</li>
+<li><strong>字符分割</strong>：将文字行分割成单个字符</li>
+<li><strong>特征提取</strong>：提取每个字符的特征</li>
+<li><strong>字符识别</strong>：将特征与字符库进行匹配，识别出对应字符</li>
+<li><strong>后处理</strong>：对识别结果进行校正和优化<h3 id="Tesseract-OCR引擎"><a href="#Tesseract-OCR引擎" class="headerlink" title="Tesseract OCR引擎"></a>Tesseract OCR引擎</h3></li>
+</ol>
+<p>这里使用的Tesseract是一个开源的OCR引擎，最初由惠普开发，后由Google维护。它支持超过100种语言，包括中文简体和繁体。</p>
+<h2 id="项目需求分析"><a href="#项目需求分析" class="headerlink" title="项目需求分析"></a>项目需求分析</h2><p>这个工具要实现的功能包括：</p>
+<ul>
+<li>批量读取指定目录下的PDF文件</li>
+<li>将PDF页面转换为图像</li>
+<li>对图像进行OCR文字识别</li>
+<li>将识别结果保存为文本文件</li>
+<li>提供友好的进度提示和错误处理</li>
+</ul>
+<h2 id="核心技术栈"><a href="#核心技术栈" class="headerlink" title="核心技术栈"></a>核心技术栈</h2><h3 id="Python库介绍"><a href="#Python库介绍" class="headerlink" title="Python库介绍"></a>Python库介绍</h3><ol>
+<li><strong>pytesseract</strong>：Tesseract OCR的Python封装</li>
+<li><strong>pypdfium2</strong>：PDF处理库，用于将PDF页面转换为图像</li>
+<li><strong>PIL（Pillow）</strong>：Python图像处理库</li>
+<li><strong>os和glob</strong>：用于文件和目录操作</li>
+</ol>
+<h2 id="代码实现详解"><a href="#代码实现详解" class="headerlink" title="代码实现详解"></a>代码实现详解</h2><p>  下面来逐段分析这个73行的Python脚本：</p>
+<h3 id="1-导入必要的库"><a href="#1-导入必要的库" class="headerlink" title="1. 导入必要的库"></a>1. 导入必要的库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytesseract          <span class="comment"># Tesseract OCR封装</span></span><br><span class="line"><span class="keyword">import</span> pypdfium2 <span class="keyword">as</span> pdfium  <span class="comment"># PDF处理</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image       <span class="comment"># 图像处理</span></span><br><span class="line"><span class="keyword">import</span> os                   <span class="comment"># 操作系统接口</span></span><br><span class="line"><span class="keyword">import</span> glob                 <span class="comment"># 文件模式匹配</span></span><br></pre></td></tr></table></figure>
+<p>这里导入了所有需要的第三方库。每个库都有其特定的用途，缺一不可。</p>
+<h3 id="2-路径配置"><a href="#2-路径配置" class="headerlink" title="2. 路径配置"></a>2. 路径配置</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INPUT_DIR = <span class="string">'./pdfs/'</span>       <span class="comment"># PDF文件输入目录</span></span><br><span class="line">OUTPUT_DIR = <span class="string">'./out/'</span>       <span class="comment"># 文本文件输出目录</span></span><br><span class="line">PDF_PATTERN = os.path.join(INPUT_DIR, <span class="string">'*.pdf'</span>)  <span class="comment"># PDF文件匹配模式</span></span><br></pre></td></tr></table></figure>
+<p>这里使用了硬编码的路径配置。<code>os.path.join()</code>是一个很好的实践，它可以自动处理不同操作系统的路径分隔符差异。</p>
+<h3 id="3-输出目录创建"><a href="#3-输出目录创建" class="headerlink" title="3. 输出目录创建"></a>3. 输出目录创建</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(OUTPUT_DIR):</span><br><span class="line">    os.makedirs(OUTPUT_DIR)</span><br><span class="line">    print(<span class="string">f"✅ 创建输出目录: <span class="subst">&#123;OUTPUT_DIR&#125;</span>"</span>)</span><br></pre></td></tr></table></figure>
+<p>这是一个防御性编程的例子。程序在开始处理前先检查输出目录是否存在，如果不存在就创建它，避免后续操作因目录不存在而失败。</p>
+<h3 id="4-文件发现和验证"><a href="#4-文件发现和验证" class="headerlink" title="4. 文件发现和验证"></a>4. 文件发现和验证</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pdf_files = glob.glob(PDF_PATTERN)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> pdf_files:</span><br><span class="line">    print(<span class="string">f"⚠️ 警告: 未在目录 <span class="subst">&#123;INPUT_DIR&#125;</span> 中找到任何 PDF 文件。请确保该目录存在且包含 PDF 文件。"</span>)</span><br><span class="line">    </span><br><span class="line">total_files = len(pdf_files)</span><br><span class="line">print(<span class="string">f"共找到 <span class="subst">&#123;total_files&#125;</span> 个 PDF 文件待处理。"</span>)</span><br></pre></td></tr></table></figure>
+<p><code>glob.glob()</code>是一个非常实用的函数，它可以根据通配符模式查找匹配的文件。这里用<code>*.pdf</code>模式查找所有PDF文件。</p>
+<h3 id="5-核心处理循环"><a href="#5-核心处理循环" class="headerlink" title="5. 核心处理循环"></a>5. 核心处理循环</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> index, pdf_path <span class="keyword">in</span> enumerate(pdf_files):</span><br><span class="line">    filename_with_ext = os.path.basename(pdf_path)</span><br><span class="line">    filename_base = os.path.splitext(filename_with_ext)[<span class="number">0</span>]</span><br><span class="line">    output_txt_path = os.path.join(OUTPUT_DIR, <span class="string">f"<span class="subst">&#123;filename_base&#125;</span>.txt"</span>)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">f"[<span class="subst">&#123;index + <span class="number">1</span>&#125;</span>/<span class="subst">&#123;total_files&#125;</span>] 正在处理文件: <span class="subst">&#123;filename_with_ext&#125;</span>..."</span>)</span><br></pre></td></tr></table></figure>
+<p>这里使用了几个重要的文件操作技巧：</p>
+<ul>
+<li><code>os.path.basename()</code>：提取文件名（不含路径）</li>
+<li><code>os.path.splitext()</code>：分离文件名和扩展名</li>
+<li><code>enumerate()</code>：同时获取索引和值，便于显示进度<h3 id="6-PDF处理核心代码"><a href="#6-PDF处理核心代码" class="headerlink" title="6. PDF处理核心代码"></a>6. PDF处理核心代码</h3></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">doc = pdfium.PdfDocument(pdf_path)</span><br><span class="line">n_pages = len(doc)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(output_txt_path, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f_out:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n_pages):</span><br><span class="line">        page = doc.get_page(i)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 渲染 PDF 页面为 PIL 图像对象 (高分辨率 3.0)</span></span><br><span class="line">        bitmap = page.render(scale=<span class="number">3.0</span>)</span><br><span class="line">        pil_image = bitmap.to_pil()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 执行 Tesseract OCR 识别</span></span><br><span class="line">        text = pytesseract.image_to_string(pil_image, lang=<span class="string">'chi_sim'</span>, config=<span class="string">'--psm 6'</span>)</span><br><span class="line">        <span class="comment"># 写入 TXT 文件</span></span><br><span class="line">        f_out.write(<span class="string">f"\n======== Page <span class="subst">&#123;i + <span class="number">1</span>&#125;</span> ========\n"</span>)</span><br><span class="line">        f_out.write(text.strip() + <span class="string">"\n"</span>)</span><br></pre></td></tr></table></figure>
+<p>这段代码是整个脚本的核心，让我们详细分析每个步骤：</p>
+<h4 id="PDF页面渲染"><a href="#PDF页面渲染" class="headerlink" title="PDF页面渲染"></a>PDF页面渲染</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bitmap = page.render(scale=<span class="number">3.0</span>)</span><br><span class="line">pil_image = bitmap.to_pil()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>scale=3.0</code>：将页面放大3倍渲染。为什么要放大？因为OCR引擎在处理高分辨率图像时识别准确率更高</li>
+<li><code>to_pil()</code>：将位图转换为PIL图像对象，这是Tesseract需要的格式</li>
+</ul>
+<h4 id="OCR识别"><a href="#OCR识别" class="headerlink" title="OCR识别"></a>OCR识别</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">text = pytesseract.image_to_string(pil_image, lang=<span class="string">'chi_sim'</span>, config=<span class="string">'--psm 6'</span>)</span><br></pre></td></tr></table></figure>
+<p>这里的参数很重要：</p>
+<ul>
+<li><code>lang=&#39;chi_sim&#39;</code>：指定使用中文简体语言模型</li>
+<li><code>config=&#39;--psm 6&#39;</code>：页面分割模式6，表示”假定单一统一文本块”</li>
+</ul>
+<p>Tesseract支持多种页面分割模式（PSM）：</p>
+<ul>
+<li>0: 定向和脚本检测（OSD）仅</li>
+<li>1: 带有OSD的OCR</li>
+<li>2: 自动页面分割，但无OSD或OCR</li>
+<li>3: 完全自动页面分割，但没有OSD（默认）</li>
+<li>4: 假定单列文本</li>
+<li>5: 假定垂直对齐文本的单个统一文本块</li>
+<li>6: 假定单个统一的文本块</li>
+<li>7: 将图像视为单个文本行</li>
+<li>8: 将图像视为单个单词</li>
+<li>9: 将图像视为圆中的单个单词</li>
+<li>10: 将图像视为单个字符</li>
+</ul>
+<p>对于文档类的PDF，模式6通常是最佳选择。</p>
+<h3 id="7-错误处理"><a href="#7-错误处理" class="headerlink" title="7. 错误处理"></a>7. 错误处理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">except</span> pytesseract.TesseractNotFoundError:</span><br><span class="line">    print(<span class="string">"致命错误：Tesseract OCR 引擎未安装或未在系统路径中。请确保已安装 `tesseract-ocr`。"</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">f"发生总体错误：<span class="subst">&#123;e&#125;</span>"</span>)</span><br></pre></td></tr></table></figure>
+<p>这里采用了分层错误处理：</p>
+<ul>
+<li>特定异常（Tesseract未找到）提供具体的解决建议</li>
+<li>通用异常捕获其他所有错误</li>
+</ul>
+<h2 id="技术要点解析"><a href="#技术要点解析" class="headerlink" title="技术要点解析"></a>技术要点解析</h2><h3 id="1-图像分辨率的重要性"><a href="#1-图像分辨率的重要性" class="headerlink" title="1. 图像分辨率的重要性"></a>1. 图像分辨率的重要性</h3><p>OCR识别的准确率很大程度上取决于输入图像的质量。代码中使用<code>scale=3.0</code>将PDF页面放大3倍，这有几个好处：</p>
+<ul>
+<li><strong>更高的细节保留</strong>：小字体和复杂字符更加清晰</li>
+<li><strong>更好的字符分割</strong>：字符边缘更加明显，便于算法识别</li>
+<li><strong>减少识别错误</strong>：特别是在处理中文这样复杂的字符时</li>
+</ul>
+<h3 id="2-中文OCR的特殊考虑"><a href="#2-中文OCR的特殊考虑" class="headerlink" title="2. 中文OCR的特殊考虑"></a>2. 中文OCR的特殊考虑</h3><p>  中文OCR相比英文有更多挑战：</p>
+<ul>
+<li><strong>字符集庞大</strong>：中文有几万个常用汉字</li>
+<li><strong>字符复杂</strong>：笔画多、结构复杂</li>
+<li><strong>字体多样性</strong>：宋体、黑体、楷体等</li>
+<li><strong>排版复杂</strong>：横排、竖排、混合排版</li>
+</ul>
+<p>因此，选择合适的语言模型和页面分割模式至关重要。</p>
+<h3 id="3-内存管理"><a href="#3-内存管理" class="headerlink" title="3. 内存管理"></a>3. 内存管理</h3><p>对于大PDF文件，需要注意内存使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(output_txt_path, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f_out:</span><br></pre></td></tr></table></figure>
+<p>使用<code>with</code>语句确保文件正确关闭，避免内存泄漏。</p>
+<h3 id="4-进度反馈"><a href="#4-进度反馈" class="headerlink" title="4. 进度反馈"></a>4. 进度反馈</h3><p>用户体验很重要：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">f"[<span class="subst">&#123;index + <span class="number">1</span>&#125;</span>/<span class="subst">&#123;total_files&#125;</span>] 正在处理文件: <span class="subst">&#123;filename_with_ext&#125;</span>..."</span>)</span><br></pre></td></tr></table></figure>
+<p>清晰的进度提示让用户了解处理状态，特别是在处理大量文件时。</p>
+<h2 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h2><p>这种OCR工具有很多实际应用：</p>
+<ol>
+<li><strong>文档数字化</strong>：将纸质文档扫描件转换为可搜索的文本</li>
+<li><strong>数据提取</strong>：从报表、表格中提取结构化数据</li>
+<li><strong>文档归档</strong>：建立文档的全文检索系统</li>
+<li><strong>多语言处理</strong>：处理包含多种语言的文档</li>
+<li><strong>自动化办公</strong>：批量处理文档，提高工作效率</li>
+</ol>
+<h2 id="性能优化建议"><a href="#性能优化建议" class="headerlink" title="性能优化建议"></a>性能优化建议</h2><p>  如果想进一步提升性能，可以考虑：</p>
+<ol>
+<li><strong>并行处理</strong>：使用多线程或异步IO处理多个文件</li>
+<li><strong>图像预处理</strong>：添加去噪、锐化等预处理步骤</li>
+<li><strong>缓存机制</strong>：避免重复处理相同的文件</li>
+<li><strong>批处理优化</strong>：合理控制同时处理的文件数量</li>
+<li><strong>内存监控</strong>：监控内存使用，避免处理超大文件时内存溢出</li>
+</ol>
+<h2 id="扩展功能"><a href="#扩展功能" class="headerlink" title="扩展功能"></a>扩展功能</h2><p>基于这个基础版本，还可以添加很多功能：</p>
+<ol>
+<li><strong>GUI界面</strong>：使用tkinter或PyQt创建图形界面</li>
+<li><strong>配置文件</strong>：将硬编码的配置提取到配置文件</li>
+<li><strong>日志记录</strong>：添加详细的日志记录功能</li>
+<li><strong>结果校验</strong>：添加OCR结果的校验和修正机制</li>
+<li><strong>格式支持</strong>：支持更多输入格式（图片、Word等）</li>
+<li><strong>语言检测</strong>：自动检测文档语言并选择相应的OCR模型</li>
+</ol>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytesseract</span><br><span class="line"><span class="keyword">import</span> pypdfium2 <span class="keyword">as</span> pdfium</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> glob <span class="comment"># 用于查找文件</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># --- 路径配置 ---</span></span><br><span class="line">INPUT_DIR = <span class="string">'./pdfs/'</span></span><br><span class="line">OUTPUT_DIR = <span class="string">'./out/'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># PDF 文件通配符</span></span><br><span class="line">PDF_PATTERN = os.path.join(INPUT_DIR, <span class="string">'*.pdf'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 1. 创建输出目录 ---</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(OUTPUT_DIR):</span><br><span class="line">    os.makedirs(OUTPUT_DIR)</span><br><span class="line">    print(<span class="string">f"✅ 创建输出目录: <span class="subst">&#123;OUTPUT_DIR&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 2. 处理所有 PDF 文件 ---</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="comment"># 查找所有匹配的文件路径</span></span><br><span class="line">    pdf_files = glob.glob(PDF_PATTERN)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> pdf_files:</span><br><span class="line">        print(<span class="string">f"⚠️ 警告: 未在目录 <span class="subst">&#123;INPUT_DIR&#125;</span> 中找到任何 PDF 文件。请确保该目录存在且包含 PDF 文件。"</span>)</span><br><span class="line">    total_files = len(pdf_files)</span><br><span class="line">    print(<span class="string">f"共找到 <span class="subst">&#123;total_files&#125;</span> 个 PDF 文件待处理。"</span>)</span><br><span class="line">    print(<span class="string">"---------------------------------------"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> index, pdf_path <span class="keyword">in</span> enumerate(pdf_files):</span><br><span class="line">        <span class="comment"># 获取文件名 (带扩展名)</span></span><br><span class="line">        filename_with_ext = os.path.basename(pdf_path)</span><br><span class="line">        <span class="comment"># 获取不带扩展名的文件名</span></span><br><span class="line">        filename_base = os.path.splitext(filename_with_ext)[<span class="number">0</span>]</span><br><span class="line">        <span class="comment"># 构建输出 TXT 文件的完整路径</span></span><br><span class="line">        output_txt_path = os.path.join(OUTPUT_DIR, <span class="string">f"<span class="subst">&#123;filename_base&#125;</span>.txt"</span>)</span><br><span class="line"></span><br><span class="line">        print(<span class="string">f"[<span class="subst">&#123;index + <span class="number">1</span>&#125;</span>/<span class="subst">&#123;total_files&#125;</span>] 正在处理文件: <span class="subst">&#123;filename_with_ext&#125;</span>..."</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            doc = pdfium.PdfDocument(pdf_path)</span><br><span class="line">            n_pages = len(doc)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">with</span> open(output_txt_path, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f_out:</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> range(n_pages):</span><br><span class="line">                    page = doc.get_page(i)</span><br><span class="line">                    <span class="comment"># 渲染 PDF 页面为 PIL 图像对象 (高分辨率 3.0)</span></span><br><span class="line">                    bitmap = page.render(scale=<span class="number">3.0</span>)</span><br><span class="line">                    pil_image = bitmap.to_pil()</span><br><span class="line"></span><br><span class="line">                    <span class="comment"># 执行 Tesseract OCR 识别</span></span><br><span class="line">                    <span class="comment"># lang='chi_sim' (中文)</span></span><br><span class="line">                    <span class="comment"># config='--psm 6' (单列文本块模式)</span></span><br><span class="line">                    text = pytesseract.image_to_string(pil_image, lang=<span class="string">'chi_sim'</span>, config=<span class="string">'--psm 6'</span>)</span><br><span class="line"></span><br><span class="line">                    <span class="comment"># 写入 TXT 文件</span></span><br><span class="line">                    f_out.write(<span class="string">f"\n======== Page <span class="subst">&#123;i + <span class="number">1</span>&#125;</span> ========\n"</span>)</span><br><span class="line">                    f_out.write(text.strip() + <span class="string">"\n"</span>)</span><br><span class="line"></span><br><span class="line">            print(<span class="string">f"    -&gt; 成功保存识别结果到 <span class="subst">&#123;output_txt_path&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            print(<span class="string">f"    ❌ 处理文件 <span class="subst">&#123;filename_with_ext&#125;</span> 时发生错误: <span class="subst">&#123;e&#125;</span>"</span>)</span><br><span class="line">            <span class="keyword">continue</span> <span class="comment"># 跳过当前文件，继续下一个</span></span><br><span class="line"></span><br><span class="line">    print(<span class="string">"\n✅ 所有文件处理完毕。"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> pytesseract.TesseractNotFoundError:</span><br><span class="line">    print(<span class="string">"致命错误：Tesseract OCR 引擎未安装或未在系统路径中。请确保已安装 `tesseract-ocr`。"</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">f"发生总体错误：<span class="subst">&#123;e&#125;</span>"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过这个73行的Python脚本，实现了一个功能完整的PDF OCR处理工具。虽然代码简洁，但涵盖了很多重要的编程概念和技术要点：</p>
+<ul>
+<li>文件和目录操作</li>
+<li>异常处理</li>
+<li>第三方库的使用</li>
+<li>OCR技术的实际应用</li>
+<li>用户体验设计</li>
+</ul>
+<p>对于编程小白来说，这个项目是一个很好的学习起点，既有实用价值，又涵盖了多种技术概念。对于有经验的开发者，这个基础版本也可以作为更复杂OCR系统的起点。</p>
+<p>技术的价值在于解决实际问题。希望这篇文章能帮助理解OCR技术，并启发你创造更多有用的工具！</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/tesseract-ocr/" rel="tag"># tesseract-ocr</a>
+              <a href="/tags/ocr/" rel="tag"># ocr</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/11/20/2025-11-20-PaddleOCR_Sample/" rel="prev" title="PaddleOCR实战：从零构建智能文字识别应用">
+      <i class="fa fa-chevron-left"></i> PaddleOCR实战：从零构建智能文字识别应用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/11/23/2025-11-23-dragonflyOCR/" rel="next" title="一款支持批量文件处理的OCR工具">
+      一款支持批量文件处理的OCR工具 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是OCR技术？"><span class="nav-number">1.</span> <span class="nav-text">什么是OCR技术？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">1.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OCR的工作原理"><span class="nav-number">1.2.</span> <span class="nav-text">OCR的工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tesseract-OCR引擎"><span class="nav-number">1.3.</span> <span class="nav-text">Tesseract OCR引擎</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目需求分析"><span class="nav-number">2.</span> <span class="nav-text">项目需求分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心技术栈"><span class="nav-number">3.</span> <span class="nav-text">核心技术栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python库介绍"><span class="nav-number">3.1.</span> <span class="nav-text">Python库介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现详解"><span class="nav-number">4.</span> <span class="nav-text">代码实现详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-导入必要的库"><span class="nav-number">4.1.</span> <span class="nav-text">1. 导入必要的库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-路径配置"><span class="nav-number">4.2.</span> <span class="nav-text">2. 路径配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-输出目录创建"><span class="nav-number">4.3.</span> <span class="nav-text">3. 输出目录创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-文件发现和验证"><span class="nav-number">4.4.</span> <span class="nav-text">4. 文件发现和验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-核心处理循环"><span class="nav-number">4.5.</span> <span class="nav-text">5. 核心处理循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-PDF处理核心代码"><span class="nav-number">4.6.</span> <span class="nav-text">6. PDF处理核心代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PDF页面渲染"><span class="nav-number">4.6.1.</span> <span class="nav-text">PDF页面渲染</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OCR识别"><span class="nav-number">4.6.2.</span> <span class="nav-text">OCR识别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-错误处理"><span class="nav-number">4.7.</span> <span class="nav-text">7. 错误处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术要点解析"><span class="nav-number">5.</span> <span class="nav-text">技术要点解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-图像分辨率的重要性"><span class="nav-number">5.1.</span> <span class="nav-text">1. 图像分辨率的重要性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-中文OCR的特殊考虑"><span class="nav-number">5.2.</span> <span class="nav-text">2. 中文OCR的特殊考虑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-内存管理"><span class="nav-number">5.3.</span> <span class="nav-text">3. 内存管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-进度反馈"><span class="nav-number">5.4.</span> <span class="nav-text">4. 进度反馈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际应用场景"><span class="nav-number">6.</span> <span class="nav-text">实际应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能优化建议"><span class="nav-number">7.</span> <span class="nav-text">性能优化建议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展功能"><span class="nav-number">8.</span> <span class="nav-text">扩展功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整代码"><span class="nav-number">9.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

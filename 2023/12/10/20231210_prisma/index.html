@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.fanzhh.pw","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Prisma is an open-source database toolkit and Object-Relational Mapping (ORM) tool.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Getting Start On Prisma">
+<meta property="og:url" content="http://blog.fanzhh.pw/2023/12/10/20231210_prisma/index.html">
+<meta property="og:site_name" content="Fanzhh&#39;s Blog">
+<meta property="og:description" content="Prisma is an open-source database toolkit and Object-Relational Mapping (ORM) tool.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cf-assets.www.cloudflare.com/slt3lc6tev37/4WJkWMYGkEpa05B0hyL88E/91dd67e91752d39d94b60cdcdfdc287d/prismalogo-freelogovectors.net_.png">
+<meta property="article:published_time" content="2023-12-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-05-23T06:51:24.680Z">
+<meta property="article:author" content="fanzhh">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="Javascript">
+<meta property="article:tag" content="database">
+<meta property="article:tag" content="全栈">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cf-assets.www.cloudflare.com/slt3lc6tev37/4WJkWMYGkEpa05B0hyL88E/91dd67e91752d39d94b60cdcdfdc287d/prismalogo-freelogovectors.net_.png">
+
+<link rel="canonical" href="http://blog.fanzhh.pw/2023/12/10/20231210_prisma/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Getting Start On Prisma | Fanzhh's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fanzhh's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.fanzhh.pw/2023/12/10/20231210_prisma/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fanzhh">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fanzhh's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Getting Start On Prisma
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2023-12-10T00:00:00+08:00">2023-12-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-05-23 14:51:24" itemprop="dateModified" datetime="2025-05-23T14:51:24+08:00">2025-05-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://cf-assets.www.cloudflare.com/slt3lc6tev37/4WJkWMYGkEpa05B0hyL88E/91dd67e91752d39d94b60cdcdfdc287d/prismalogo-freelogovectors.net_.png" alt="Prisma"><br><a href="https://www.prisma.io/docs/" target="_blank" rel="noopener">Prisma</a> is an open-source database toolkit and Object-Relational Mapping (ORM) tool.<br><a id="more"></a></p>
+<h2 id="What’s-Prisma"><a href="#What’s-Prisma" class="headerlink" title="What’s Prisma"></a>What’s Prisma</h2><p>Prisma provides a set of tools and libraries that simplify database access and management for developers. Prisma supports various databases, including PostgreSQL, MySQL, SQLite, and SQL Server.</p>
+<p>Here are some key features and concepts of Prisma:</p>
+<ol>
+<li><strong>Database Modeling</strong>: Prisma allows you to define your database schema using its own declarative language called Prisma Schema. You can define entities, relationships, fields, and other aspects of your database structure.</li>
+<li><strong>Type-Safe Database Access</strong>: Prisma generates a type-safe and auto-completed database client based on your Prisma Schema. This client provides a set of methods for querying, creating, updating, and deleting data in your database. It leverages TypeScript or JavaScript to provide compile-time type checking and autocompletion, reducing the chances of runtime errors.</li>
+<li><strong>Database Migrations</strong>: Prisma includes a migration system that helps you manage changes to your database schema over time. It tracks and applies migrations to keep your database schema in sync with your Prisma Schema.</li>
+<li><strong>Query Language</strong>: Prisma provides a powerful and expressive query language called Prisma Client Query API. It allows you to write complex database queries in a concise and readable manner, supporting filtering, sorting, pagination, and other query operations.</li>
+<li><strong>Real-Time Data Sync</strong>: Prisma supports real-time data synchronization through its integration with GraphQL subscriptions. You can subscribe to changes in your database and receive real-time updates in your application.</li>
+<li><strong>Prisma Client</strong>: Prisma generates a client library specific to your database schema. This client library acts as an interface between your application and the database, providing a convenient and type-safe API to interact with the database.</li>
+</ol>
+<p>Prisma is often used in modern web development stacks, alongside frameworks like Next.js, Express, or GraphQL. It simplifies database access, improves developer productivity, and helps maintain a clean and scalable data layer in your application.</p>
+<h2 id="Quick-start-on-Prisma"><a href="#Quick-start-on-Prisma" class="headerlink" title="Quick start on Prisma"></a>Quick start on Prisma</h2><h3 id="Create-project-and-setup"><a href="#Create-project-and-setup" class="headerlink" title="Create project and setup"></a>Create project and setup</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir hello-prisma </span><br><span class="line">cd hello-prisma</span><br><span class="line">npm init -y </span><br><span class="line">npm install typescript ts-node @types/node --save-dev</span><br></pre></td></tr></table></figure>
+<p>As a first step, create a project directory and navigate into it. Then the code executed in the terminal using npm, the package manager for Node.js. Let’s break down each command:</p>
+<ol>
+<li><code>npm init -y</code>: This command initializes a new npm project in the current directory. The <code>-y</code> flag automatically accepts the default options for the project initialization, such as the package name, version, entry point, and license. It generates a <code>package.json</code> file that holds metadata about the project and its dependencies.    </li>
+<li><code>npm install typescript ts-node @types/node --save-dev</code>: This command installs several packages as development dependencies in the project. Here’s what each package does:    <ul>
+<li><code>typescript</code>: This package installs the TypeScript compiler, which allows you to write and transpile TypeScript code into JavaScript.</li>
+<li><code>ts-node</code>: This package provides a TypeScript execution environment for Node.js. It allows you to directly run TypeScript files without explicitly compiling them to JavaScript first.</li>
+<li><code>@types/node</code>: This package provides TypeScript type definitions for Node.js. It enables TypeScript to understand and provide type checking for Node.js-specific modules and APIs.</li>
+<li>The <code>--save-dev</code> flag indicates that these packages should be saved as development dependencies in the <code>package.json</code> file. Development dependencies are packages required during the development process but not necessary for the production deployment of the application.</li>
+</ul>
+</li>
+</ol>
+<p>By running these commands, you set up a new npm project, install TypeScript and related tools, and configure your project to use TypeScript for development.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npx tsc --init</span><br><span class="line">npm install prisma --save-dev</span><br><span class="line">npx prisma init --datasource-provider sqlite</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>npx tsc --init</code>: This command initializes a TypeScript project in the current directory. It generates a <code>tsconfig.json</code> file that contains configuration options for the TypeScript compiler (<code>tsc</code>). The <code>--init</code> flag tells <code>tsc</code> to create a default <code>tsconfig.json</code> file with basic settings. You can further customize this file to suit your project’s needs.</li>
+<li><code>npm install prisma --save-dev</code>: This command installs the Prisma package as a development dependency in the project. The <code>--save-dev</code> flag indicates that the package should be saved in the <code>devDependencies</code> section of the <code>package.json</code> file. Prisma is a toolkit for working with databases, and installing it as a development dependency means it’s not required for the production deployment of the application.</li>
+<li><code>npx prisma init --datasource-provider sqlite</code>: This command initializes a Prisma project in the current directory. It sets up the necessary files and configurations for using Prisma in your project. The <code>--datasource-provider sqlite</code> flag specifies that you want to use SQLite as the data source for your Prisma project. Prisma will generate the required files and configurations to connect to a SQLite database.</li>
+</ol>
+<p>By running these commands, you set up a TypeScript project, install Prisma as a development dependency, and initialize a Prisma project with SQLite as the data source. This allows you to leverage Prisma’s features and tools for working with databases, such as defining your database schema, generating a type-safe database client, and managing database migrations.</p>
+<h3 id="Model-data-in-Prisma"><a href="#Model-data-in-Prisma" class="headerlink" title="Model data in Prisma"></a>Model data in Prisma</h3><p>The Prisma schema provides an intuitive way to model data. Add the following models to your <code>schema.prisma</code> file:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">model User &#123; </span><br><span class="line">    id Int @id @<span class="keyword">default</span>(autoincrement()) </span><br><span class="line">	email <span class="built_in">String</span> @unique </span><br><span class="line">	name <span class="built_in">String</span>? </span><br><span class="line">	posts Post[] </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">model Post &#123; </span><br><span class="line">    id Int @id @<span class="keyword">default</span>(autoincrement()) </span><br><span class="line">    title <span class="built_in">String</span> </span><br><span class="line">    content <span class="built_in">String</span>? </span><br><span class="line">    published <span class="built_in">Boolean</span> @<span class="keyword">default</span>(<span class="literal">false</span>) </span><br><span class="line">    author User @relation(fields: [authorId], <span class="attr">references</span>: [id]) </span><br><span class="line">    authorId Int </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This code is written in Prisma Schema Language, which is used to define the database schema and models for a Prisma project. Let’s explain <code>User</code> first:</p>
+<ul>
+<li><code>model User</code>: This declares a model named “User” representing a user entity in the database.</li>
+<li><code>id Int @id @default(autoincrement())</code>: This defines an <code>id</code> field of type <code>Int</code> as the primary key for the “User” model. The <code>@id</code> attribute specifies that this field is the primary identifier. The <code>@default(autoincrement())</code> attribute indicates that the field should automatically increment its value for each new record.</li>
+<li><code>email String @unique</code>: This defines an <code>email</code> field of type <code>String</code> in the “User” model. The <code>@unique</code> attribute ensures that each email value in the database is unique.</li>
+<li><code>name String?</code>: This defines a nullable <code>name</code> field of type <code>String</code> in the “User” model. The <code>?</code> denotes that the field can be optional and may contain a null value.</li>
+<li><code>posts Post[]</code>: This establishes a one-to-many relationship between the “User” and “Post” models. It indicates that a user can have multiple posts. The <code>Post[]</code> syntax represents an array of <code>Post</code> objects associated with the user.</li>
+</ul>
+<p>The the <code>Post</code>:</p>
+<ul>
+<li><code>model Post</code>: This declares a model named “Post” representing a post entity in the database.</li>
+<li><code>id Int @id @default(autoincrement())</code>: This defines an <code>id</code> field of type <code>Int</code> as the primary key for the “Post” model, similar to the “User” model.</li>
+<li><code>title String</code>: This defines a <code>title</code> field of type <code>String</code> in the “Post” model, representing the title of the post.</li>
+<li><code>content String?</code>: This defines a nullable <code>content</code> field of type <code>String</code> in the “Post” model, representing the content of the post.</li>
+<li><code>published Boolean @default(false)</code>: This defines a <code>published</code> field of type <code>Boolean</code> in the “Post” model. The <code>@default(false)</code> attribute sets the default value of the field to <code>false</code>.</li>
+<li><code>author User @relation(fields: [authorId], references: [id])</code>: This establishes a many-to-one relationship between the “Post” and “User” models. It indicates that a post belongs to a single user. The <code>@relation</code> attribute specifies the relationship, and <code>fields: [authorId]</code> and <code>references: [id]</code> define the fields used for establishing the relationship.</li>
+<li><code>authorId Int</code>: This defines an <code>authorId</code> field of type <code>Int</code> in the “Post” model. It represents the foreign key that references the <code>id</code> field of the associated user in the “User” model.<h3 id="Run-migration-to-create-database-tables"><a href="#Run-migration-to-create-database-tables" class="headerlink" title="Run migration to create database tables"></a>Run migration to create database tables</h3></li>
+</ul>
+<p>At this point, you have a Prisma schema but no database yet. Run the following command in your terminal to create the SQLite database and the <code>User</code> and <code>Post</code> tables represented by your models:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx prisma migrate dev --name init</span><br></pre></td></tr></table></figure>
+<p>Let’s explain it:</p>
+<ul>
+<li><code>npx</code>: This is a utility that allows you to run a package without installing it globally. It executes the following command using the locally installed version of the package.</li>
+<li><code>prisma</code>: This is the command for invoking the Prisma CLI.    </li>
+<li><code>migrate dev</code>: This command is used to apply pending database migrations. It ensures that the database schema is up to date with the latest changes defined in your Prisma schema file.    </li>
+<li><code>--name init</code>: This flag specifies the name of the migration. In this case, it is set to “init”. The name is used to identify the migration and can be helpful for tracking and managing migrations in your project.    </li>
+</ul>
+<p>When you run the provided code, the Prisma CLI will perform the following steps:</p>
+<ol>
+<li>It will check for any pending migrations that have not been applied to the database.</li>
+<li>If there are pending migrations, it will generate the necessary SQL statements to apply those migrations to the database. These migrations typically involve creating or modifying database tables, columns, or other schema changes defined in your Prisma schema file.</li>
+<li>It will execute the generated SQL statements to apply the migrations to the database, ensuring that the database schema is synchronized with your Prisma schema.</li>
+<li>Once the migrations are applied, the Prisma CLI will update the migration history, marking the applied migrations as completed.</li>
+</ol>
+<h3 id="Send-queries-to-your-database-with-Prisma-Client"><a href="#Send-queries-to-your-database-with-Prisma-Client" class="headerlink" title="Send queries to your database with Prisma Client"></a>Send queries to your database with Prisma Client</h3><p>To send queries to the database, you will need a TypeScript file to execute your Prisma Client queries. Create a new file called <code>script.ts</code> for this purpose:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch script.ts</span><br></pre></td></tr></table></figure></p>
+<p>Paste the following boilerplate into it:<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; PrismaClient &#125; <span class="keyword">from</span> <span class="string">'@prisma/client'</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> prisma = <span class="keyword">new</span> PrismaClient(); </span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">    <span class="comment">// ... you will write your Prisma Client queries here </span></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">main() </span><br><span class="line">    .then(<span class="keyword">async</span> () =&gt; &#123; </span><br><span class="line">        <span class="keyword">await</span> prisma.$disconnect() </span><br><span class="line">    &#125;) </span><br><span class="line">    .catch(<span class="keyword">async</span> (e) =&gt; &#123; </span><br><span class="line">        <span class="built_in">console</span>.error(e) </span><br><span class="line">        <span class="keyword">await</span> prisma.$disconnect() </span><br><span class="line">        process.exit(<span class="number">1</span>) </span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>The code:</p>
+<ul>
+<li>Imports the <code>PrismaClient</code> class from the <code>@prisma/client</code> package. The <code>PrismaClient</code> is the main entry point for interacting with your database using Prisma.</li>
+<li>Creates an instance of the <code>PrismaClient</code> class and assigns it to the <code>prisma</code> variable. This instance represents a connection to your database and provides methods for executing queries and mutations.</li>
+<li>Defines an <code>async</code> function named <code>main()</code>. This function serves as the entry point for executing Prisma Client queries and mutations. You can write your Prisma Client code inside this function.</li>
+<li>Then<ul>
+<li>Calls the <code>main()</code> function and handles the execution flow. It uses a combination of <code>then()</code> and <code>catch()</code> to handle successful execution and error scenarios.</li>
+<li>If the <code>main()</code> function resolves successfully, the <code>then()</code> block is executed. Inside the <code>then()</code> block, <code>await prisma.$disconnect()</code> is called to close the database connection and release any resources held by Prisma Client.</li>
+<li>If an error occurs during the execution of <code>main()</code>, the <code>catch()</code> block is executed. The error is logged to the console using <code>console.error(e)</code>. Then, <code>await prisma.$disconnect()</code> is called to close the database connection, and <code>process.exit(1)</code> is used to exit the Node.js process with a non-zero status code (indicating an error).</li>
+</ul>
+</li>
+</ul>
+<h4 id="Create-new-User-record"><a href="#Create-new-User-record" class="headerlink" title="Create new User record"></a>Create new <code>User</code> record</h4><p>Add the following code to your <code>script.ts</code> file:<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> prisma.user.create(&#123;</span><br><span class="line">        data: &#123;</span><br><span class="line">          name: <span class="string">'Alice'</span>,</span><br><span class="line">          email: <span class="string">'alice@prisma.io'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">console</span>.log(user)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Next, execute the script with the following command:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx ts-node script.ts</span><br></pre></td></tr></table></figure></p>
+<p>You just created your first database record with Prisma Client!</p>
+<h4 id="Retrieve-all-User-records"><a href="#Retrieve-all-User-records" class="headerlink" title="Retrieve all User records"></a>Retrieve all <code>User</code> records</h4><p>Prisma Client offers various queries to read data from your database. In this section, you’ll use the <code>findMany</code> query that returns <em>all</em> the records in the database for a given model.</p>
+<p>Delete the previous Prisma Client query and add the new <code>findMany</code> query instead:<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> users = <span class="keyword">await</span> prisma.user.findMany()</span><br><span class="line">  <span class="built_in">console</span>.log(users)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Then:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx ts-node script.ts</span><br></pre></td></tr></table></figure></p>
+<p>Notice how the single <code>User</code> object is now enclosed with square brackets in the console. That’s because the <code>findMany</code> returned an array with a single object inside.</p>
+<h4 id="Explore-relation-queries-with-Prisma"><a href="#Explore-relation-queries-with-Prisma" class="headerlink" title="Explore relation queries with Prisma"></a>Explore relation queries with Prisma</h4><p>One of the main features of Prisma Client is the ease of working with <a href="https://www.prisma.io/docs/orm/prisma-schema/data-model/relations" target="_blank" rel="noopener">relations</a>. In this section, you’ll learn how to create a <code>User</code> and a <code>Post</code> record in a nested write query. Afterwards, you’ll see how you can retrieve the relation from the database using the <code>include</code> option.</p>
+<p>First, adjust your script to include the nested query:<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sync <span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> user = <span class="keyword">await</span> prisma.user.create(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      name: <span class="string">'Bob'</span>,</span><br><span class="line">      email: <span class="string">'bob@prisma.io'</span>,</span><br><span class="line">      posts: &#123;</span><br><span class="line">        create: &#123;</span><br><span class="line">          title: <span class="string">'Hello World'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">console</span>.log(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Run the query by executing the script again:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx ts-node script.ts</span><br></pre></td></tr></table></figure></p>
+<p>By default, Prisma only returns <em>scalar</em> fields in the result objects of a query. That’s why, even though you also created a new <code>Post</code> record for the new <code>User</code> record, the console only printed an object with three scalar fields: <code>id</code>, <code>email</code> and <code>name</code>.</p>
+<p>In order to also retrieve the <code>Post</code> records that belong to a <code>User</code>, you can use the <code>include</code> option via the <code>posts</code> relation field:<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">  <span class="keyword">const</span> usersWithPosts = <span class="keyword">await</span> prisma.user.findMany(&#123;</span><br><span class="line">    include: &#123;</span><br><span class="line">      posts: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">console</span>.dir(usersWithPosts, &#123; depth: <span class="literal">null</span> &#125;)</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>Run the script again to see the results of the nested read query.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+              <a href="/tags/database/" rel="tag"># database</a>
+              <a href="/tags/%E5%85%A8%E6%A0%88/" rel="tag"># 全栈</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/09/20231209_the_summit_of_the_gods/" rel="prev" title="神之山岭">
+      <i class="fa fa-chevron-left"></i> 神之山岭
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/12/11/20231211_python_csv_word/" rel="next" title="使用python批量生成word文档">
+      使用python批量生成word文档 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What’s-Prisma"><span class="nav-number">1.</span> <span class="nav-text">What’s Prisma</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-start-on-Prisma"><span class="nav-number">2.</span> <span class="nav-text">Quick start on Prisma</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-project-and-setup"><span class="nav-number">2.1.</span> <span class="nav-text">Create project and setup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-data-in-Prisma"><span class="nav-number">2.2.</span> <span class="nav-text">Model data in Prisma</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-migration-to-create-database-tables"><span class="nav-number">2.3.</span> <span class="nav-text">Run migration to create database tables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Send-queries-to-your-database-with-Prisma-Client"><span class="nav-number">2.4.</span> <span class="nav-text">Send queries to your database with Prisma Client</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Create-new-User-record"><span class="nav-number">2.4.1.</span> <span class="nav-text">Create new User record</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Retrieve-all-User-records"><span class="nav-number">2.4.2.</span> <span class="nav-text">Retrieve all User records</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Explore-relation-queries-with-Prisma"><span class="nav-number">2.4.3.</span> <span class="nav-text">Explore relation queries with Prisma</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fanzhh</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fanzhh</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

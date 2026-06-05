@@ -1,0 +1,5029 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2026/06/05/2026-06-05-headscale-tailscale-bridge/</loc>
+    <lastmod>2026-06-05T05:56:43.812Z</lastmod>
+    <data>
+        <display>
+        <title>VPS 既是 Headscale 节点又是 Tailscale 节点：实现双网互通</title>
+        <pubTime>2026-06-05T05:00:00.000Z</pubTime>
+        
+        <tag>Tailscale</tag>
+         
+        <tag>Headscale</tag>
+         
+        <tag>网络</tag>
+         
+        <tag>VPN</tag>
+         
+        <tag>WireGuard</tag>
+         
+        <tag>iptables</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术教程" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2026/03/09/2026-03-09-digital-assistant-with-openclaw-para/</loc>
+    <lastmod>2026-06-02T13:43:09.281Z</lastmod>
+    <data>
+        <display>
+        <title>用 OpenClaw + PARA 搭建个人数字知识助理</title>
+        <pubTime>2026-03-08T23:30:00.000Z</pubTime>
+        
+        <tag>AI</tag>
+         
+        <tag>知识库</tag>
+         
+        <tag>OpenClaw</tag>
+         
+        <tag>数字助理</tag>
+         
+        <tag>PARA</tag>
+         
+        <tag>知识管理</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术教程" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2022/05/11/220511_you_and_your_reasearch/</loc>
+    <lastmod>2026-06-02T13:43:09.281Z</lastmod>
+    <data>
+        <display>
+        <title>怎样才能做到卓越</title>
+        <pubTime>2022-05-10T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>个人成长</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/08/08/190808_python_draw/</loc>
+    <lastmod>2026-06-02T13:43:09.280Z</lastmod>
+    <data>
+        <display>
+        <title>手把手教你用Python绘制动图</title>
+        <pubTime>2019-08-07T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>pygame</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2022/10/21/20221022_monk_and_empty_boat/</loc>
+    <lastmod>2026-06-02T13:43:09.280Z</lastmod>
+    <data>
+        <display>
+        <title>僧人和空船</title>
+        <pubTime>2022-10-20T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>冥想</tag>
+         
+        <tag>翻译</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2022/09/16/20220916_song_change/</loc>
+    <lastmod>2026-06-02T13:43:09.279Z</lastmod>
+    <data>
+        <display>
+        <title>大宋之变</title>
+        <pubTime>2022-09-15T16:00:00.000Z</pubTime>
+        
+        <tag>历史</tag>
+         
+        <tag>读书</tag>
+         
+        <tag>宋朝</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2026/02/16/20260216_huaweihealth/</loc>
+    <lastmod>2026-02-16T13:31:26.225Z</lastmod>
+    <data>
+        <display>
+        <title>华为健康数据提取助手-v0.1.1</title>
+        <pubTime>2026-02-15T16:00:00.000Z</pubTime>
+        
+        <tag>AI</tag>
+         
+        <tag>APK</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2026/02/04/2026-02-04-safari_reading_list_automation/</loc>
+    <lastmod>2026-02-05T00:15:11.139Z</lastmod>
+    <data>
+        <display>
+        <title>Safari阅读列表自动化：从书签到EPUB的完整工作流</title>
+        <pubTime>2026-02-03T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>safari</tag>
+         
+        <tag>automation</tag>
+         
+        <tag>epub</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2011/12/06/111206-hello-mr-tree/</loc>
+    <lastmod>2026-02-04T22:35:40.307Z</lastmod>
+    <data>
+        <display>
+        <title>《hello！树先生》——无法到达的太阳新城</title>
+        <pubTime>2011-12-06T12:26:00.000Z</pubTime>
+        
+        <tag>电影</tag>
+         
+         
+           
+             
+              <breadCrumb title="电影剧集" url="http://blog.fanzhh.pw/categories/%E7%94%B5%E5%BD%B1%E5%89%A7%E9%9B%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/09/20231209_history/</loc>
+    <lastmod>2026-02-04T22:35:40.307Z</lastmod>
+    <data>
+        <display>
+        <title>历史的运用与滥用</title>
+        <pubTime>2023-12-08T16:00:00.000Z</pubTime>
+        
+        <tag>历史</tag>
+         
+        <tag>读书</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2011/12/31/111227-kindle/</loc>
+    <lastmod>2026-02-04T22:35:40.306Z</lastmod>
+    <data>
+        <display>
+        <title>海淘kindle3记及kindle使用初体验</title>
+        <pubTime>2011-12-31T03:46:44.000Z</pubTime>
+        
+        <tag>kindle</tag>
+         
+        <tag>海淘</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/07/19/180719_changsha/</loc>
+    <lastmod>2026-02-04T22:35:40.306Z</lastmod>
+    <data>
+        <display>
+        <title>2018-07-19 长沙</title>
+        <pubTime>2018-07-18T16:00:00.000Z</pubTime>
+        
+        <tag>湖南</tag>
+         
+        <tag>湘菜</tag>
+         
+        <tag>长沙</tag>
+         
+        <tag>古迹</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2022/02/28/220228_exam/</loc>
+    <lastmod>2026-02-04T22:35:40.305Z</lastmod>
+    <data>
+        <display>
+        <title>一个在线考试网站</title>
+        <pubTime>2022-02-27T16:00:00.000Z</pubTime>
+        
+        <tag>javascript</tag>
+         
+        <tag>React</tag>
+         
+        <tag>Django</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2022/01/09/220109_books/</loc>
+    <lastmod>2026-02-04T22:35:40.304Z</lastmod>
+    <data>
+        <display>
+        <title>2021年读书记录</title>
+        <pubTime>2022-01-08T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2011/11/22/111122-huashan/</loc>
+    <lastmod>2026-02-04T22:35:40.302Z</lastmod>
+    <data>
+        <display>
+        <title>华山游记（下）</title>
+        <pubTime>2011-11-22T09:43:00.000Z</pubTime>
+        
+        <tag>华山</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/02/20231202_A_Golden_Wing/</loc>
+    <lastmod>2026-02-04T22:35:40.301Z</lastmod>
+    <data>
+        <display>
+        <title>金翼之家</title>
+        <pubTime>2023-12-01T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>宗教</tag>
+         
+        <tag>社会</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/10/01/161001_knn_gmp_clause/</loc>
+    <lastmod>2026-02-04T22:35:40.300Z</lastmod>
+    <data>
+        <display>
+        <title>使用K-近邻预测药品生产企业检查缺陷对应GMP条款</title>
+        <pubTime>2016-09-30T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>machine learning</tag>
+         
+        <tag>GMP</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/08/13/20230813shanxi/</loc>
+    <lastmod>2026-02-04T22:35:40.299Z</lastmod>
+    <data>
+        <display>
+        <title>2023-08-13 浑源-悬空寺-恒山-大同</title>
+        <pubTime>2023-08-12T16:00:00.000Z</pubTime>
+        
+        <tag>旅行</tag>
+         
+        <tag>古迹</tag>
+         
+        <tag>自驾</tag>
+         
+        <tag>山西</tag>
+         
+        <tag>大同</tag>
+         
+        <tag>爬山</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/01/08/20230108_socks_proxy_with_ssh/</loc>
+    <lastmod>2026-02-04T22:35:40.297Z</lastmod>
+    <data>
+        <display>
+        <title>一条SSH命令实现Socks5代理</title>
+        <pubTime>2023-01-07T16:00:00.000Z</pubTime>
+        
+        <tag>vps</tag>
+         
+        <tag>ssh</tag>
+         
+        <tag>socks5</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/07/23/180723_fenghuang/</loc>
+    <lastmod>2026-02-04T22:35:40.295Z</lastmod>
+    <data>
+        <display>
+        <title>2018-07-23 凤凰</title>
+        <pubTime>2018-07-22T16:00:00.000Z</pubTime>
+        
+        <tag>湖南</tag>
+         
+        <tag>湘菜</tag>
+         
+        <tag>旅行</tag>
+         
+        <tag>凤凰</tag>
+         
+        <tag>沈从文</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2022/09/17/20220917_hexo_auto_post/</loc>
+    <lastmod>2026-02-04T22:35:40.291Z</lastmod>
+    <data>
+        <display>
+        <title>Hexo访问坚果云自动更新博客</title>
+        <pubTime>2022-09-16T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>hexo</tag>
+         
+        <tag>坚果云</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/07/12/160712-yunnan/</loc>
+    <lastmod>2026-02-04T22:35:40.290Z</lastmod>
+    <data>
+        <display>
+        <title>云南day3/香格里拉</title>
+        <pubTime>2016-07-11T16:00:00.000Z</pubTime>
+        
+        <tag>旅游</tag>
+         
+        <tag>云南</tag>
+         
+        <tag>香格里拉</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2021/09/12/220502_guilin/</loc>
+    <lastmod>2026-02-04T22:35:40.290Z</lastmod>
+    <data>
+        <display>
+        <title>2021-09 桂林</title>
+        <pubTime>2021-09-11T16:00:00.000Z</pubTime>
+        
+        <tag>旅行</tag>
+         
+        <tag>桂林</tag>
+         
+        <tag>米粉</tag>
+         
+        <tag>南方</tag>
+         
+        <tag>美食</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/07/15/20230715_greatwork/</loc>
+    <lastmod>2026-02-04T22:35:40.289Z</lastmod>
+    <data>
+        <display>
+        <title>如何获得卓越的工作成就——好奇心、学习、发现与创造</title>
+        <pubTime>2023-07-14T16:00:00.000Z</pubTime>
+        
+        <tag>翻译</tag>
+         
+        <tag>创业</tag>
+         
+        <tag>价值观</tag>
+         
+        <tag>机遇</tag>
+         
+        <tag>择业</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/01/10/160110-running-summerize/</loc>
+    <lastmod>2026-02-04T22:35:40.288Z</lastmod>
+    <data>
+        <display>
+        <title>2015年跑步总结</title>
+        <pubTime>2016-01-09T16:00:00.000Z</pubTime>
+        
+        <tag>马拉松</tag>
+         
+        <tag>跑步</tag>
+         
+         
+           
+             
+              <breadCrumb title="跑步健身" url="http://blog.fanzhh.pw/categories/%E8%B7%91%E6%AD%A5%E5%81%A5%E8%BA%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/04/30/170430-how-to-read-a-book/</loc>
+    <lastmod>2026-02-04T22:35:40.286Z</lastmod>
+    <data>
+        <display>
+        <title>如何阅读一本书</title>
+        <pubTime>2017-04-29T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2022/01/06/220106_renjianyanhuo/</loc>
+    <lastmod>2026-02-04T22:35:40.285Z</lastmod>
+    <data>
+        <display>
+        <title>那些在历史上被忽略的普通人</title>
+        <pubTime>2022-01-05T16:00:00.000Z</pubTime>
+        
+        <tag>历史</tag>
+         
+        <tag>读书笔记</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/06/27/20230626_24%E5%B2%81%E7%9A%84%E5%8D%83%E4%B8%87%E5%AF%8C%E7%BF%81/</loc>
+    <lastmod>2026-02-04T22:35:40.282Z</lastmod>
+    <data>
+        <display>
+        <title>24岁的千万富翁</title>
+        <pubTime>2023-06-26T16:00:00.000Z</pubTime>
+        
+        <tag>创业</tag>
+         
+        <tag>价值观</tag>
+         
+        <tag>机遇</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂感随想" url="http://blog.fanzhh.pw/categories/%E6%9D%82%E6%84%9F%E9%9A%8F%E6%83%B3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2024/04/25/20240425_nextcloud_onlyoffice/</loc>
+    <lastmod>2026-02-04T22:35:40.281Z</lastmod>
+    <data>
+        <display>
+        <title>使用Nextcloud+Onlyoffice打造私有云盘</title>
+        <pubTime>2024-04-24T16:00:00.000Z</pubTime>
+        
+        <tag>ubuntu</tag>
+         
+        <tag>云盘</tag>
+         
+        <tag>nextcloud</tag>
+         
+        <tag>onlyoffice</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/04/13/170420-python-pygame/</loc>
+    <lastmod>2026-02-04T22:35:40.277Z</lastmod>
+    <data>
+        <display>
+        <title>保护兔子宝宝！—— 使用python编写一个游戏</title>
+        <pubTime>2017-04-12T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>游戏</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/09/14/190914_poor_charlie/</loc>
+    <lastmod>2026-02-04T22:35:40.277Z</lastmod>
+    <data>
+        <display>
+        <title>查理芒格的普世智慧</title>
+        <pubTime>2019-09-13T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+        <tag>思维工具</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2013/09/20/130920-banma/</loc>
+    <lastmod>2026-02-04T22:35:40.276Z</lastmod>
+    <data>
+        <display>
+        <title>第一次半马</title>
+        <pubTime>2013-09-19T16:00:00.000Z</pubTime>
+        
+        <tag>马拉松</tag>
+         
+        <tag>跑步</tag>
+         
+         
+           
+             
+              <breadCrumb title="跑步健身" url="http://blog.fanzhh.pw/categories/%E8%B7%91%E6%AD%A5%E5%81%A5%E8%BA%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/07/14/160714-yunnan/</loc>
+    <lastmod>2026-02-04T22:35:40.275Z</lastmod>
+    <data>
+        <display>
+        <title>云南 day5 / 梅里雪山</title>
+        <pubTime>2016-07-13T16:00:00.000Z</pubTime>
+        
+        <tag>云南</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/24/20231224_conscious/</loc>
+    <lastmod>2026-02-04T22:35:40.275Z</lastmod>
+    <data>
+        <display>
+        <title>关于人类的意识</title>
+        <pubTime>2023-12-23T16:00:00.000Z</pubTime>
+        
+        <tag>哲学</tag>
+         
+        <tag>进化论</tag>
+         
+        <tag>科技</tag>
+         
+        <tag>意识</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂感随想" url="http://blog.fanzhh.pw/categories/%E6%9D%82%E6%84%9F%E9%9A%8F%E6%83%B3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/27/20231127_hushi/</loc>
+    <lastmod>2026-02-04T22:35:40.273Z</lastmod>
+    <data>
+        <display>
+        <title>胡适的《四十自述》</title>
+        <pubTime>2023-12-26T16:00:00.000Z</pubTime>
+        
+        <tag>胡适</tag>
+         
+        <tag>民国</tag>
+         
+        <tag>传记</tag>
+         
+        <tag>文学</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/07/01/20230701_software_engineering_the_soft_parts/</loc>
+    <lastmod>2026-02-04T22:35:40.272Z</lastmod>
+    <data>
+        <display>
+        <title>软件工程师的软实力</title>
+        <pubTime>2023-06-30T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>哲学</tag>
+         
+        <tag>编程</tag>
+         
+        <tag>时间管理</tag>
+         
+        <tag>软件工程</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2014/11/20/141120-taishan-marathon/</loc>
+    <lastmod>2026-02-04T22:35:40.271Z</lastmod>
+    <data>
+        <display>
+        <title>泰马琐记</title>
+        <pubTime>2014-11-19T16:00:00.000Z</pubTime>
+        
+        <tag>泰山</tag>
+         
+        <tag>马拉松</tag>
+         
+         
+           
+             
+              <breadCrumb title="跑步健身" url="http://blog.fanzhh.pw/categories/%E8%B7%91%E6%AD%A5%E5%81%A5%E8%BA%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/06/05/20230603_motivation/</loc>
+    <lastmod>2026-02-04T22:35:40.271Z</lastmod>
+    <data>
+        <display>
+        <title>由一名退休程序员的故事谈驱动力</title>
+        <pubTime>2023-06-04T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>哲学</tag>
+         
+        <tag>心流</tag>
+         
+        <tag>编程</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/08/12/190812_python_turtle/</loc>
+    <lastmod>2026-02-04T22:35:40.270Z</lastmod>
+    <data>
+        <display>
+        <title>在编程中发现数学之美——使用Python小龟绘制多边形</title>
+        <pubTime>2019-08-11T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>turtle</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2021/08/10/220810_matsutake/</loc>
+    <lastmod>2026-02-04T22:35:40.270Z</lastmod>
+    <data>
+        <display>
+        <title>末日松茸—资本主义废墟上的生活可能</title>
+        <pubTime>2021-08-09T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+        <tag>环境</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/05/02/20230502_cloudflare_pages/</loc>
+    <lastmod>2026-02-04T22:35:40.269Z</lastmod>
+    <data>
+        <display>
+        <title>使用Cloudflare Pages发布前端页面</title>
+        <pubTime>2023-05-01T16:00:00.000Z</pubTime>
+        
+        <tag>cloudflare</tag>
+         
+        <tag>前端</tag>
+         
+        <tag>vps</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/08/16/202308116daixian/</loc>
+    <lastmod>2026-02-04T22:35:40.268Z</lastmod>
+    <data>
+        <display>
+        <title>2023-08-16 雁门关-代县文庙-边靖楼-阿育王塔-后记</title>
+        <pubTime>2023-08-15T16:00:00.000Z</pubTime>
+        
+        <tag>旅行</tag>
+         
+        <tag>古迹</tag>
+         
+        <tag>自驾</tag>
+         
+        <tag>山西</tag>
+         
+        <tag>长城</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/07/09/20230709_dufu2/</loc>
+    <lastmod>2026-02-04T22:35:40.268Z</lastmod>
+    <data>
+        <display>
+        <title>一位唐史学者的中国大地自由行</title>
+        <pubTime>2023-07-08T16:00:00.000Z</pubTime>
+        
+        <tag>历史</tag>
+         
+        <tag>读书笔记</tag>
+         
+        <tag>旅行</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2012/09/19/120914-taishan/</loc>
+    <lastmod>2026-02-04T22:35:40.267Z</lastmod>
+    <data>
+        <display>
+        <title>登泰山记（上）</title>
+        <pubTime>2012-09-19T07:26:41.000Z</pubTime>
+        
+        <tag>泰山</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/05/01/160501-bixuejinsha/</loc>
+    <lastmod>2026-02-04T22:35:40.266Z</lastmod>
+    <data>
+        <display>
+        <title>碧血金沙</title>
+        <pubTime>2016-04-30T16:00:00.000Z</pubTime>
+        
+        <tag>好莱坞</tag>
+         
+         
+           
+             
+              <breadCrumb title="电影剧集" url="http://blog.fanzhh.pw/categories/%E7%94%B5%E5%BD%B1%E5%89%A7%E9%9B%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/11/25/161125-how-to-read/</loc>
+    <lastmod>2026-02-04T22:35:40.266Z</lastmod>
+    <data>
+        <display>
+        <title>读过很多书，但读过即忘，如何能记住所学的内容？</title>
+        <pubTime>2016-11-24T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>学习</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/05/21/2023-W20/</loc>
+    <lastmod>2026-02-04T22:35:40.266Z</lastmod>
+    <data>
+        <display>
+        <title>2023-W20-创造的快乐</title>
+        <pubTime>2023-05-20T16:00:00.000Z</pubTime>
+        
+        <tag>历史</tag>
+         
+        <tag>AI</tag>
+         
+        <tag>VPS</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂感随想" url="http://blog.fanzhh.pw/categories/%E6%9D%82%E6%84%9F%E9%9A%8F%E6%83%B3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/08/08/170808_20_minites_learning/</loc>
+    <lastmod>2026-02-04T22:35:40.265Z</lastmod>
+    <data>
+        <display>
+        <title>Get一项新技能需要多长时间</title>
+        <pubTime>2017-08-08T12:59:00.000Z</pubTime>
+        
+        <tag>终身学习</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂感随想" url="http://blog.fanzhh.pw/categories/%E6%9D%82%E6%84%9F%E9%9A%8F%E6%83%B3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2022/11/19/20221119_siddhartha/</loc>
+    <lastmod>2026-02-04T22:35:40.265Z</lastmod>
+    <data>
+        <display>
+        <title>悉达多</title>
+        <pubTime>2022-11-18T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>哲学</tag>
+         
+        <tag>宗教</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/07/21/20230721_dont_end_the_week_with_nothing/</loc>
+    <lastmod>2026-02-04T22:35:40.265Z</lastmod>
+    <data>
+        <display>
+        <title>不要在一周结束时一无所获</title>
+        <pubTime>2023-07-20T16:00:00.000Z</pubTime>
+        
+        <tag>翻译</tag>
+         
+        <tag>创业</tag>
+         
+        <tag>择业</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/26/20231226_search/</loc>
+    <lastmod>2026-02-04T22:35:40.263Z</lastmod>
+    <data>
+        <display>
+        <title>搜索技术</title>
+        <pubTime>2023-12-25T16:00:00.000Z</pubTime>
+        
+        <tag>AI</tag>
+         
+        <tag>科技</tag>
+         
+        <tag>搜索</tag>
+         
+        <tag>工具</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/02/18/20230218_predictably_irrational/</loc>
+    <lastmod>2026-02-04T22:35:40.262Z</lastmod>
+    <data>
+        <display>
+        <title>人的非理性</title>
+        <pubTime>2023-02-17T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>心理学</tag>
+         
+        <tag>非理性</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/07/21/180721_wulingyuan/</loc>
+    <lastmod>2026-02-04T22:35:40.261Z</lastmod>
+    <data>
+        <display>
+        <title>2018-07-21 武陵源</title>
+        <pubTime>2018-07-20T16:00:00.000Z</pubTime>
+        
+        <tag>张家界</tag>
+         
+        <tag>湖南</tag>
+         
+        <tag>湘菜</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/02/14/20230214%E4%B8%96%E4%BF%97%E4%B8%BB%E4%B9%89%E4%B9%8B%E4%B9%90/</loc>
+    <lastmod>2026-02-04T22:35:40.261Z</lastmod>
+    <data>
+        <display>
+        <title>世俗主义之乐</title>
+        <pubTime>2023-02-13T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>宗教</tag>
+         
+        <tag>世俗主义</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/07/02/20230702_system_design_blueprint/</loc>
+    <lastmod>2026-02-04T22:35:40.260Z</lastmod>
+    <data>
+        <display>
+        <title>系统设计蓝图：终极指南</title>
+        <pubTime>2023-07-01T16:00:00.000Z</pubTime>
+        
+        <tag>翻译</tag>
+         
+        <tag>编程</tag>
+         
+        <tag>软件工程</tag>
+         
+        <tag>系统设计</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2014/08/09/140809-xian/</loc>
+    <lastmod>2026-02-04T22:35:40.258Z</lastmod>
+    <data>
+        <display>
+        <title>西安游流水帐</title>
+        <pubTime>2014-08-08T16:00:00.000Z</pubTime>
+        
+        <tag>西安</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/06/20/20250620-knowledge/</loc>
+    <lastmod>2026-02-04T22:35:40.258Z</lastmod>
+    <data>
+        <display>
+        <title>在Mac mini M4上搭建智能文档问答助手</title>
+        <pubTime>2025-06-19T16:00:00.000Z</pubTime>
+        
+        <tag>AI</tag>
+         
+        <tag>ollama</tag>
+         
+        <tag>知识库</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/08/12/20230812%E6%B5%91%E6%BA%90/</loc>
+    <lastmod>2026-02-04T22:35:40.257Z</lastmod>
+    <data>
+        <display>
+        <title>2023-08-12 浑源</title>
+        <pubTime>2023-08-11T16:00:00.000Z</pubTime>
+        
+        <tag>旅行</tag>
+         
+        <tag>古迹</tag>
+         
+        <tag>自驾</tag>
+         
+        <tag>山西</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/09/20231209_the_summit_of_the_gods/</loc>
+    <lastmod>2026-02-04T22:35:40.256Z</lastmod>
+    <data>
+        <display>
+        <title>神之山岭</title>
+        <pubTime>2023-12-08T16:00:00.000Z</pubTime>
+        
+        <tag>价值观</tag>
+         
+        <tag>心流</tag>
+         
+        <tag>动画片</tag>
+         
+        <tag>法国</tag>
+         
+        <tag>户外</tag>
+         
+         
+           
+             
+              <breadCrumb title="电影剧集" url="http://blog.fanzhh.pw/categories/%E7%94%B5%E5%BD%B1%E5%89%A7%E9%9B%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/06/23/20230622habits/</loc>
+    <lastmod>2026-02-04T22:35:40.255Z</lastmod>
+    <data>
+        <display>
+        <title>习惯的力量</title>
+        <pubTime>2023-06-22T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+        <tag>时间管理</tag>
+         
+        <tag>成功学</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/12/31/191231_books/</loc>
+    <lastmod>2026-02-04T22:35:40.254Z</lastmod>
+    <data>
+        <display>
+        <title>2019年读书记录</title>
+        <pubTime>2019-12-30T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/03/25/2023-W12-%E4%BC%91%E5%81%87%E5%91%A8/</loc>
+    <lastmod>2026-02-04T22:35:40.254Z</lastmod>
+    <data>
+        <display>
+        <title>2023-W12-休假周</title>
+        <pubTime>2023-03-24T16:00:00.000Z</pubTime>
+        
+        <tag>AI</tag>
+         
+        <tag>VPS</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂感随想" url="http://blog.fanzhh.pw/categories/%E6%9D%82%E6%84%9F%E9%9A%8F%E6%83%B3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2014/04/02/140402-zhengzhou-marathon/</loc>
+    <lastmod>2026-02-04T22:35:40.251Z</lastmod>
+    <data>
+        <display>
+        <title>郑开半程马拉松跑步琐记</title>
+        <pubTime>2014-04-01T16:00:00.000Z</pubTime>
+        
+        <tag>马拉松</tag>
+         
+        <tag>郑州</tag>
+         
+         
+           
+             
+              <breadCrumb title="跑步健身" url="http://blog.fanzhh.pw/categories/%E8%B7%91%E6%AD%A5%E5%81%A5%E8%BA%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2020/04/19/20200419_responsibility_and_judgment/</loc>
+    <lastmod>2026-02-04T22:35:40.250Z</lastmod>
+    <data>
+        <display>
+        <title>反抗平庸之恶</title>
+        <pubTime>2020-04-18T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>阿伦特</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2024/04/19/20240419_2023books/</loc>
+    <lastmod>2026-02-04T22:35:40.250Z</lastmod>
+    <data>
+        <display>
+        <title>2023年读书总结</title>
+        <pubTime>2024-04-18T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/08/14/20230814datong/</loc>
+    <lastmod>2026-02-04T22:35:40.249Z</lastmod>
+    <data>
+        <display>
+        <title>2023-08-14 云岗石窟-华严寺-大同古城</title>
+        <pubTime>2023-08-13T16:00:00.000Z</pubTime>
+        
+        <tag>旅行</tag>
+         
+        <tag>古迹</tag>
+         
+        <tag>自驾</tag>
+         
+        <tag>山西</tag>
+         
+        <tag>石窟</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2011/12/21/111221-jinling/</loc>
+    <lastmod>2026-02-04T22:35:40.248Z</lastmod>
+    <data>
+        <display>
+        <title>《金陵十三钗》——用庸俗剧情无聊噱头消解历史的烂片</title>
+        <pubTime>2011-12-20T17:02:05.000Z</pubTime>
+        
+        <tag>电影</tag>
+         
+         
+           
+             
+              <breadCrumb title="电影剧集" url="http://blog.fanzhh.pw/categories/%E7%94%B5%E5%BD%B1%E5%89%A7%E9%9B%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2014/08/07/140807-qinghai/</loc>
+    <lastmod>2026-02-04T22:35:40.247Z</lastmod>
+    <data>
+        <display>
+        <title>青海湖游记 day3</title>
+        <pubTime>2014-08-06T16:00:00.000Z</pubTime>
+        
+        <tag>青海湖</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2021/02/15/210215_decision_tree/</loc>
+    <lastmod>2026-02-04T22:35:40.246Z</lastmod>
+    <data>
+        <display>
+        <title>使用决策树辅助日常生活中的决策</title>
+        <pubTime>2021-02-14T16:00:00.000Z</pubTime>
+        
+        <tag>概率</tag>
+         
+        <tag>Decision Tree</tag>
+         
+        <tag>Model Thinking</tag>
+         
+        <tag>Decision Models</tag>
+         
+        <tag>coursera.org</tag>
+         
+        <tag>数学</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/10/170710_statistics/</loc>
+    <lastmod>2026-02-04T22:35:40.245Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（三）</title>
+        <pubTime>2017-07-09T16:00:00.000Z</pubTime>
+        
+        <tag>统计</tag>
+         
+        <tag>pandas</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2021/04/05/20210405_books1/</loc>
+    <lastmod>2026-02-04T22:35:40.244Z</lastmod>
+    <data>
+        <display>
+        <title>读书记1</title>
+        <pubTime>2021-04-04T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>哲学</tag>
+         
+        <tag>生物</tag>
+         
+        <tag>化学</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2024/02/26/20240226-shang/</loc>
+    <lastmod>2026-02-04T22:35:40.244Z</lastmod>
+    <data>
+        <display>
+        <title>华夏文明始于周</title>
+        <pubTime>2024-02-25T16:00:00.000Z</pubTime>
+        
+        <tag>历史</tag>
+         
+        <tag>读书</tag>
+         
+        <tag>上古</tag>
+         
+        <tag>儒家</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/10/09/161009-ml-gmpcluase/</loc>
+    <lastmod>2026-02-04T22:35:40.243Z</lastmod>
+    <data>
+        <display>
+        <title>使用sklearn中贝叶斯分类算法预测药品生产企业缺陷GMP条款</title>
+        <pubTime>2016-10-08T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>machine learning</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/31/20231231_40_questions/</loc>
+    <lastmod>2026-02-04T22:35:40.241Z</lastmod>
+    <data>
+        <display>
+        <title>2023年复盘的40个问题</title>
+        <pubTime>2023-12-30T16:00:00.000Z</pubTime>
+        
+        <tag>哲学</tag>
+         
+        <tag>随想</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂感随想" url="http://blog.fanzhh.pw/categories/%E6%9D%82%E6%84%9F%E9%9A%8F%E6%83%B3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/18/170718_statistics_11/</loc>
+    <lastmod>2026-02-04T22:35:40.238Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（十一）</title>
+        <pubTime>2017-07-18T11:50:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/01/25/190127_religion_1/</loc>
+    <lastmod>2026-02-04T22:35:40.237Z</lastmod>
+    <data>
+        <display>
+        <title>无神论者的宗教（一）</title>
+        <pubTime>2019-01-24T16:00:00.000Z</pubTime>
+        
+        <tag>译文</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2014/08/11/140811-xiaoai/</loc>
+    <lastmod>2026-02-04T22:35:40.236Z</lastmod>
+    <data>
+        <display>
+        <title>小艾，爸爸特别特别想你</title>
+        <pubTime>2014-08-10T16:00:00.000Z</pubTime>
+        
+        <tag>历史</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/11/19/231119_any_thing_you_want/</loc>
+    <lastmod>2026-02-04T22:35:40.236Z</lastmod>
+    <data>
+        <display>
+        <title>Anything You Want by Derek Sivers</title>
+        <pubTime>2023-11-18T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>创业</tag>
+         
+        <tag>价值观</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/12/21/171221_postfix/</loc>
+    <lastmod>2026-02-04T22:35:40.235Z</lastmod>
+    <data>
+        <display>
+        <title>如何在Ubuntu 16.04上安装配置邮件发送服务器</title>
+        <pubTime>2017-12-21T15:30:00.000Z</pubTime>
+        
+        <tag>Ubuntu</tag>
+         
+        <tag>Postfix</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/04/15/20250415_macmini/</loc>
+    <lastmod>2026-02-04T22:35:40.235Z</lastmod>
+    <data>
+        <display>
+        <title>Apple Mac mini M4：我的全能家庭服务器实践</title>
+        <pubTime>2025-04-14T16:00:00.000Z</pubTime>
+        
+        <tag>cloudflare</tag>
+         
+        <tag>Apple</tag>
+         
+        <tag>macOS</tag>
+         
+        <tag>硬件</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/04/03/2023-W13-%E6%91%98%E5%BD%95/</loc>
+    <lastmod>2026-02-04T22:35:40.234Z</lastmod>
+    <data>
+        <display>
+        <title>2023-W13-摘录</title>
+        <pubTime>2023-04-02T16:00:00.000Z</pubTime>
+        
+        <tag>摘录</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂感随想" url="http://blog.fanzhh.pw/categories/%E6%9D%82%E6%84%9F%E9%9A%8F%E6%83%B3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/26/170726_statistics_16/</loc>
+    <lastmod>2026-02-04T22:35:40.233Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（十六）</title>
+        <pubTime>2017-07-25T16:00:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2024/03/20/20240318_suzhou/</loc>
+    <lastmod>2026-02-04T22:35:40.233Z</lastmod>
+    <data>
+        <display>
+        <title>城市速记——苏州</title>
+        <pubTime>2024-03-19T16:00:00.000Z</pubTime>
+        
+        <tag>旅行</tag>
+         
+        <tag>随想</tag>
+         
+        <tag>城市</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2014/08/07/140807-qinghai-day2/</loc>
+    <lastmod>2026-02-04T22:35:40.232Z</lastmod>
+    <data>
+        <display>
+        <title>青海湖游记 day2</title>
+        <pubTime>2014-08-06T16:00:00.000Z</pubTime>
+        
+        <tag>青海湖</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2020/03/01/2003011913_shengcun/</loc>
+    <lastmod>2026-02-04T22:35:40.232Z</lastmod>
+    <data>
+        <display>
+        <title>《生存与命运》读后</title>
+        <pubTime>2020-02-29T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+        <tag>小说</tag>
+         
+        <tag>苏联</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/13/20231213_2_novels/</loc>
+    <lastmod>2026-02-04T22:35:40.230Z</lastmod>
+    <data>
+        <display>
+        <title>两个伟大作家的两部小说</title>
+        <pubTime>2023-12-12T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>小说</tag>
+         
+        <tag>毛姆</tag>
+         
+        <tag>契诃夫</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/04/10/190410_think/</loc>
+    <lastmod>2026-02-04T22:35:40.229Z</lastmod>
+    <data>
+        <display>
+        <title>如何理解我思故我在</title>
+        <pubTime>2019-04-09T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/04/20231203_the_sociel_dilemma/</loc>
+    <lastmod>2026-02-04T22:35:40.229Z</lastmod>
+    <data>
+        <display>
+        <title>当工具超越人类的弱点</title>
+        <pubTime>2023-12-03T16:00:00.000Z</pubTime>
+        
+        <tag>AI</tag>
+         
+        <tag>社会</tag>
+         
+        <tag>科技</tag>
+         
+         
+           
+             
+              <breadCrumb title="电影剧集" url="http://blog.fanzhh.pw/categories/%E7%94%B5%E5%BD%B1%E5%89%A7%E9%9B%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/07/10/160710-yunnan/</loc>
+    <lastmod>2026-02-04T22:35:40.228Z</lastmod>
+    <data>
+        <display>
+        <title>云南day1</title>
+        <pubTime>2016-07-09T16:00:00.000Z</pubTime>
+        
+        <tag>旅游</tag>
+         
+        <tag>云南</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/06/23/190623_furongzhen/</loc>
+    <lastmod>2026-02-04T22:35:40.227Z</lastmod>
+    <data>
+        <display>
+        <title>重看《芙蓉镇》</title>
+        <pubTime>2019-06-22T16:00:00.000Z</pubTime>
+        
+        <tag>电影</tag>
+         
+         
+           
+             
+              <breadCrumb title="电影剧集" url="http://blog.fanzhh.pw/categories/%E7%94%B5%E5%BD%B1%E5%89%A7%E9%9B%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/01/26/190127_religion_2/</loc>
+    <lastmod>2026-02-04T22:35:40.226Z</lastmod>
+    <data>
+        <display>
+        <title>无神论者的宗教（二）</title>
+        <pubTime>2019-01-25T16:00:00.000Z</pubTime>
+        
+        <tag>译文</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2021/01/30/210130_one_second/</loc>
+    <lastmod>2026-02-04T22:35:40.225Z</lastmod>
+    <data>
+        <display>
+        <title>两部电影：《一秒钟》与《半个喜剧》</title>
+        <pubTime>2021-01-29T16:00:00.000Z</pubTime>
+        
+        <tag>电影</tag>
+         
+         
+           
+             
+              <breadCrumb title="电影剧集" url="http://blog.fanzhh.pw/categories/%E7%94%B5%E5%BD%B1%E5%89%A7%E9%9B%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/07/20/180720_wulingyuan/</loc>
+    <lastmod>2026-02-04T22:35:40.223Z</lastmod>
+    <data>
+        <display>
+        <title>2018-07-20 武陵源</title>
+        <pubTime>2018-07-19T16:00:00.000Z</pubTime>
+        
+        <tag>张家界</tag>
+         
+        <tag>湖南</tag>
+         
+        <tag>湘菜</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/08/18/160818_ml_ch03/</loc>
+    <lastmod>2026-02-04T22:35:40.222Z</lastmod>
+    <data>
+        <display>
+        <title>Machine Learning in Action Chapter 3</title>
+        <pubTime>2016-08-17T16:00:00.000Z</pubTime>
+        
+        <tag>machine learning</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/07/24/180724_xijiang/</loc>
+    <lastmod>2026-02-04T22:35:40.222Z</lastmod>
+    <data>
+        <display>
+        <title>2018-07-24 西江苗寨，镇远古城</title>
+        <pubTime>2018-07-23T16:00:00.000Z</pubTime>
+        
+        <tag>贵州</tag>
+         
+        <tag>凯里</tag>
+         
+        <tag>镇远</tag>
+         
+        <tag>西江</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/22/20231222_nextjs/</loc>
+    <lastmod>2026-02-04T22:35:40.221Z</lastmod>
+    <data>
+        <display>
+        <title>Next.js实践初步</title>
+        <pubTime>2023-12-21T16:00:00.000Z</pubTime>
+        
+        <tag>前端</tag>
+         
+        <tag>编程</tag>
+         
+        <tag>Javascript</tag>
+         
+        <tag>Nextjs</tag>
+         
+        <tag>ReactJs</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/08/15/20230815changcheng/</loc>
+    <lastmod>2026-02-04T22:35:40.219Z</lastmod>
+    <data>
+        <display>
+        <title>2023-08-15 大同市博物馆-守口堡长城-代县</title>
+        <pubTime>2023-08-14T16:00:00.000Z</pubTime>
+        
+        <tag>旅行</tag>
+         
+        <tag>古迹</tag>
+         
+        <tag>自驾</tag>
+         
+        <tag>山西</tag>
+         
+        <tag>长城</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/06/20/20230619_think/</loc>
+    <lastmod>2026-02-04T22:35:40.218Z</lastmod>
+    <data>
+        <display>
+        <title>松浦弥太郎的幸福工作术</title>
+        <pubTime>2023-06-19T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+        <tag>生活</tag>
+         
+        <tag>松浦弥太郎</tag>
+         
+        <tag>时间管理</tag>
+         
+        <tag>成功学</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/01/27/190127_religion_3/</loc>
+    <lastmod>2026-02-04T22:35:40.217Z</lastmod>
+    <data>
+        <display>
+        <title>无神论者的宗教（三）</title>
+        <pubTime>2019-01-26T16:00:00.000Z</pubTime>
+        
+        <tag>译文</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2007/10/10/071010_miyang/</loc>
+    <lastmod>2026-02-04T22:35:40.215Z</lastmod>
+    <data>
+        <display>
+        <title>密阳</title>
+        <pubTime>2007-10-09T16:00:00.000Z</pubTime>
+        
+        <tag>电影</tag>
+         
+         
+           
+             
+              <breadCrumb title="电影剧集" url="http://blog.fanzhh.pw/categories/%E7%94%B5%E5%BD%B1%E5%89%A7%E9%9B%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/07/30/160730_ml_chapter5/</loc>
+    <lastmod>2026-02-04T22:35:40.214Z</lastmod>
+    <data>
+        <display>
+        <title>Machine Learning in Action Chapter 5</title>
+        <pubTime>2016-07-29T16:00:00.000Z</pubTime>
+        
+        <tag>machine learning</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/08/14/180814_shencongwen/</loc>
+    <lastmod>2026-02-04T22:35:40.212Z</lastmod>
+    <data>
+        <display>
+        <title>寂寞有情人</title>
+        <pubTime>2018-08-13T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+        <tag>沈从文</tag>
+         
+        <tag>文革</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/07/18/180718_changsha/</loc>
+    <lastmod>2026-02-04T22:35:40.211Z</lastmod>
+    <data>
+        <display>
+        <title>2018-07-18 长沙</title>
+        <pubTime>2018-07-17T16:00:00.000Z</pubTime>
+        
+        <tag>旅行</tag>
+         
+        <tag>长沙</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/05/01/20230501_why_react_renders/</loc>
+    <lastmod>2026-02-04T22:35:40.207Z</lastmod>
+    <data>
+        <display>
+        <title>探究React的渲染</title>
+        <pubTime>2023-04-30T16:00:00.000Z</pubTime>
+        
+        <tag>react</tag>
+         
+        <tag>翻译</tag>
+         
+        <tag>前端</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/11/26/191126_yuanze/</loc>
+    <lastmod>2026-02-04T22:35:40.206Z</lastmod>
+    <data>
+        <display>
+        <title>自我意识和思维盲点是个人成长的最大障碍</title>
+        <pubTime>2019-11-25T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/07/16/160716-yunnan/</loc>
+    <lastmod>2026-02-04T22:35:40.202Z</lastmod>
+    <data>
+        <display>
+        <title>云南 day7 / 大理</title>
+        <pubTime>2016-07-15T16:00:00.000Z</pubTime>
+        
+        <tag>云南</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2024/01/07/20240107_2023_movies/</loc>
+    <lastmod>2026-02-04T22:35:40.202Z</lastmod>
+    <data>
+        <display>
+        <title>我的2023影视十佳</title>
+        <pubTime>2024-01-06T16:00:00.000Z</pubTime>
+        
+        <tag>电影</tag>
+         
+        <tag>剧集</tag>
+         
+        <tag>总结</tag>
+         
+         
+           
+             
+              <breadCrumb title="电影剧集" url="http://blog.fanzhh.pw/categories/%E7%94%B5%E5%BD%B1%E5%89%A7%E9%9B%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/13/170713_statistics_5/</loc>
+    <lastmod>2026-02-04T22:35:40.201Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（五）</title>
+        <pubTime>2017-07-12T16:00:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/04/08/180408_seven_hibits_exercises/</loc>
+    <lastmod>2026-02-04T22:35:40.200Z</lastmod>
+    <data>
+        <display>
+        <title>高效能人士成功的七个习惯实践</title>
+        <pubTime>2018-04-07T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2015/05/03/150503-dongying-marathon/</loc>
+    <lastmod>2026-02-04T22:35:40.199Z</lastmod>
+    <data>
+        <display>
+        <title>东马琐记</title>
+        <pubTime>2015-05-02T16:00:00.000Z</pubTime>
+        
+        <tag>马拉松</tag>
+         
+        <tag>东营</tag>
+         
+         
+           
+             
+              <breadCrumb title="跑步健身" url="http://blog.fanzhh.pw/categories/%E8%B7%91%E6%AD%A5%E5%81%A5%E8%BA%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2015/08/20/150820-chengdu-day1/</loc>
+    <lastmod>2026-02-04T22:35:40.198Z</lastmod>
+    <data>
+        <display>
+        <title>成都四日 day1</title>
+        <pubTime>2015-08-19T16:00:00.000Z</pubTime>
+        
+        <tag>成都</tag>
+         
+        <tag>重庆</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/09/18/160917-beijing/</loc>
+    <lastmod>2026-02-04T22:35:40.170Z</lastmod>
+    <data>
+        <display>
+        <title>我的北马</title>
+        <pubTime>2016-09-17T16:00:00.000Z</pubTime>
+        
+        <tag>马拉松</tag>
+         
+        <tag>北京</tag>
+         
+         
+           
+             
+              <breadCrumb title="跑步健身" url="http://blog.fanzhh.pw/categories/%E8%B7%91%E6%AD%A5%E5%81%A5%E8%BA%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2014/08/06/140806-qinghai/</loc>
+    <lastmod>2026-02-04T22:35:40.168Z</lastmod>
+    <data>
+        <display>
+        <title>青海湖游记 day1</title>
+        <pubTime>2014-08-05T16:00:00.000Z</pubTime>
+        
+        <tag>西宁</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/02/03/170203-think-fast-and-slow/</loc>
+    <lastmod>2026-02-04T22:35:40.167Z</lastmod>
+    <data>
+        <display>
+        <title>《思考，快与慢》读书笔记</title>
+        <pubTime>2017-02-02T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>心理学</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/11/29/20231129_Finite_and_Infinite_Games/</loc>
+    <lastmod>2026-02-04T22:35:40.166Z</lastmod>
+    <data>
+        <display>
+        <title>有限与无限的游戏</title>
+        <pubTime>2023-11-28T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+        <tag>哲学</tag>
+         
+        <tag>价值观</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/08/170708-statistics/</loc>
+    <lastmod>2026-02-04T22:35:40.135Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（一）</title>
+        <pubTime>2017-07-07T16:00:00.000Z</pubTime>
+        
+        <tag>统计</tag>
+         
+        <tag>pandas</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2021/01/10/210110_afuhan/</loc>
+    <lastmod>2026-02-04T22:35:40.134Z</lastmod>
+    <data>
+        <display>
+        <title>寻路阿富汗</title>
+        <pubTime>2021-01-09T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+        <tag>旅行</tag>
+         
+        <tag>徒步</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/07/24/190723_webpy_postgres_to_docker/</loc>
+    <lastmod>2026-02-04T22:35:40.133Z</lastmod>
+    <data>
+        <display>
+        <title>使用docker封装古董python web.py + postgresql应用</title>
+        <pubTime>2019-07-24T07:50:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>postgresql</tag>
+         
+        <tag>docker</tag>
+         
+        <tag>web.py</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2022/09/11/20220911_evolution/</loc>
+    <lastmod>2026-02-04T22:35:40.131Z</lastmod>
+    <data>
+        <display>
+        <title>进化论的再思考</title>
+        <pubTime>2022-09-10T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>进化论</tag>
+         
+        <tag>达尔文</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/07/11/160711-yunnan/</loc>
+    <lastmod>2026-02-04T22:35:40.129Z</lastmod>
+    <data>
+        <display>
+        <title>云南day2/丽江</title>
+        <pubTime>2016-07-10T16:00:00.000Z</pubTime>
+        
+        <tag>旅游</tag>
+         
+        <tag>云南</tag>
+         
+        <tag>丽江</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/11/20231211_python_csv_word/</loc>
+    <lastmod>2026-02-04T22:35:40.127Z</lastmod>
+    <data>
+        <display>
+        <title>使用python批量生成word文档</title>
+        <pubTime>2023-12-10T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>csv</tag>
+         
+        <tag>word</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/12/08/191208_nextjs/</loc>
+    <lastmod>2026-02-04T22:35:40.126Z</lastmod>
+    <data>
+        <display>
+        <title>Next.js新手教程</title>
+        <pubTime>2019-12-07T16:00:00.000Z</pubTime>
+        
+        <tag>React</tag>
+         
+        <tag>NextJS</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/01/01/20230101_hi_2023/</loc>
+    <lastmod>2026-02-04T22:35:40.125Z</lastmod>
+    <data>
+        <display>
+        <title>再见2022；你好，2023</title>
+        <pubTime>2022-12-31T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>运动</tag>
+         
+        <tag>创造</tag>
+         
+        <tag>obsidian</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂感随想" url="http://blog.fanzhh.pw/categories/%E6%9D%82%E6%84%9F%E9%9A%8F%E6%83%B3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/02/170702-doing-what-you-evolved-to-do/</loc>
+    <lastmod>2026-02-04T22:35:40.124Z</lastmod>
+    <data>
+        <display>
+        <title>从这里开始：大脑的进化程度还没有为今天的网络色情做好准备</title>
+        <pubTime>2017-07-01T16:00:00.000Z</pubTime>
+        
+        <tag>神经科学</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/26/20231226_hushi/</loc>
+    <lastmod>2026-02-04T22:35:40.124Z</lastmod>
+    <data>
+        <display>
+        <title>胡适是怎样成为无神论者的</title>
+        <pubTime>2023-12-25T16:00:00.000Z</pubTime>
+        
+        <tag>世俗主义</tag>
+         
+        <tag>价值观</tag>
+         
+        <tag>胡适</tag>
+         
+        <tag>无神论</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/28/170728_statistics_17/</loc>
+    <lastmod>2026-02-04T22:35:40.122Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（十七）</title>
+        <pubTime>2017-07-27T16:00:00.000Z</pubTime>
+        
+        <tag>统计</tag>
+         
+        <tag>pandas</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/08/05/190805_react_captcha/</loc>
+    <lastmod>2026-02-04T22:35:40.121Z</lastmod>
+    <data>
+        <display>
+        <title>React人机验证控件</title>
+        <pubTime>2019-08-05T12:30:00.000Z</pubTime>
+        
+        <tag>React</tag>
+         
+        <tag>CAPTCHA</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/10/170710_productive/</loc>
+    <lastmod>2026-02-04T22:35:40.120Z</lastmod>
+    <data>
+        <display>
+        <title>如何成为高效人士</title>
+        <pubTime>2017-07-09T16:00:00.000Z</pubTime>
+        
+        <tag>心理学</tag>
+         
+        <tag>译文</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/07/13/160713-yunnan-day4/</loc>
+    <lastmod>2026-02-04T22:35:40.118Z</lastmod>
+    <data>
+        <display>
+        <title>云南 day4 / 普达措国家森林公园</title>
+        <pubTime>2016-07-12T16:00:00.000Z</pubTime>
+        
+        <tag>云南</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/05/20/230514_tokyo_story/</loc>
+    <lastmod>2026-02-04T22:35:40.118Z</lastmod>
+    <data>
+        <display>
+        <title>重看《东京物语》</title>
+        <pubTime>2023-05-19T16:00:00.000Z</pubTime>
+        
+        <tag>电影</tag>
+         
+        <tag>小津安二郎</tag>
+         
+         
+           
+             
+              <breadCrumb title="电影剧集" url="http://blog.fanzhh.pw/categories/%E7%94%B5%E5%BD%B1%E5%89%A7%E9%9B%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2011/11/21/111121-huashan/</loc>
+    <lastmod>2026-02-04T22:35:40.117Z</lastmod>
+    <data>
+        <display>
+        <title>华山游记(上)</title>
+        <pubTime>2011-11-21T05:23:24.000Z</pubTime>
+        
+        <tag>华山</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2012/10/15/120915-taishan/</loc>
+    <lastmod>2026-02-04T22:35:40.116Z</lastmod>
+    <data>
+        <display>
+        <title>登泰山记（下）</title>
+        <pubTime>2012-10-15T03:05:47.000Z</pubTime>
+        
+        <tag>泰山</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/19/170719_statistics_13/</loc>
+    <lastmod>2026-02-04T22:35:40.115Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（十三）</title>
+        <pubTime>2017-07-19T12:40:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/07/25/180725_zhenyuan/</loc>
+    <lastmod>2026-02-04T22:35:40.114Z</lastmod>
+    <data>
+        <display>
+        <title>2018-07-25 镇远古城-贵阳</title>
+        <pubTime>2018-07-24T16:00:00.000Z</pubTime>
+        
+        <tag>贵州</tag>
+         
+        <tag>凯里</tag>
+         
+        <tag>镇远</tag>
+         
+        <tag>贵阳</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/06/12/160619-conda-python/</loc>
+    <lastmod>2026-02-04T22:35:40.113Z</lastmod>
+    <data>
+        <display>
+        <title>使用conda搭建python数据分析开发环境</title>
+        <pubTime>2016-06-12T00:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>ubuntu</tag>
+         
+        <tag>machine learning</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/30/170730_statistics_21/</loc>
+    <lastmod>2026-02-04T22:35:40.112Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（二十一）</title>
+        <pubTime>2017-07-30T02:07:00.000Z</pubTime>
+        
+        <tag>统计</tag>
+         
+        <tag>pandas</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/07/22/180722_zhangjiajie/</loc>
+    <lastmod>2026-02-04T22:35:40.112Z</lastmod>
+    <data>
+        <display>
+        <title>2018-07-22 武陵源-玻璃桥-武陵源-张家界-吉首-凤凰</title>
+        <pubTime>2018-07-21T16:00:00.000Z</pubTime>
+        
+        <tag>湖南</tag>
+         
+        <tag>湘菜</tag>
+         
+        <tag>凤凰</tag>
+         
+         
+           
+             
+              <breadCrumb title="吃喝玩乐" url="http://blog.fanzhh.pw/categories/%E5%90%83%E5%96%9D%E7%8E%A9%E4%B9%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2022/09/15/20220915_49_books/</loc>
+    <lastmod>2026-02-04T22:35:40.111Z</lastmod>
+    <data>
+        <display>
+        <title>让你了解一切的49本书</title>
+        <pubTime>2022-09-14T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/11/22/20231122_40_questions/</loc>
+    <lastmod>2026-02-04T22:35:40.110Z</lastmod>
+    <data>
+        <display>
+        <title>年度复盘的40个问题</title>
+        <pubTime>2023-11-21T16:00:00.000Z</pubTime>
+        
+        <tag>哲学</tag>
+         
+        <tag>价值观</tag>
+         
+        <tag>时间管理</tag>
+         
+        <tag>计划</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂感随想" url="http://blog.fanzhh.pw/categories/%E6%9D%82%E6%84%9F%E9%9A%8F%E6%83%B3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2022/08/10/220810_matsutake3/</loc>
+    <lastmod>2026-02-04T22:35:40.109Z</lastmod>
+    <data>
+        <display>
+        <title>末日松茸—资本主义废墟上的生活可能</title>
+        <pubTime>2022-08-09T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+        <tag>环境</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/07/06/20250706_tiny_qa/</loc>
+    <lastmod>2026-02-04T22:35:40.108Z</lastmod>
+    <data>
+        <display>
+        <title>Tiny QA：基于 Ollama 的本地智能知识库问答系统</title>
+        <pubTime>2025-07-05T16:00:00.000Z</pubTime>
+        
+        <tag>AI</tag>
+         
+        <tag>知识库</tag>
+         
+        <tag>Ollama</tag>
+         
+        <tag>大模型</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/12/17/2025-12-17-local-rerank/</loc>
+    <lastmod>2026-02-04T12:25:44.316Z</lastmod>
+    <data>
+        <display>
+        <title>本地Rerank服务实现方案</title>
+        <pubTime>2025-12-16T16:00:00.000Z</pubTime>
+        
+        <tag>docker</tag>
+         
+        <tag>ai</tag>
+         
+        <tag>rerank</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/11/23/2025-11-23-dragonflyOCR/</loc>
+    <lastmod>2025-11-22T22:52:51.900Z</lastmod>
+    <data>
+        <display>
+        <title>一款支持批量文件处理的OCR工具</title>
+        <pubTime>2025-11-22T16:00:00.000Z</pubTime>
+        
+        <tag>ocr</tag>
+         
+        <tag>paddleocr</tag>
+         
+        <tag>flask</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/11/20/2025-11-20-PaddleOCR_Sample/</loc>
+    <lastmod>2025-11-22T22:52:04.641Z</lastmod>
+    <data>
+        <display>
+        <title>PaddleOCR实战：从零构建智能文字识别应用</title>
+        <pubTime>2025-11-19T16:00:00.000Z</pubTime>
+        
+        <tag>ocr</tag>
+         
+        <tag>paddleocr</tag>
+         
+        <tag>baidu</tag>
+         
+        <tag>deep-learning</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/11/20/2025-11-20-Ocr_chinese_pdf_files_with_Tesseract/</loc>
+    <lastmod>2025-11-20T00:47:54.096Z</lastmod>
+    <data>
+        <display>
+        <title>用Tesseract批量提取中文PDF文件文本</title>
+        <pubTime>2025-11-19T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>tesseract-ocr</tag>
+         
+        <tag>ocr</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/11/15/20251115_100_push-ups_and_squats/</loc>
+    <lastmod>2025-11-15T14:38:44.037Z</lastmod>
+    <data>
+        <display>
+        <title>100个俯卧撑与深蹲</title>
+        <pubTime>2025-11-14T16:00:00.000Z</pubTime>
+        
+        <tag>telegram</tag>
+         
+        <tag>podcast</tag>
+         
+        <tag>pavel</tag>
+         
+        <tag>durov</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/11/01/20251101_singbox/</loc>
+    <lastmod>2025-11-04T09:59:18.584Z</lastmod>
+    <data>
+        <display>
+        <title>sing-box：让 OpenWrt 路由器实现智能代理的终极方案</title>
+        <pubTime>2025-10-31T16:00:00.000Z</pubTime>
+        
+        <tag>openwrt</tag>
+         
+        <tag>wndr4300</tag>
+         
+        <tag>singbox</tag>
+         
+        <tag>网络代理</tag>
+         
+        <tag>教程</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/10/07/20251007_huawei_data/</loc>
+    <lastmod>2025-10-07T11:04:31.331Z</lastmod>
+    <data>
+        <display>
+        <title>一款提取华为运动健康数据的手机APP</title>
+        <pubTime>2025-10-06T16:00:00.000Z</pubTime>
+        
+        <tag>ai</tag>
+         
+        <tag>android</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/10/01/20251001-VPN_Hysteria2/</loc>
+    <lastmod>2025-10-05T06:31:08.887Z</lastmod>
+    <data>
+        <display>
+        <title>L2TP VPN服务器与Hysteria2代理整合实践</title>
+        <pubTime>2025-09-30T16:00:00.000Z</pubTime>
+        
+        <tag>vpn</tag>
+         
+        <tag>hysteria</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/10/04/2025-10-04-OpenWrt-OpenClash/</loc>
+    <lastmod>2025-10-04T05:20:31.194Z</lastmod>
+    <data>
+        <display>
+        <title>OpenWrt路由器部署OpenClash手记</title>
+        <pubTime>2025-10-03T16:00:00.000Z</pubTime>
+        
+        <tag>vps</tag>
+         
+        <tag>clash</tag>
+         
+        <tag>openwrt</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2025/08/15/20250809_MCP_Sample/</loc>
+    <lastmod>2025-10-01T14:06:46.933Z</lastmod>
+    <data>
+        <display>
+        <title>构建智能数据查询引擎：MCP项目架构解析</title>
+        <pubTime>2025-08-14T16:00:00.000Z</pubTime>
+        
+        <tag>AI</tag>
+         
+        <tag>MCP</tag>
+         
+        <tag>LLM</tag>
+         
+        <tag>Python</tag>
+         
+        <tag>Database</tag>
+         
+        <tag>Anthropic</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/06/05/secrets-of-mental-math-01/</loc>
+    <lastmod>2025-05-23T06:51:24.683Z</lastmod>
+    <data>
+        <display>
+        <title>心算的秘密1-在脑中运算</title>
+        <pubTime>2016-06-04T16:00:00.000Z</pubTime>
+        
+        <tag>教育</tag>
+         
+        <tag>数学</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/06/01/secrets-of-mental-math-00/</loc>
+    <lastmod>2025-05-23T06:51:24.683Z</lastmod>
+    <data>
+        <display>
+        <title>心算的秘密 序言</title>
+        <pubTime>2016-05-31T16:00:00.000Z</pubTime>
+        
+        <tag>教育</tag>
+         
+        <tag>数学</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2023/12/10/20231210_prisma/</loc>
+    <lastmod>2025-05-23T06:51:24.680Z</lastmod>
+    <data>
+        <display>
+        <title>Getting Start On Prisma</title>
+        <pubTime>2023-12-09T16:00:00.000Z</pubTime>
+        
+        <tag>前端</tag>
+         
+        <tag>Javascript</tag>
+         
+        <tag>database</tag>
+         
+        <tag>全栈</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/01/10/20160110_endless1/</loc>
+    <lastmod>2025-05-23T06:51:24.677Z</lastmod>
+    <data>
+        <display>
+        <title>无穷的开始读书笔记1</title>
+        <pubTime>2016-01-09T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+        <tag>读书笔记</tag>
+         
+        <tag>哲学</tag>
+         
+        <tag>戴维·多伊奇</tag>
+         
+        <tag>物理</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/12/05/20161114-how-to-meditate/</loc>
+    <lastmod>2025-05-23T06:51:24.677Z</lastmod>
+    <data>
+        <display>
+        <title>如何进行冥想</title>
+        <pubTime>2016-12-04T16:00:00.000Z</pubTime>
+        
+        <tag>禅</tag>
+         
+        <tag>冥想</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/12/21/20171221-how-to-overcome-negative-emotion/</loc>
+    <lastmod>2025-05-23T06:51:24.677Z</lastmod>
+    <data>
+        <display>
+        <title>如何克服负面情绪</title>
+        <pubTime>2017-12-21T00:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+        <tag>个人成长</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/01/22/190122_picking_career/</loc>
+    <lastmod>2025-05-23T06:51:24.676Z</lastmod>
+    <data>
+        <display>
+        <title>如何选择适合自己的职业（四）</title>
+        <pubTime>2019-01-21T16:00:00.000Z</pubTime>
+        
+        <tag>译文</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/06/23/190623_react/</loc>
+    <lastmod>2025-05-23T06:51:24.676Z</lastmod>
+    <data>
+        <display>
+        <title>React中router-dom相同路径不同参数时页面不重载问题</title>
+        <pubTime>2019-06-22T16:00:00.000Z</pubTime>
+        
+        <tag>react</tag>
+         
+        <tag>reactjs</tag>
+         
+        <tag>router</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/01/20/190120_picking_career/</loc>
+    <lastmod>2025-05-23T06:51:24.676Z</lastmod>
+    <data>
+        <display>
+        <title>如何选择适合自己的职业（三）</title>
+        <pubTime>2019-01-19T16:00:00.000Z</pubTime>
+        
+        <tag>译文</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/01/18/190118_picking_career/</loc>
+    <lastmod>2025-05-23T06:51:24.676Z</lastmod>
+    <data>
+        <display>
+        <title>如何选择适合自己的职业（二）</title>
+        <pubTime>2019-01-17T16:00:00.000Z</pubTime>
+        
+        <tag>译文</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/07/18/190718_deploy_hexo_to_github_pages/</loc>
+    <lastmod>2025-05-23T06:51:24.676Z</lastmod>
+    <data>
+        <display>
+        <title>如何使用Hexo发布博客到GitHub Pages</title>
+        <pubTime>2019-07-18T07:00:00.000Z</pubTime>
+        
+        <tag>hexo</tag>
+         
+        <tag>gitpages</tag>
+         
+        <tag>github</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/01/28/180128_express_react/</loc>
+    <lastmod>2025-05-23T06:51:24.675Z</lastmod>
+    <data>
+        <display>
+        <title>使用Sqlite3+Express.js+React实现在线答题</title>
+        <pubTime>2018-01-27T16:00:00.000Z</pubTime>
+        
+        <tag>react</tag>
+         
+        <tag>javascript</tag>
+         
+        <tag>express.js</tag>
+         
+        <tag>sqlite3</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/04/03/1804003_seven_habits/</loc>
+    <lastmod>2025-05-23T06:51:24.675Z</lastmod>
+    <data>
+        <display>
+        <title>高效能人士成功的七个习惯</title>
+        <pubTime>2018-04-02T16:00:00.000Z</pubTime>
+        
+        <tag>读书笔记</tag>
+         
+        <tag>成长励志</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/12/30/181230_books/</loc>
+    <lastmod>2025-05-23T06:51:24.675Z</lastmod>
+    <data>
+        <display>
+        <title>2018年读过的书</title>
+        <pubTime>2018-12-29T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/12/09/181209_the_little_prince/</loc>
+    <lastmod>2025-05-23T06:51:24.675Z</lastmod>
+    <data>
+        <display>
+        <title>重读《小王子》</title>
+        <pubTime>2018-12-08T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2019/01/17/190117_picking_career/</loc>
+    <lastmod>2025-05-23T06:51:24.675Z</lastmod>
+    <data>
+        <display>
+        <title>如何选择适合自己的职业（一）</title>
+        <pubTime>2019-01-16T16:00:00.000Z</pubTime>
+        
+        <tag>译文</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/29/170729_statistics_18/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（十八）</title>
+        <pubTime>2017-07-29T09:40:00.000Z</pubTime>
+        
+        <tag>统计</tag>
+         
+        <tag>pandas</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/30/170730_statistics_20/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（二十）</title>
+        <pubTime>2017-07-30T01:10:00.000Z</pubTime>
+        
+        <tag>统计</tag>
+         
+        <tag>pandas</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/29/170729_statistics_19/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（十九）</title>
+        <pubTime>2017-07-29T09:40:00.000Z</pubTime>
+        
+        <tag>统计</tag>
+         
+        <tag>pandas</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/08/29/170829_git_django_virtualenv/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>Git, Django, 和 virtualenv的结合应用</title>
+        <pubTime>2017-08-29T13:04:00.000Z</pubTime>
+        
+        <tag>django</tag>
+         
+        <tag>virtualenv</tag>
+         
+        <tag>git</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/08/02/170802_statistics/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>统计学中的Z值</title>
+        <pubTime>2017-08-01T16:00:00.000Z</pubTime>
+        
+        <tag>统计</tag>
+         
+        <tag>pandas</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/09/12/170912_django_chinese/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>Django中文化设置</title>
+        <pubTime>2017-09-11T16:00:00.000Z</pubTime>
+        
+        <tag>django</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/08/07/170807_wenyanwen/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>推荐一本文言文工具书</title>
+        <pubTime>2017-08-07T13:49:00.000Z</pubTime>
+        
+        <tag>古文</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/12/26/171226_monitor_and_send_err/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>如何在ubuntu上定时抓取错误日志并发至管理员邮箱</title>
+        <pubTime>2017-12-25T16:00:00.000Z</pubTime>
+        
+        <tag>ubuntu</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/12/31/171231_books/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>我的2017年书单</title>
+        <pubTime>2017-12-30T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/12/25/171225_ubuntu_sendemail/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>如何在ubuntu上使用sendemail发送邮件</title>
+        <pubTime>2017-12-24T16:00:00.000Z</pubTime>
+        
+        <tag>ubuntu</tag>
+         
+        <tag>sendemail</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/01/06/180106_react/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>React.js 概念与入门</title>
+        <pubTime>2018-01-05T16:00:00.000Z</pubTime>
+        
+        <tag>react</tag>
+         
+        <tag>javascript</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/01/06/180107_react_think/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>以React.js的方式思考</title>
+        <pubTime>2018-01-05T16:00:00.000Z</pubTime>
+        
+        <tag>react</tag>
+         
+        <tag>javascript</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/01/14/1801115_change_your_thinking_4/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>通往财务自由之路</title>
+        <pubTime>2018-01-13T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2018/01/10/180110_cause_effect_law/</loc>
+    <lastmod>2025-05-23T06:51:24.674Z</lastmod>
+    <data>
+        <display>
+        <title>因果关系法则及对你生活的影响</title>
+        <pubTime>2018-01-09T16:00:00.000Z</pubTime>
+        
+        <tag>心理学</tag>
+         
+        <tag>译文</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/09/170709_statistics/</loc>
+    <lastmod>2025-05-23T06:51:24.673Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（二）</title>
+        <pubTime>2017-07-08T16:00:00.000Z</pubTime>
+        
+        <tag>统计</tag>
+         
+        <tag>pandas</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/15/170715_statistics_7/</loc>
+    <lastmod>2025-05-23T06:51:24.673Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（七）</title>
+        <pubTime>2017-07-14T16:00:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/18/170718_statistics_10/</loc>
+    <lastmod>2025-05-23T06:51:24.673Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（十）</title>
+        <pubTime>2017-07-18T02:00:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/14/170713_statistics_6/</loc>
+    <lastmod>2025-05-23T06:51:24.673Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（六）</title>
+        <pubTime>2017-07-13T16:00:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/19/170719_statistics_12/</loc>
+    <lastmod>2025-05-23T06:51:24.673Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（十二）</title>
+        <pubTime>2017-07-19T01:00:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/17/170718_statistics_9/</loc>
+    <lastmod>2025-05-23T06:51:24.673Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（九）</title>
+        <pubTime>2017-07-16T16:00:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/25/170725_statistics_15/</loc>
+    <lastmod>2025-05-23T06:51:24.673Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（十五）</title>
+        <pubTime>2017-07-24T16:00:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/11/170710_statistics_2/</loc>
+    <lastmod>2025-05-23T06:51:24.673Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（四）</title>
+        <pubTime>2017-07-10T16:00:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/23/170723_statistics_14/</loc>
+    <lastmod>2025-05-23T06:51:24.673Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（十四）</title>
+        <pubTime>2017-07-22T16:00:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/16/170715_statistics_8/</loc>
+    <lastmod>2025-05-23T06:51:24.673Z</lastmod>
+    <data>
+        <display>
+        <title>统计学与pandas学习（八）</title>
+        <pubTime>2017-07-15T16:00:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>统计学</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/11/29/161129-gensim-similarity-queries/</loc>
+    <lastmod>2025-05-23T06:51:24.672Z</lastmod>
+    <data>
+        <display>
+        <title>gensim — 相似性查询</title>
+        <pubTime>2016-11-28T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>语义分析</tag>
+         
+        <tag>统计</tag>
+         
+        <tag>gensim</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/11/29/161129-gensim-topics-and-transformation/</loc>
+    <lastmod>2025-05-23T06:51:24.672Z</lastmod>
+    <data>
+        <display>
+        <title>gensim — 主题与转换</title>
+        <pubTime>2016-11-28T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>语义分析</tag>
+         
+        <tag>统计</tag>
+         
+        <tag>gensim</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/04/10/170410-python-guessing-game/</loc>
+    <lastmod>2025-05-23T06:51:24.672Z</lastmod>
+    <data>
+        <display>
+        <title>猜数游戏[难度:低]</title>
+        <pubTime>2017-04-09T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>游戏</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/12/31/161231-2016-books-movies/</loc>
+    <lastmod>2025-05-23T06:51:24.672Z</lastmod>
+    <data>
+        <display>
+        <title>2016年的书单和影单</title>
+        <pubTime>2016-12-30T16:00:00.000Z</pubTime>
+        
+        <tag>电影</tag>
+         
+        <tag>读书</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂感随想" url="http://blog.fanzhh.pw/categories/%E6%9D%82%E6%84%9F%E9%9A%8F%E6%83%B3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/12/25/161225-ubuntu-inode-zen/</loc>
+    <lastmod>2025-05-23T06:51:24.672Z</lastmod>
+    <data>
+        <display>
+        <title>安装ubuntu中碰到的一个小问题与禅</title>
+        <pubTime>2016-12-24T16:00:00.000Z</pubTime>
+        
+        <tag>ubuntu</tag>
+         
+        <tag>读书</tag>
+         
+        <tag>禅</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/05/08/170508-men-search-for-meaning/</loc>
+    <lastmod>2025-05-23T06:51:24.672Z</lastmod>
+    <data>
+        <display>
+        <title>寻找人生的意义</title>
+        <pubTime>2017-05-07T16:00:00.000Z</pubTime>
+        
+        <tag>读书</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/04/10/170410-game-hangman/</loc>
+    <lastmod>2025-05-23T06:51:24.672Z</lastmod>
+    <data>
+        <display>
+        <title>猜单词游戏[难度:低]</title>
+        <pubTime>2017-04-09T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>游戏</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2017/07/07/170707_dont_care_about_myself/</loc>
+    <lastmod>2025-05-23T06:51:24.672Z</lastmod>
+    <data>
+        <display>
+        <title>你以为你过了1天，其实你只是过了0天</title>
+        <pubTime>2017-07-06T16:00:00.000Z</pubTime>
+        
+        <tag>学习</tag>
+         
+        <tag>教育</tag>
+         
+        <tag>译文</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习教育" url="http://blog.fanzhh.pw/categories/%E5%AD%A6%E4%B9%A0%E6%95%99%E8%82%B2/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/08/16/160816-mlia-ch02/</loc>
+    <lastmod>2025-05-23T06:51:24.671Z</lastmod>
+    <data>
+        <display>
+        <title>Machine Learning in Action Chapter 2</title>
+        <pubTime>2016-08-15T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>machine learning</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/08/12/160802-csv-codecs/</loc>
+    <lastmod>2025-05-23T06:51:24.671Z</lastmod>
+    <data>
+        <display>
+        <title>csv文件读取过程中utf-8编码问题</title>
+        <pubTime>2016-08-11T16:00:00.000Z</pubTime>
+        
+        <tag>csv</tag>
+         
+        <tag>utf-8</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/11/28/161128-gensim-tutorials/</loc>
+    <lastmod>2025-05-23T06:51:24.671Z</lastmod>
+    <data>
+        <display>
+        <title>gensim — 入门</title>
+        <pubTime>2016-11-27T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>语义分析</tag>
+         
+        <tag>统计</tag>
+         
+        <tag>gensim</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/08/23/160821_ml_ch04/</loc>
+    <lastmod>2025-05-23T06:51:24.671Z</lastmod>
+    <data>
+        <display>
+        <title>Machine Learning in Action Chapter 4</title>
+        <pubTime>2016-08-22T16:00:00.000Z</pubTime>
+        
+        <tag>machine learning</tag>
+         
+        <tag>概率</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/11/28/161128-gensim-corpora-vector-spaces/</loc>
+    <lastmod>2025-05-23T06:51:24.671Z</lastmod>
+    <data>
+        <display>
+        <title>gensim — 文档集与向量空间</title>
+        <pubTime>2016-11-27T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>语义分析</tag>
+         
+        <tag>统计</tag>
+         
+        <tag>gensim</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2015/02/17/150217-history-of-everything/</loc>
+    <lastmod>2025-05-23T06:51:24.670Z</lastmod>
+    <data>
+        <display>
+        <title>万物简史</title>
+        <pubTime>2015-02-16T16:00:00.000Z</pubTime>
+        
+        <tag>科普</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/01/10/160110-guadouji/</loc>
+    <lastmod>2025-05-23T06:51:24.670Z</lastmod>
+    <data>
+        <display>
+        <title>瓜豆集.周作人</title>
+        <pubTime>2016-01-09T16:00:00.000Z</pubTime>
+        
+        <tag>周作人</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2015/08/21/150821-violent-in-school/</loc>
+    <lastmod>2025-05-23T06:51:24.670Z</lastmod>
+    <data>
+        <display>
+        <title>校园暴力与暗黑的少年时代</title>
+        <pubTime>2015-08-20T16:00:00.000Z</pubTime>
+        
+        <tag>校园暴力</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂感随想" url="http://blog.fanzhh.pw/categories/%E6%9D%82%E6%84%9F%E9%9A%8F%E6%83%B3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/01/10/160110-zhanguo/</loc>
+    <lastmod>2025-05-23T06:51:24.670Z</lastmod>
+    <data>
+        <display>
+        <title>战国歧途</title>
+        <pubTime>2016-01-09T16:00:00.000Z</pubTime>
+        
+        <tag>战国</tag>
+         
+        <tag>历史</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://blog.fanzhh.pw/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/06/10/160610-csv-to-postgresql/</loc>
+    <lastmod>2025-05-23T06:51:24.670Z</lastmod>
+    <data>
+        <display>
+        <title>将csv文件中的数据导入至postgresql</title>
+        <pubTime>2016-06-09T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>postgresql</tag>
+         
+        <tag>csv</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/06/11/160611-export-wd-to-grav-md/</loc>
+    <lastmod>2025-05-23T06:51:24.670Z</lastmod>
+    <data>
+        <display>
+        <title>Export wordpress posts to markdown file</title>
+        <pubTime>2016-06-10T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>ubuntu</tag>
+         
+        <tag>grav</tag>
+         
+        <tag>wordpress</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/07/04/160704-backup-use-rsync/</loc>
+    <lastmod>2025-05-23T06:51:24.670Z</lastmod>
+    <data>
+        <display>
+        <title>使用rsync远程备份数据</title>
+        <pubTime>2016-07-03T16:00:00.000Z</pubTime>
+        
+        <tag>ubuntu</tag>
+         
+        <tag>rsync</tag>
+         
+        <tag>数据备份</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2016/07/01/160703-update-grav-blog-use-ftp/</loc>
+    <lastmod>2025-05-23T06:51:24.670Z</lastmod>
+    <data>
+        <display>
+        <title>利用ftp更新grav博客</title>
+        <pubTime>2016-07-01T00:00:00.000Z</pubTime>
+        
+        <tag>ubuntu</tag>
+         
+        <tag>grav</tag>
+         
+        <tag>blog</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2012/04/15/120416-django/</loc>
+    <lastmod>2025-05-23T06:51:24.669Z</lastmod>
+    <data>
+        <display>
+        <title>一个改进的django admin面板 —— django-admin-tools</title>
+        <pubTime>2012-04-15T06:12:00.000Z</pubTime>
+        
+        <tag>django</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2012/04/16/120418-django/</loc>
+    <lastmod>2025-05-23T06:51:24.669Z</lastmod>
+    <data>
+        <display>
+        <title>django开发应用中使用自定义css样式表的设置</title>
+        <pubTime>2012-04-16T08:15:00.000Z</pubTime>
+        
+        <tag>django</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2012/04/15/120417-django/</loc>
+    <lastmod>2025-05-23T06:51:24.669Z</lastmod>
+    <data>
+        <display>
+        <title>django的数据管理插件south</title>
+        <pubTime>2012-04-15T07:33:00.000Z</pubTime>
+        
+        <tag>django</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2007/10/28/071028_movie/</loc>
+    <lastmod>2025-05-23T06:51:24.668Z</lastmod>
+    <data>
+        <display>
+        <title>26届金鸡奖颁奖典礼</title>
+        <pubTime>2007-10-27T16:00:00.000Z</pubTime>
+        
+        <tag>电影</tag>
+         
+         
+           
+             
+              <breadCrumb title="电影剧集" url="http://blog.fanzhh.pw/categories/%E7%94%B5%E5%BD%B1%E5%89%A7%E9%9B%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2012/01/01/120101-django/</loc>
+    <lastmod>2025-05-23T06:51:24.668Z</lastmod>
+    <data>
+        <display>
+        <title>Django `AlreadyRegistered` exception</title>
+        <pubTime>2012-01-01T03:07:00.000Z</pubTime>
+        
+        <tag>django</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2012/04/15/120415-django/</loc>
+    <lastmod>2025-05-23T06:51:24.668Z</lastmod>
+    <data>
+        <display>
+        <title>django中verbose_name使用中文出现decode错误</title>
+        <pubTime>2012-04-14T23:40:00.000Z</pubTime>
+        
+        <tag>django</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.fanzhh.pw/2012/04/10/120410-django/</loc>
+    <lastmod>2025-05-23T06:51:24.668Z</lastmod>
+    <data>
+        <display>
+        <title>django下使用django-workflow</title>
+        <pubTime>2012-04-10T13:19:00.000Z</pubTime>
+        
+        <tag>django</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术笔记" url="http://blog.fanzhh.pw/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+</urlset>
